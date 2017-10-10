@@ -13,7 +13,7 @@
 
         <TextView
             style="@style/LayoutItem"
-            android:text="@string/RadioGroupEntryType"/>
+            android:text="@string/RadioGroupBudgettType"/>
 
         <RadioGroup
             android:id="@+id/rdgEntryType"
@@ -40,7 +40,7 @@
 
         <TextView
             style="@style/LayoutItem"
-            android:text="@string/DateEditEntryDate"/>
+            android:text="@string/DateEditBudgettDate"/>
 
         <EditText
             android:id="@+id/txtEntryDate"
@@ -49,10 +49,10 @@
 
         <TextView
             style="@style/LayoutItem"
-            android:text="@string/SpinnerEditExpenseSource"/>
+            android:text="@string/SpinnerEditBudgettSource"/>
 
         <Spinner
-            android:id="@+id/spnExpenseSource"
+            android:id="@+id/spnBudgettSource"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -60,7 +60,7 @@
 
         <TextView
             style="@style/LayoutItem"
-            android:text="@string/SpinnerEditExpenseType"/>
+            android:text="@string/SpinnerEditBudgettType"/>
 
         <Spinner
             android:id="@+id/spnExpenseType"
@@ -71,7 +71,7 @@
 
         <TextView
             style="@style/LayoutItem"
-            android:text="@string/NumboxEditPrice"/>
+            android:text="@string/NumboxEditBudgettAmount"/>
 
         <EditText
             android:id="@+id/txtPrice"

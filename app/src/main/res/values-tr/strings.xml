@@ -2,11 +2,11 @@
 <resources>
     <string name="BtnCancel">İptal</string>
     <string name="BtnSave">Kaydet</string>
-    <string name="DateEditEntryDate">Tarih</string>
-    <string name="RadioGroupEntryType">Giriş Tipi</string>
     <string name="RadioOptionExpense">Gider</string>
     <string name="RadioOptionIncome">Gelir</string>
-    <string name="NumboxEditPrice">Fiyat</string>
-    <string name="SpinnerEditExpenseSource">Harcama Kaynağı</string>
-    <string name="SpinnerEditExpenseType">Harcama Tipi</string>
+    <string name="DateEditBudgettDate">Tarih</string>
+    <string name="NumboxEditBudgettAmount">Tutar</string>
+    <string name="RadioGroupBudgettType">Giriş Tipi</string>
+    <string name="SpinnerEditBudgettSource">Kaynak</string>
+    <string name="SpinnerEditBudgettType">Tür</string>
 </resources>
