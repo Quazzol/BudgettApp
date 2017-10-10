@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">BudgettApp</string>
+    <string name="app_name" translatable="false">BudgettApp</string>
+    <string name="RadioGroupEntryType">Entry Type</string>
+    <string name="RadioOptionExpense">Expense</string>
+    <string name="RadioOptionIncome">Income</string>
+    <string name="DateEditEntryDate">Date</string>
+    <string name="SpinnerEditExpenseType">Expense Type</string>
+    <string name="SpinnerEditExpenseSource">Expense Source</string>
+    <string name="NumboxEditPrice">Price</string>
+    <string name="BtnSave">Save</string>
+    <string name="BtnCancel">Cancel</string>
 </resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="BtnCancel">İptal</string>
+    <string name="BtnSave">Kaydet</string>
+    <string name="DateEditEntryDate">Tarih</string>
+    <string name="RadioGroupEntryType">Giriş Tipi</string>
+    <string name="RadioOptionExpense">Gider</string>
+    <string name="RadioOptionIncome">Gelir</string>
+    <string name="NumboxEditPrice">Fiyat</string>
+    <string name="SpinnerEditExpenseSource">Harcama Kaynağı</string>
+    <string name="SpinnerEditExpenseType">Harcama Tipi</string>
+</resources>

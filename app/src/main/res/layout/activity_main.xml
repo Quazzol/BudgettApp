@@ -6,13 +6,100 @@
     android:layout_height="match_parent"
     tools:context="com.okanerkan.budgettapp.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/LayoutItem"
+            android:text="@string/RadioGroupEntryType"/>
+
+        <RadioGroup
+            android:id="@+id/rdgEntryType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbtnExpense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/RadioOptionExpense"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/rbtnIncome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/RadioOptionIncome" />
+
+        </RadioGroup>
+
+        <TextView
+            style="@style/LayoutItem"
+            android:text="@string/DateEditEntryDate"/>
+
+        <EditText
+            android:id="@+id/txtEntryDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/LayoutItem"
+            android:text="@string/SpinnerEditExpenseSource"/>
+
+        <Spinner
+            android:id="@+id/spnExpenseSource"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </Spinner>
+
+        <TextView
+            style="@style/LayoutItem"
+            android:text="@string/SpinnerEditExpenseType"/>
+
+        <Spinner
+            android:id="@+id/spnExpenseType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </Spinner>
+
+        <TextView
+            style="@style/LayoutItem"
+            android:text="@string/NumboxEditPrice"/>
+
+        <EditText
+            android:id="@+id/txtPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:gravity="end"
+            android:textAlignment="textEnd" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/BtnSave"
+                android:layout_weight="1"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/BtnCancel"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
