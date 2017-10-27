@@ -15,13 +15,10 @@ public class BudgettType
         this.mTypeValue = _typeValue;
     }
 
-    public int getID()
-    {
-        return this.mID;
-    }
-
+    public int getID() { return this.mID; }
     public String getTypeValue()
     {
         return this.mTypeValue;
     }
+    public void SetTypeValue(String _type) { this.mTypeValue = _type; }
 }

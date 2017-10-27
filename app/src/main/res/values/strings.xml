@@ -9,4 +9,10 @@
     <string name="NumboxEditBudgettAmount">Amount</string>
     <string name="BtnSave">Save</string>
     <string name="BtnCancel">Cancel</string>
+    <string name="BtnLogin">Login</string>
+    <string name="Username">Username</string>
+    <string name="Password">Password</string>
+
+    <string name="MenuItemBudgettType">Budgett Type</string>
+    <string name="MenuItemBudgettSource">Budgett Source</string>
 </resources>

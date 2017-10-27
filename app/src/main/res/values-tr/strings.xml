@@ -9,4 +9,9 @@
     <string name="RadioGroupBudgettType">Giriş Tipi</string>
     <string name="SpinnerEditBudgettSource">Kaynak</string>
     <string name="SpinnerEditBudgettType">Tür</string>
+    <string name="BtnLogin">Giriş</string>
+    <string name="Password">Şifre</string>
+    <string name="Username">Kullanıcı Adı</string>
+    <string name="MenuItemBudgettType">Budgett Türü</string>
+    <string name="MenuItemBudgettSource">Budgett Kaynağı</string>
 </resources>
