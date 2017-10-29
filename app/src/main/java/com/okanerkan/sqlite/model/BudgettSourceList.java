@@ -1,4 +1,4 @@
-package com.okanerkan.budgettapp;
+package com.okanerkan.sqlite.model;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ public class BudgettSourceList
     private static BudgettSourceList mSingleton;
     private ArrayList<BudgettSource> mList;
 
-    private void BudgettSourceList()
+    private BudgettSourceList()
     {
         this.mList = new ArrayList<BudgettSource>();
     }
@@ -28,7 +28,7 @@ public class BudgettSourceList
 
     private void LoadListFromDB()
     {
-
+        // TODO get list from database
     }
 
     public ArrayList<String> GetBudgettSourceNames()
@@ -36,7 +36,7 @@ public class BudgettSourceList
         ArrayList<String> names = new ArrayList<>();
         for (BudgettSource source: this.mList)
         {
-            names.add(source.getSourceValue());
+            names.add(source.getSourceCode());
         }
         return names;
     }
@@ -69,7 +69,7 @@ public class BudgettSourceList
     {
         for (BudgettSource source: this.mList)
         {
-            if(source.getSourceValue().equals(_sourceCode))
+            if(source.getSourceCode().equals(_sourceCode))
                 return source;
         }
         return null;

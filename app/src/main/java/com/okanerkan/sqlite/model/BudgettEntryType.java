@@ -1,4 +1,4 @@
-package com.okanerkan.budgettapp;
+package com.okanerkan.sqlite.model;
 
 /**
  * Created by OkanErkan on 10.10.2017.

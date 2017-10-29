@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.okanerkan.sqlite.model.BudgettTypeList;
+
 public class BudgettTypeActivity extends AppCompatActivity
 {
     ListView mListView;

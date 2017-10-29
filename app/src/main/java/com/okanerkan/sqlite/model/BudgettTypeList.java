@@ -1,6 +1,4 @@
-package com.okanerkan.budgettapp;
-
-import android.database.sqlite.SQLiteDatabase;
+package com.okanerkan.sqlite.model;
 
 import java.util.ArrayList;
 
@@ -13,7 +11,7 @@ public class BudgettTypeList
     private static BudgettTypeList mSingleton;
     private ArrayList<BudgettType> mList;
 
-    private void BudgettTypeList()
+    private BudgettTypeList()
     {
         this.mList = new ArrayList<BudgettType>();
     }
@@ -30,7 +28,7 @@ public class BudgettTypeList
 
     private void LoadListFromDB()
     {
-
+        // TODO get list from database
     }
 
     public ArrayList<String> GetBudgettTypeNames()
@@ -38,7 +36,7 @@ public class BudgettTypeList
         ArrayList<String> names = new ArrayList<>();
         for (BudgettType type: this.mList)
         {
-            names.add(type.getTypeValue());
+            names.add(type.getTypeCode());
         }
         return names;
     }
@@ -71,7 +69,7 @@ public class BudgettTypeList
     {
         for (BudgettType type: this.mList)
         {
-            if(type.getTypeValue().equals(_typeCode))
+            if(type.getTypeCode().equals(_typeCode))
                 return type;
         }
         return null;

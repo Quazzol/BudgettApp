@@ -1,4 +1,4 @@
-package com.okanerkan.budgettapp;
+package com.okanerkan.sqlite.model;
 
 import java.io.Serializable;
 
@@ -9,18 +9,18 @@ import java.io.Serializable;
 public class BudgettType implements Serializable
 {
     private int mID;
-    private String mTypeValue;
+    private String mTypeCode;
 
     public BudgettType(int _id, String _typeValue)
     {
         this.mID = _id;
-        this.mTypeValue = _typeValue;
+        this.mTypeCode = _typeValue;
     }
 
     public int getID() { return this.mID; }
-    public String getTypeValue()
+    public String getTypeCode()
     {
-        return this.mTypeValue;
+        return this.mTypeCode;
     }
-    public void SetTypeValue(String _type) { this.mTypeValue = _type; }
+    public void setTypeCode(String _type) { this.mTypeCode = _type; }
 }

@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.okanerkan.sqlite.model.BudgettSource;
+import com.okanerkan.sqlite.model.BudgettSourceList;
+
 public class BudgettSourceCardActivity extends AppCompatActivity
 {
     Button mSaveButton;

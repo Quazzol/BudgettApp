@@ -1,4 +1,4 @@
-package com.okanerkan.budgettapp;
+package com.okanerkan.sqlite.model;
 
 /**
  * Created by OkanErkan on 10.10.2017.
@@ -7,21 +7,20 @@ package com.okanerkan.budgettapp;
 public class BudgettSource
 {
     private int mID;
-    private String mSourceValue;
+    private String mSourceCode;
 
     public BudgettSource(int _id, String _sourceValue)
     {
         this.mID = _id;
-        this.mSourceValue = _sourceValue;
+        this.mSourceCode = _sourceValue;
     }
 
     public int getID()
     {
         return this.mID;
     }
-
-    public String getSourceValue()
+    public String getSourceCode()
     {
-        return this.mSourceValue;
+        return this.mSourceCode;
     }
 }
