@@ -101,15 +101,17 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/btnReset"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/BtnSave"
+                    android:text="@string/BtnReset"
                     android:layout_weight="1"/>
 
                 <Button
+                    android:id="@+id/btnSave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/BtnCancel"
+                    android:text="@string/BtnSave"
                     android:layout_weight="1"/>
 
             </LinearLayout>

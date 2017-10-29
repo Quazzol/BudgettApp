@@ -14,4 +14,7 @@
     <string name="Username">Kullanıcı Adı</string>
     <string name="MenuItemBudgettType">Budgett Türü</string>
     <string name="MenuItemBudgettSource">Budgett Kaynağı</string>
+    <string name="BtnDelete">Sil</string>
+    <string name="BtnReset">Sıfırla</string>
+    <string name="BtnNew">Yeni</string>
 </resources>

@@ -1,10 +1,12 @@
 package com.okanerkan.budgettapp;
 
+import java.io.Serializable;
+
 /**
  * Created by OkanErkan on 10.10.2017.
  */
 
-public class BudgettType
+public class BudgettType implements Serializable
 {
     private int mID;
     private String mTypeValue;

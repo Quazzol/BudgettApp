@@ -10,6 +10,9 @@
     <string name="BtnSave">Save</string>
     <string name="BtnCancel">Cancel</string>
     <string name="BtnLogin">Login</string>
+    <string name="BtnDelete">Delete</string>
+    <string name="BtnReset">Reset</string>
+    <string name="BtnNew">New</string>
     <string name="Username">Username</string>
     <string name="Password">Password</string>
 

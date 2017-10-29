@@ -18,7 +18,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".BudgettTypeActivity" />
-        <activity android:name=".BudgettSourceActivity"></activity>
+        <activity android:name=".BudgettSourceActivity" />
+        <activity android:name=".BudgettTypeCardActivity" />
+        <activity android:name=".BudgettSourceCardActivity"></activity>
     </application>
 
 </manifest>
