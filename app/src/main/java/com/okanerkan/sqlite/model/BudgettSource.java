@@ -15,10 +15,8 @@ public class BudgettSource
         this.mSourceCode = _sourceValue;
     }
 
-    public int getID()
-    {
-        return this.mID;
-    }
+    public int getID() { return this.mID; }
+    public void setID(int _id) { this.mID = _id; }
     public String getSourceCode()
     {
         return this.mSourceCode;

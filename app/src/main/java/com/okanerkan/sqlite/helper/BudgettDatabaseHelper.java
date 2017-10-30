@@ -47,7 +47,6 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
     private static final String KEY_ITEM_PRICE = "price";
 
     // Table Create Statements
-    // Todo table create statement
     private static final String CREATE_TABLE_SOURCE = "CREATE TABLE "
             + TABLE_SOURCE + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
             + KEY_SOURCE_CODE + " TEXT UNIQUE)";
@@ -60,7 +59,7 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
     // todo_tag table create statement
     private static final String CREATE_TABLE_BUDGETT_ITEM = "CREATE TABLE "
             + TABLE_BUDGETT_ITEM + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
-            + KEY_ITEM_ENTRY_TYPE + " BOOLEAN," + KEY_ITEM_ENTRY_DATE + " INTEGER,"
+            + KEY_ITEM_ENTRY_TYPE + " BOOLEAN," + KEY_ITEM_ENTRY_DATE + " LONG,"
             + KEY_ITEM_SOURCE_ID + " INTEGER," + KEY_ITEM_TYPE_ID + " INTEGER,"
             + KEY_ITEM_PRICE + " DOUBLE)";
 
@@ -97,7 +96,10 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
 
         long id = db.insert(TABLE_TYPE, null, values);
         if(id >= 0)
+        {
             BudgettTypeList.GetList().AddToList(type);
+            type.setID((int)id);
+        }
         return id;
     }
 
@@ -152,7 +154,10 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
 
         long id = db.insert(TABLE_SOURCE, null, values);
         if (id >= 0)
+        {
             BudgettSourceList.GetList().AddToList(source);
+            source.setID((int)id);
+        }
         return id;
     }
 
@@ -210,6 +215,10 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_ITEM_PRICE, item.getPrice());
 
         long id = db.insert(TABLE_BUDGETT_ITEM, null, values);
+        if (id >= 0)
+        {
+            item.setID((int)id);
+        }
         return id;
     }
 
@@ -239,7 +248,7 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
         {
             BudgettItem item = new BudgettItem(cursor.getInt(cursor.getColumnIndex(KEY_ID)),
                     BudgettEntryType.values()[cursor.getInt(cursor.getColumnIndex(KEY_ITEM_ENTRY_TYPE))],
-                    cursor.getInt(cursor.getColumnIndex(KEY_ITEM_ENTRY_DATE)),
+                    cursor.getLong(cursor.getColumnIndex(KEY_ITEM_ENTRY_DATE)),
                     cursor.getInt(cursor.getColumnIndex(KEY_ITEM_SOURCE_ID)),
                     cursor.getInt(cursor.getColumnIndex(KEY_ITEM_ENTRY_TYPE)),
                     cursor.getDouble(cursor.getColumnIndex(KEY_ITEM_PRICE)));

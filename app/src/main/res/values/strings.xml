@@ -13,6 +13,7 @@
     <string name="BtnDelete">Delete</string>
     <string name="BtnReset">Reset</string>
     <string name="BtnNew">New</string>
+    <string name="BtnSet">Set</string>
     <string name="Username">Username</string>
     <string name="Password">Password</string>
 
@@ -21,6 +22,7 @@
     <string name="BudgettSources">Budgett Sources</string>
     <string name="BudgettTypes">Budgett Types</string>
     <string name="Login">Login</string>
+    <string name="PickADate">Pick a Date</string>
 
     <string name="MenuItemBudgettType">Budgett Type</string>
     <string name="MenuItemBudgettSource">Budgett Source</string>

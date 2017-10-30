@@ -22,4 +22,6 @@
     <string name="BudgettType">Budgett Türü</string>
     <string name="BudgettTypes">Budgett Tür Listesi</string>
     <string name="Login">Giriş</string>
+    <string name="BtnSet">Ayarla</string>
+    <string name="PickADate">Tarih Seç</string>
 </resources>

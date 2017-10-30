@@ -18,6 +18,7 @@ public class BudgettType implements Serializable
     }
 
     public int getID() { return this.mID; }
+    public void setID(int _id) { this.mID = _id; }
     public String getTypeCode()
     {
         return this.mTypeCode;

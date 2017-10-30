@@ -7,21 +7,21 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context="com.okanerkan.budgettapp.BudgettTypeCardActivity">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/budgettType"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:inputType="text" />
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true" >
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnDelete"
@@ -39,6 +39,6 @@ tools:context="com.okanerkan.budgettapp.BudgettTypeCardActivity">
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
