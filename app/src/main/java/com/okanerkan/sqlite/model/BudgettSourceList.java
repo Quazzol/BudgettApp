@@ -1,5 +1,7 @@
 package com.okanerkan.sqlite.model;
 
+import com.okanerkan.globals.Globals;
+
 import java.util.ArrayList;
 
 /**
@@ -28,7 +30,12 @@ public class BudgettSourceList
 
     private void LoadListFromDB()
     {
-        // TODO get list from database
+        this.mList = Globals.DBHelper.getAllBudgettSource();
+    }
+
+    public void ReLoadListFromDB()
+    {
+        this.LoadListFromDB();
     }
 
     public ArrayList<String> GetBudgettSourceNames()
@@ -73,5 +80,27 @@ public class BudgettSourceList
                 return source;
         }
         return null;
+    }
+
+    public void AddToList(BudgettSource _source)
+    {
+        this.mList.add(_source);
+    }
+
+    public void RemoveFromList(BudgettSource _source)
+    {
+        this.mList.remove(_source);
+    }
+
+    public void RemoveFromList(int _id)
+    {
+        for (int i = 0; i < this.mList.size(); i++)
+            if (this.mList.get(i).getID() == _id)
+                this.mList.remove(i);
+    }
+
+    public void RemoveFromListWithIndex(int _index)
+    {
+        this.mList.remove(_index);
     }
 }

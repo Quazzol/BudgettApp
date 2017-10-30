@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.okanerkan.globals.Globals;
 import com.okanerkan.sqlite.model.BudgettSource;
 import com.okanerkan.sqlite.model.BudgettSourceList;
 
@@ -37,6 +38,8 @@ public class BudgettSourceCardActivity extends AppCompatActivity
         this.mBudgettSource = BudgettSourceList.GetList().GetBudgettSourceWithIndex(index);
         if (this.mBudgettSource == null)
             this.mDeleteButton.setText(R.string.BtnCancel);
+        else
+            this.mBudgettSourceCode.setText(this.mBudgettSource.getSourceCode());
     }
 
     private void AddEventHandlers()
@@ -58,11 +61,24 @@ public class BudgettSourceCardActivity extends AppCompatActivity
 
     public void OnSaveButtonClicked(View view)
     {
+        if (this.mBudgettSource == null)
+        {
+            this.mBudgettSource= new BudgettSource(-1, this.mBudgettSourceCode.getText().toString());
+            Globals.DBHelper.insertBudgettSource(this.mBudgettSource);
+        }
+        else
+        {
+            this.mBudgettSource.setSourceCode(this.mBudgettSourceCode.getText().toString());
+            Globals.DBHelper.updateBudgettSource(this.mBudgettSource);
+        }
+
+        this.finish();
     }
 
     public void OnDeleteButtonClicked(View view)
     {
-        if (this.mBudgettSource == null)
-            this.finish();
+        if (this.mBudgettSource != null)
+            Globals.DBHelper.deleteBudgettSource(this.mBudgettSource);
+        this.finish();
     }
 }

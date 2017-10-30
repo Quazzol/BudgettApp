@@ -27,6 +27,13 @@ public class BudgettSourceActivity extends AppCompatActivity
         this.AddHandlers();
     }
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        this.CreateListView();
+    }
+
     private void CreateListView()
     {
         try

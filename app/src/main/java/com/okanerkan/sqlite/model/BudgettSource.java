@@ -23,4 +23,5 @@ public class BudgettSource
     {
         return this.mSourceCode;
     }
+    public void setSourceCode(String _source) { this.mSourceCode = _source; }
 }

@@ -17,4 +17,9 @@
     <string name="BtnDelete">Sil</string>
     <string name="BtnReset">Sıfırla</string>
     <string name="BtnNew">Yeni</string>
+    <string name="BudgettSource">Budgett Kaynağı</string>
+    <string name="BudgettSources">Budgett Kaynak Listesi</string>
+    <string name="BudgettType">Budgett Türü</string>
+    <string name="BudgettTypes">Budgett Tür Listesi</string>
+    <string name="Login">Giriş</string>
 </resources>

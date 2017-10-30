@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.okanerkan.globals.Globals;
 import com.okanerkan.sqlite.model.BudgettType;
 import com.okanerkan.sqlite.model.BudgettTypeList;
 
@@ -37,6 +39,8 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
         this.mBudgettType = BudgettTypeList.GetList().GetBudgettTypeWithIndex(index);
         if (this.mBudgettType == null)
             this.mDeleteButton.setText(R.string.BtnCancel);
+        else
+            this.mBudgettTypeCode.setText(this.mBudgettType.getTypeCode());
     }
 
     private void AddEventHandlers()
@@ -58,12 +62,27 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
 
     public void OnSaveButtonClicked(View view)
     {
+        String typeCode = this.mBudgettTypeCode.getText().toString();
+
+        if (this.mBudgettType == null)
+        {
+            this.mBudgettType = new BudgettType(-1, typeCode);
+            Globals.DBHelper.insertBudgettType(this.mBudgettType);
+        }
+        else
+        {
+            this.mBudgettType.setTypeCode(typeCode);
+            Globals.DBHelper.updateBudgettType(this.mBudgettType);
+        }
+
+        this.finish();
     }
 
     public void OnDeleteButtonClicked(View view)
     {
-        if (this.mBudgettType == null)
-            this.finish();
+        if (this.mBudgettType != null)
+            Globals.DBHelper.deleteBudgettType(this.mBudgettType);
+        this.finish();
     }
 
 }

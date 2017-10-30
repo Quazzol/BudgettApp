@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menuItemBudgettType" android:title="@string/MenuItemBudgettType"></item>
-    <item android:id="@+id/menuItemBudgettSource" android:title="@string/MenuItemBudgettSource"></item>
+    <item android:id="@+id/menuItemBudgettType" android:title="@string/MenuItemBudgettType" />
+    <item android:id="@+id/menuItemBudgettSource" android:title="@string/MenuItemBudgettSource" />
 </menu>

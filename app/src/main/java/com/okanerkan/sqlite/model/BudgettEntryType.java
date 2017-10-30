@@ -10,9 +10,10 @@ public enum BudgettEntryType
     INCOME(1);
 
     private int value;
-
     private BudgettEntryType(int value)
     {
         this.value = value;
     }
+
+    public int getValue() { return this.value; }
 }
