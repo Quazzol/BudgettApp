@@ -78,5 +78,13 @@ public class BudgettItem
         return this.mPrice;
     }
     public void setPrice(double _price) { this.mPrice = _price; }
+
+    public boolean ValidateModel()
+    {
+        return this.mBudgettSource > 0 &&
+                this.mBudgettType > 0 &&
+                this.mEntryDate > 0 &&
+                this.mPrice > 0;
+    }
 }
 

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.okanerkan.globals.ValidationException;
 import com.okanerkan.sqlite.model.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettItem;
 import com.okanerkan.sqlite.model.BudgettSource;
@@ -87,18 +88,20 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
 
     // ------------------------ "budgett_type" table methods ----------------//
 
-    public long insertBudgettType(BudgettType type)
+    public long insertBudgettType(BudgettType type) throws Exception
     {
+        if (!type.ValidateModel())
+            throw new Exception("BudgettType not valid!");
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_TYPE_CODE, type.getTypeCode());
 
         long id = db.insert(TABLE_TYPE, null, values);
-        if(id >= 0)
-        {
+        if (id >= 0) {
             BudgettTypeList.GetList().AddToList(type);
-            type.setID((int)id);
+            type.setID((int) id);
         }
         return id;
     }
@@ -124,15 +127,18 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
         return types;
     }
 
-    public int updateBudgettType(BudgettType type)
+    public int updateBudgettType(BudgettType type) throws Exception
     {
+        if (!type.ValidateModel())
+            throw new ValidationException("BudgettType not valid!");
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_TYPE_CODE, type.getTypeCode());
 
         return db.update(TABLE_TYPE, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(type.getID()) });
+                new String[]{String.valueOf(type.getID())});
     }
 
     public void deleteBudgettType(BudgettType type)
@@ -145,18 +151,20 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
 
     // ------------------------ "budgett_source" table methods ----------------//
 
-    public long insertBudgettSource(BudgettSource source)
+    public long insertBudgettSource(BudgettSource source) throws Exception
     {
+        if (!source.ValidateModel())
+            throw new ValidationException("BudgettSource not valid!");
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_SOURCE_CODE, source.getSourceCode());
 
         long id = db.insert(TABLE_SOURCE, null, values);
-        if (id >= 0)
-        {
+        if (id >= 0) {
             BudgettSourceList.GetList().AddToList(source);
-            source.setID((int)id);
+            source.setID((int) id);
         }
         return id;
     }
@@ -182,15 +190,18 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
         return sources;
     }
 
-    public int updateBudgettSource(BudgettSource source)
+    public int updateBudgettSource(BudgettSource source) throws Exception
     {
+        if (!source.ValidateModel())
+            throw new Exception("BudgettSource not valid!");
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_SOURCE_CODE, source.getSourceCode());
 
         return db.update(TABLE_SOURCE, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(source.getID()) });
+                new String[]{String.valueOf(source.getID())});
     }
 
     public void deleteBudgettSource(BudgettSource source)
@@ -203,8 +214,11 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
 
     // ------------------------ "budgett_item" table methods ----------------//
 
-    public long insertBudgettItem(BudgettItem item)
+    public long insertBudgettItem(BudgettItem item) throws Exception
     {
+        if (!item.ValidateModel())
+            throw new Exception("BudgettItem not valid!");
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -217,7 +231,7 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
         long id = db.insert(TABLE_BUDGETT_ITEM, null, values);
         if (id >= 0)
         {
-            item.setID((int)id);
+            item.setID((int) id);
         }
         return id;
     }
@@ -260,7 +274,7 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
     }
 
     public int getBudgettItemCount(String filter)
-        {
+    {
         String countQuery = "SELECT  * FROM " + TABLE_BUDGETT_ITEM;
         if (filter != null)
             countQuery += filter;
@@ -272,8 +286,11 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
         return count;
     }
 
-    public int updateBudgettItem(BudgettItem item)
+    public int updateBudgettItem(BudgettItem item) throws Exception
     {
+        if (!item.ValidateModel())
+            throw new Exception("BudgettItem not valid!");
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -284,7 +301,7 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_ITEM_PRICE, item.getPrice());
 
         return db.update(TABLE_BUDGETT_ITEM, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(item.getID()) });
+                new String[]{String.valueOf(item.getID())});
     }
 
     public void deleteBudgettItem(long id)

@@ -3,6 +3,7 @@ package com.okanerkan.budgettapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,20 +63,28 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
 
     public void OnSaveButtonClicked(View view)
     {
-        String typeCode = this.mBudgettTypeCode.getText().toString();
-
-        if (this.mBudgettType == null)
+        try
         {
-            this.mBudgettType = new BudgettType(-1, typeCode);
-            Globals.DBHelper.insertBudgettType(this.mBudgettType);
-        }
-        else
-        {
-            this.mBudgettType.setTypeCode(typeCode);
-            Globals.DBHelper.updateBudgettType(this.mBudgettType);
-        }
+            String typeCode = this.mBudgettTypeCode.getText().toString();
 
-        this.finish();
+            if (this.mBudgettType == null)
+            {
+                this.mBudgettType = new BudgettType(-1, typeCode);
+                Globals.DBHelper.insertBudgettType(this.mBudgettType);
+            }
+            else
+            {
+                this.mBudgettType.setTypeCode(typeCode);
+                Globals.DBHelper.updateBudgettType(this.mBudgettType);
+            }
+
+            this.finish();
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
+            Log.e("Error", ex.getMessage());
+        }
     }
 
     public void OnDeleteButtonClicked(View view)

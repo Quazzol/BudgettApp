@@ -19,9 +19,16 @@ public class BudgettType implements Serializable
 
     public int getID() { return this.mID; }
     public void setID(int _id) { this.mID = _id; }
+
     public String getTypeCode()
     {
         return this.mTypeCode;
     }
     public void setTypeCode(String _type) { this.mTypeCode = _type; }
+
+    public boolean ValidateModel()
+    {
+        int length = this.mTypeCode.length();
+        return length > 3 && length < 50;
+    }
 }

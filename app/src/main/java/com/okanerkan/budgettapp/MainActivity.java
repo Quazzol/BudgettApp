@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.okanerkan.globals.Globals;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
@@ -85,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
         this.mSourceSpinner = (Spinner) findViewById(R.id.spnBudgettSource);
         this.mTypeSpinner = (Spinner) findViewById(R.id.spnExpenseType);
         this.mPriceEdit = (EditText) findViewById(R.id.txtPrice);
+
+        this.mPriceEdit.setText("0");
+
         this.CreateBudgettItem();
 
         this.LoadSpinners();
@@ -96,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.mBudgettItem = new BudgettItem();
         this.mBudgettItem.setEntryType(this.GetEntryType());
-        this.SetDateValue(currentTime.get(Calendar.YEAR), currentTime.get(Calendar.MONTH), currentTime.get(Calendar.DAY_OF_MONTH));
+        this.SetDateValue(currentTime.get(Calendar.YEAR), currentTime.get(Calendar.MONTH) + 1, currentTime.get(Calendar.DAY_OF_MONTH));
     }
 
     private void LoadSpinners()
@@ -146,7 +151,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void OnSaveButtonClicked()
     {
+        try
+        {
+            this.mBudgettItem.setEntryType(this.GetEntryType());
+            this.mBudgettItem.setBudgettType(this.GetBudgettTypeID());
+            this.mBudgettItem.setBudgettSource(this.GetBudgettSourceID());
+            this.mBudgettItem.setPrice(this.GetPrice());
 
+            Globals.DBHelper.insertBudgettItem(this.mBudgettItem);
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
+            Log.e("Error", ex.getMessage());
+        }
     }
 
     private void OnDateEditClicked()
@@ -160,9 +178,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
             {
-                SetDateValue(year, monthOfYear, dayOfMonth);
+                SetDateValue(year, monthOfYear + 1, dayOfMonth);
             }
-        },cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
+        },cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         datePicker.setTitle(R.string.PickADate);
         datePicker.setButton(DatePickerDialog.BUTTON_POSITIVE, this.getResources().getString(R.string.BtnSet), datePicker);
         datePicker.setButton(DatePickerDialog.BUTTON_NEGATIVE, this.getResources().getString(R.string.BtnCancel), datePicker);
@@ -182,5 +200,20 @@ public class MainActivity extends AppCompatActivity {
         View radioButton = this.mEntryTypeRadio.findViewById(radioButtonID);
         int id = this.mEntryTypeRadio.indexOfChild(radioButton);
         return BudgettEntryType.values()[id];
+    }
+
+    private int GetBudgettTypeID()
+    {
+        return BudgettTypeList.GetList().GetBudgettListID(this.mTypeSpinner.getSelectedItemPosition());
+    }
+
+    private int GetBudgettSourceID()
+    {
+        return BudgettSourceList.GetList().GetBudgettSourceID(this.mSourceSpinner.getSelectedItemPosition());
+    }
+
+    private double GetPrice()
+    {
+        return Double.parseDouble(this.mPriceEdit.getText().toString());
     }
 }

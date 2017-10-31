@@ -17,9 +17,13 @@ public class BudgettSource
 
     public int getID() { return this.mID; }
     public void setID(int _id) { this.mID = _id; }
-    public String getSourceCode()
-    {
-        return this.mSourceCode;
-    }
+
+    public String getSourceCode() { return this.mSourceCode; }
     public void setSourceCode(String _source) { this.mSourceCode = _source; }
+
+    public boolean ValidateModel()
+    {
+        int length = this.mSourceCode.length();
+        return length > 3 && length < 50;
+    }
 }

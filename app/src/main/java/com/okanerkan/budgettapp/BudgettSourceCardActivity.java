@@ -3,9 +3,11 @@ package com.okanerkan.budgettapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.okanerkan.globals.Globals;
 import com.okanerkan.sqlite.model.BudgettSource;
@@ -61,18 +63,26 @@ public class BudgettSourceCardActivity extends AppCompatActivity
 
     public void OnSaveButtonClicked(View view)
     {
-        if (this.mBudgettSource == null)
+        try
         {
-            this.mBudgettSource= new BudgettSource(-1, this.mBudgettSourceCode.getText().toString());
-            Globals.DBHelper.insertBudgettSource(this.mBudgettSource);
-        }
-        else
-        {
-            this.mBudgettSource.setSourceCode(this.mBudgettSourceCode.getText().toString());
-            Globals.DBHelper.updateBudgettSource(this.mBudgettSource);
-        }
+            if (this.mBudgettSource == null)
+            {
+                this.mBudgettSource = new BudgettSource(-1, this.mBudgettSourceCode.getText().toString());
+                Globals.DBHelper.insertBudgettSource(this.mBudgettSource);
+            }
+            else
+            {
+                this.mBudgettSource.setSourceCode(this.mBudgettSourceCode.getText().toString());
+                Globals.DBHelper.updateBudgettSource(this.mBudgettSource);
+            }
 
-        this.finish();
+            this.finish();
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
+            Log.e("Error", ex.getMessage());
+        }
     }
 
     public void OnDeleteButtonClicked(View view)
