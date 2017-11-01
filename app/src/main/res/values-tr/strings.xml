@@ -17,11 +17,11 @@
     <string name="BtnDelete">Sil</string>
     <string name="BtnReset">Sıfırla</string>
     <string name="BtnNew">Yeni</string>
-    <string name="BudgettSource">Budgett Kaynağı</string>
-    <string name="BudgettSources">Budgett Kaynak Listesi</string>
-    <string name="BudgettType">Budgett Türü</string>
-    <string name="BudgettTypes">Budgett Tür Listesi</string>
-    <string name="Login">Giriş</string>
     <string name="BtnSet">Ayarla</string>
     <string name="PickADate">Tarih Seç</string>
+    <string name="LabelBudgettSource">BUDGETT Kaynağı</string>
+    <string name="LabelBudgettType">BUDGETT Türü</string>
+    <string name="LabelBudgettSources">BUDGETT Kaynak Listesi</string>
+    <string name="LabelBudgettTypes">BUDGETT Tür Listesi</string>
+    <string name="LabelLogin">BUDGETT Giriş</string>
 </resources>

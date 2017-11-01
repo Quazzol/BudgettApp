@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">BudgettApp</string>
+    <string name="app_name" translatable="false">BUDGETT APP</string>
     <string name="RadioGroupBudgettType">Entry Type</string>
     <string name="RadioOptionExpense">Expense</string>
     <string name="RadioOptionIncome">Income</string>
@@ -17,11 +17,11 @@
     <string name="Username">Username</string>
     <string name="Password">Password</string>
 
-    <string name="BudgettSource">Budgett Source</string>
-    <string name="BudgettType">Budgett Type</string>
-    <string name="BudgettSources">Budgett Sources</string>
-    <string name="BudgettTypes">Budgett Types</string>
-    <string name="Login">Login</string>
+    <string name="LabelBudgettSource">BUDGETT Source</string>
+    <string name="LabelBudgettType">BUDGETT Type</string>
+    <string name="LabelBudgettSources">BUDGETT Source Lİst</string>
+    <string name="LabelBudgettTypes">BUDGETT Type List</string>
+    <string name="LabelLogin">BUDGETT Login</string>
     <string name="PickADate">Pick a Date</string>
 
     <string name="MenuItemBudgettType">Budgett Type</string>

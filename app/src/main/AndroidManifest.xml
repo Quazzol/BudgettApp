@@ -10,17 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity" android:label="@string/Login">
+        <activity android:name=".LoginActivity" android:label="@string/LabelLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BudgettTypeActivity" android:label="@string/BudgettTypes"/>
-        <activity android:name=".BudgettSourceActivity" android:label="@string/BudgettSources"/>
-        <activity android:name=".BudgettTypeCardActivity" android:label="@string/BudgettType"/>
-        <activity android:name=".BudgettSourceCardActivity" android:label="@string/BudgettSource" />
+        <activity android:name=".BudgettTypeActivity" android:label="@string/LabelBudgettTypes"/>
+        <activity android:name=".BudgettSourceActivity" android:label="@string/LabelBudgettSources"/>
+        <activity android:name=".BudgettTypeCardActivity" android:label="@string/LabelBudgettType"/>
+        <activity android:name=".BudgettSourceCardActivity" android:label="@string/LabelBudgettSource" />
     </application>
 
 </manifest>
