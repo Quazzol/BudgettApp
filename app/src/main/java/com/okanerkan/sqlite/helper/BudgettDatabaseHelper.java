@@ -226,7 +226,7 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_ITEM_SOURCE_ID, item.getBudgettSource());
         values.put(KEY_ITEM_TYPE_ID, item.getBudgettType());
         values.put(KEY_ITEM_ENTRY_DATE, item.getEntryDate());
-        values.put(KEY_ITEM_PRICE, item.getPrice());
+        values.put(KEY_ITEM_PRICE, item.getAmount());
 
         long id = db.insert(TABLE_BUDGETT_ITEM, null, values);
         if (id >= 0)
@@ -298,7 +298,7 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_ITEM_ENTRY_DATE, item.getEntryDate());
         values.put(KEY_ITEM_SOURCE_ID, item.getBudgettSource());
         values.put(KEY_ITEM_TYPE_ID, item.getBudgettType());
-        values.put(KEY_ITEM_PRICE, item.getPrice());
+        values.put(KEY_ITEM_PRICE, item.getAmount());
 
         return db.update(TABLE_BUDGETT_ITEM, values, KEY_ID + " = ?",
                 new String[]{String.valueOf(item.getID())});

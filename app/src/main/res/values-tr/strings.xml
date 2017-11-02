@@ -24,4 +24,6 @@
     <string name="LabelBudgettSources">BUDGETT Kaynak Listesi</string>
     <string name="LabelBudgettTypes">BUDGETT Tür Listesi</string>
     <string name="LabelLogin">BUDGETT Giriş</string>
+    <string name="Income">Gelir</string>
+    <string name="Expense">Gider</string>
 </resources>

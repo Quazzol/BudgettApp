@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.okanerkan.budgettapp.LoginActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -55,18 +55,22 @@
             android:paddingEnd="16dp"
             android:hint="@string/Password"
             android:textColor="#000"
-            android:textColorHint="#999" />
+            android:textColorHint="#999"
+            android:layout_below="@id/txtUsername"/>
 
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="64dp"
             android:layout_marginTop="16dp"
             android:onClick="OnBtnLoginClick"
             android:text="@string/BtnLogin"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:background="@drawable/positive_button_selector"
+            android:layout_below="@id/txtPassword"
+            android:layout_alignParentRight="true"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

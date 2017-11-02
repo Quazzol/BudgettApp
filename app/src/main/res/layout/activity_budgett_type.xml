@@ -29,7 +29,8 @@
             android:id="@+id/btnNew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/BtnNew"/>
+            android:text="@string/BtnNew"
+            style="@style/PositiveButton"/>
 
         <ListView
             android:id="@+id/listViewBudgettType"

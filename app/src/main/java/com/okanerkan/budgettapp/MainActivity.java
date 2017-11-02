@@ -1,7 +1,6 @@
 package com.okanerkan.budgettapp;
 
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
@@ -26,10 +25,6 @@ import com.okanerkan.sqlite.model.BudgettItem;
 import com.okanerkan.sqlite.model.BudgettSourceList;
 import com.okanerkan.sqlite.model.BudgettTypeList;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mEntryDateEdit;
     private Spinner mSourceSpinner;
     private Spinner mTypeSpinner;
-    private EditText mPriceEdit;
+    private EditText mAmountEdit;
     private BudgettItem mBudgettItem;
 
     @Override
@@ -86,9 +81,7 @@ public class MainActivity extends AppCompatActivity {
         this.mEntryDateEdit = (EditText) findViewById(R.id.txtEntryDate);
         this.mSourceSpinner = (Spinner) findViewById(R.id.spnBudgettSource);
         this.mTypeSpinner = (Spinner) findViewById(R.id.spnExpenseType);
-        this.mPriceEdit = (EditText) findViewById(R.id.txtPrice);
-
-        this.mPriceEdit.setText("0");
+        this.mAmountEdit = (EditText) findViewById(R.id.txtAmount);
 
         this.CreateBudgettItem();
 
@@ -156,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             this.mBudgettItem.setEntryType(this.GetEntryType());
             this.mBudgettItem.setBudgettType(this.GetBudgettTypeID());
             this.mBudgettItem.setBudgettSource(this.GetBudgettSourceID());
-            this.mBudgettItem.setPrice(this.GetPrice());
+            this.mBudgettItem.setAmount(this.GetAmount());
 
             Globals.DBHelper.insertBudgettItem(this.mBudgettItem);
         }
@@ -212,8 +205,8 @@ public class MainActivity extends AppCompatActivity {
         return BudgettSourceList.GetList().GetBudgettSourceID(this.mSourceSpinner.getSelectedItemPosition());
     }
 
-    private double GetPrice()
+    private double GetAmount()
     {
-        return Double.parseDouble(this.mPriceEdit.getText().toString());
+        return Double.parseDouble(this.mAmountEdit.getText().toString());
     }
 }

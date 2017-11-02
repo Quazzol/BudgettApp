@@ -17,7 +17,7 @@ public class BudgettItem
     private long mEntryDate;
     private int mBudgettSource;
     private int mBudgettType;
-    private double mPrice;
+    private double mAmount;
 
     public BudgettItem() { }
     public BudgettItem(int _id,
@@ -25,14 +25,14 @@ public class BudgettItem
                        long _date,
                        int _budgettSource,
                        int _budgettType,
-                       double _price)
+                       double _amount)
     {
         this.mID = _id;
         this.mEntryType = _type;
         this.mEntryDate = _date;
         this.mBudgettSource = _budgettSource;
         this.mBudgettType = _budgettType;
-        this.mPrice = _price;
+        this.mAmount = _amount;
     }
 
     public int getID() { return this.mID; }
@@ -73,18 +73,18 @@ public class BudgettItem
     }
     public void setBudgettType(int _typeID) { this.mBudgettType = _typeID; }
 
-    public double getPrice()
+    public double getAmount()
     {
-        return this.mPrice;
+        return this.mAmount;
     }
-    public void setPrice(double _price) { this.mPrice = _price; }
+    public void setAmount(double _amount) { this.mAmount = _amount; }
 
     public boolean ValidateModel()
     {
         return this.mBudgettSource > 0 &&
                 this.mBudgettType > 0 &&
                 this.mEntryDate > 0 &&
-                this.mPrice > 0;
+                this.mAmount > 0;
     }
 }
 

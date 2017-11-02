@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context="com.okanerkan.budgettapp.MainActivity">
 
-    <RelativeLayout
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="0dp"
         android:layout_height="0dp"
         tools:layout_constraintTop_creator="1"
@@ -25,267 +26,232 @@
         android:layout_marginRight="8dp">
 
         <RelativeLayout
-            android:id="@+id/LayoutTopBlock"
             android:layout_width="match_parent"
-            android:layout_height="150dp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:contentDescription="@string/app_name"
-                android:scaleType="centerCrop"
-                android:src="@drawable/top_block_bg" />
+            android:layout_height="wrap_content" >
 
             <RelativeLayout
-                android:id="@+id/LayoutTopBlockInner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="20dp">
+                android:id="@+id/LayoutTopBlock"
+                android:layout_width="match_parent"
+                android:layout_height="125dp"
+                android:background="@android:drawable/dialog_holo_light_frame" >
 
-                <LinearLayout
-                    android:id="@+id/LayoutTopBlockLine1"
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="125dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/top_block_bg" />
+
+                <RelativeLayout
+                    android:id="@+id/LayoutTopBlockInner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="5dp">
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp">
 
-                   <ImageView
-                        android:id="@+id/imgIncome"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/up_arrow"
-                        android:contentDescription="@string/app_name"/>
-
-                    <TextView
-                        android:id="@+id/lblIncome"
-                        android:layout_width="70dp"
+                    <LinearLayout
+                        android:id="@+id/LayoutTopBlockLine1"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Income"
-                        android:textColor="#000"
-                        android:textSize="16sp"
-                        android:background="#AAA" />
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="5dp">
 
-                    <TextView
-                        android:id="@+id/lblIncomeValue"
-                        android:layout_width="90dp"
+                       <ImageView
+                            android:id="@+id/imgIncome"
+                            android:src="@drawable/up_arrow"
+                            android:contentDescription="@string/app_name"
+                            style="@style/SmallImage" />
+
+                        <TextView
+                            android:id="@+id/lblIncome"
+                            android:text="@string/Income"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            style="@style/HeaderLayoutItem" />
+
+                        <TextView
+                            android:id="@+id/lblIncomeValue"
+                            android:text="100.00 €"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
+                            android:layout_marginLeft="20dp"
+                            style="@style/HeaderLayoutItem" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/LayoutTopBlockLine2"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAlignment="viewEnd"
-                        android:layout_marginLeft="20dp"
-                        android:text="100.00 €"
-                        android:textColor="#000"
-                        android:textSize="16sp"
-                        android:background="#AAA" />
+                        android:orientation="horizontal"
+                        android:layout_below="@id/LayoutTopBlockLine1">
 
-                </LinearLayout>
+                        <ImageView
+                            android:id="@+id/imgExpense"
+                            android:src="@drawable/down_arrow"
+                            android:contentDescription="@string/app_name"
+                            style="@style/SmallImage" />
 
-                <LinearLayout
-                    android:id="@+id/LayoutTopBlockLine2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_below="@id/LayoutTopBlockLine1">
+                        <TextView
+                            android:id="@+id/lblExpense"
+                            android:text="@string/Expense"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            style="@style/HeaderLayoutItem" />
 
-                    <ImageView
-                        android:id="@+id/imgExpense"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/down_arrow"
-                        android:contentDescription="@string/app_name" />
+                        <TextView
+                            android:id="@+id/lblExpenseValue"
+                            android:text="60.00 €"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:textAlignment="viewEnd"
+                            style="@style/HeaderLayoutItem" />
 
-                    <TextView
-                        android:id="@+id/lblExpense"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:text="Expense"
-                        android:textColor="#000"
-                        android:textSize="16sp"
-                        android:background="#AAA" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/lblExpenseValue"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:textAlignment="viewEnd"
-                        android:text="60.00 €"
-                        android:textColor="#000"
-                        android:textSize="16sp"
-                        android:background="#AAA" />
-
-                </LinearLayout>
+                </RelativeLayout>
 
             </RelativeLayout>
 
+            <LinearLayout
+                android:id="@+id/LayoutMiddleBlock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/LayoutTopBlock"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp"
+                android:background="@android:drawable/dialog_holo_light_frame" >
+
+                <LinearLayout
+                    android:id="@+id/LayoutLeftSizeControls"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1" >
+
+                    <TextView
+                        android:id="@+id/lblEntryType"
+                        android:text="@string/RadioGroupBudgettType"
+                        style="@style/LayoutItem" />
+
+                    <TextView
+                        android:id="@+id/lblBudgettDate"
+                        android:text="@string/DateEditBudgettDate"
+                        style="@style/LayoutItem" />
+
+                    <TextView
+                        android:id="@+id/lblBudgettSource"
+                        android:text="@string/SpinnerEditBudgettSource"
+                        style="@style/LayoutItem" />
+
+                    <TextView
+                        android:id="@+id/lblBudgettType"
+                        android:text="@string/SpinnerEditBudgettType"
+                        style="@style/LayoutItem" />
+
+                    <TextView
+                        android:id="@+id/lblAmount"
+                        android:text="@string/NumboxEditBudgettAmount"
+                        style="@style/LayoutItem" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black" />
+
+                <LinearLayout
+                    android:id="@+id/LayoutRightSizeControls"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="2">
+
+                    <RadioGroup
+                        android:id="@+id/rdgEntryType"
+                        android:orientation="horizontal"
+                        style="@style/LayoutControl" >
+
+                        <RadioButton
+                            android:id="@+id/rbtnExpense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/RadioOptionExpense"
+                            android:checked="true"
+                            android:textSize="10dp"/>
+
+                        <RadioButton
+                            android:id="@+id/rbtnIncome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/RadioOptionIncome"
+                            android:textSize="10dp" />
+
+                    </RadioGroup>
+
+                    <EditText
+                        android:id="@+id/txtEntryDate"
+                        android:focusable="false"
+                        android:clickable="true"
+                        style="@style/LayoutControl" />
+
+                    <Spinner
+                        android:id="@+id/spnBudgettSource"
+                        style="@style/LayoutControl" />
+
+                    <Spinner
+                        android:id="@+id/spnExpenseType"
+                        style="@style/LayoutControl" />
+
+                    <EditText
+                        android:id="@+id/txtAmount"
+                        android:inputType="numberDecimal"
+                        android:gravity="end"
+                        android:textAlignment="textEnd"
+                        android:hint="0.00"
+                        style="@style/LayoutControl" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LayoutBottomBlock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/LayoutMiddleBlock">
+
+                <Button
+                    android:id="@+id/btnReset"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/BtnReset"
+                    android:layout_weight="2"
+                    style="@style/NegativeButton"/>
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/BtnSave"
+                    android:layout_weight="1"
+                    style="@style/PositiveButton"/>
+
+            </LinearLayout>
+
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/LayoutMiddleBlock"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/LayoutTopBlock"
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp"
-            android:paddingTop="40dp">
-
-            <LinearLayout
-                android:id="@+id/LayoutLeftSizeControls"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/lblEntryType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:gravity="center"
-                    android:text="@string/RadioGroupBudgettType"
-                    android:textColor="#000"
-                    android:layout_marginBottom="15dp"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:id="@+id/lblBudgettDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:gravity="center"
-                    android:text="@string/DateEditBudgettDate"
-                    android:textColor="#000"
-                    android:layout_marginBottom="15dp"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:id="@+id/lblBudgettSource"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:gravity="center"
-                    android:text="@string/SpinnerEditBudgettSource"
-                    android:textColor="#000"
-                    android:layout_marginBottom="15dp"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:id="@+id/lblBudgettType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:gravity="center"
-                    android:text="@string/SpinnerEditBudgettType"
-                    android:textColor="#000"
-                    android:layout_marginBottom="15dp"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:id="@+id/lblPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:gravity="center"
-                    android:text="@string/SpinnerEditBudgettSource"
-                    android:textColor="#000"
-                    android:layout_marginBottom="15dp"
-                    android:textSize="18sp"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@android:color/black" />
-
-            <LinearLayout
-                android:id="@+id/LayoutRightSizeControls"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
-
-                <RadioGroup
-                    android:id="@+id/rdgEntryType"
-                    android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="15dp" >
-
-                    <RadioButton
-                        android:id="@+id/rbtnExpense"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/RadioOptionExpense"
-                        android:checked="true"
-                        android:textSize="10dp"/>
-
-                    <RadioButton
-                        android:id="@+id/rbtnIncome"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/RadioOptionIncome"
-                        android:textSize="10dp" />
-
-                </RadioGroup>
-
-                <EditText
-                    android:id="@+id/txtEntryDate"
-                    android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:focusable="false"
-                    android:clickable="true"
-                    android:layout_marginBottom="15dp"/>
-
-                <Spinner
-                    android:id="@+id/spnBudgettSource"
-                    android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginBottom="15dp"/>
-
-                <Spinner
-                    android:id="@+id/spnExpenseType"
-                    android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginBottom="15dp"/>
-
-                <EditText
-                    android:id="@+id/txtPrice"
-                    android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:inputType="numberDecimal"
-                    android:gravity="end"
-                    android:textAlignment="textEnd"
-                    android:layout_marginBottom="15dp"
-                    android:textSize="12sp"
-                    android:hint="0.00"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/LayoutBottomBlock"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true">
-
-            <Button
-                android:id="@+id/btnReset"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/BtnReset"
-                android:layout_weight="4"/>
-
-            <Button
-                android:id="@+id/btnSave"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/BtnSave"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-
-    </RelativeLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
