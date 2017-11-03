@@ -14,12 +14,37 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="30dp"
+        android:padding="16dp"
         android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/rdgEntryType"
+            android:orientation="horizontal"
+            style="@style/LayoutControl" >
+
+            <RadioButton
+                android:id="@+id/rbtnExpense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/RadioOptionExpense"
+                android:checked="true"
+                android:textSize="20sp"/>
+
+            <RadioButton
+                android:id="@+id/rbtnIncome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/RadioOptionIncome"
+                android:textSize="20sp" />
+
+        </RadioGroup>
 
         <EditText
             android:id="@+id/budgettSource"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/LayoutControl"
             android:inputType="text" />
 
         <LinearLayout

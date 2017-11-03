@@ -9,16 +9,21 @@ import java.io.Serializable;
 public class BudgettType implements Serializable
 {
     private int mID;
+    private BudgettEntryType mEntryType;
     private String mTypeCode;
 
-    public BudgettType(int _id, String _typeValue)
+    public BudgettType(int _id, BudgettEntryType _entryType, String _typeValue)
     {
         this.mID = _id;
+        this.mEntryType = _entryType;
         this.mTypeCode = _typeValue;
     }
 
     public int getID() { return this.mID; }
     public void setID(int _id) { this.mID = _id; }
+
+    public BudgettEntryType getEntryType() { return this.mEntryType; }
+    public void setEntryType(BudgettEntryType _entryType) { this.mEntryType = _entryType; }
 
     public String getTypeCode()
     {

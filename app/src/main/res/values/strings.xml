@@ -24,10 +24,25 @@
 
     <string name="MenuItemBudgettType">Budgett Type</string>
     <string name="MenuItemBudgettSource">Budgett Source</string>
+    <string name="MenuItemSettings">Settings</string>
 
     <string name="Username">Username</string>
     <string name="Password">Password</string>
 
     <string name="Income">Income</string>
     <string name="Expense">Expense</string>
+
+    <string-array name="SideMenuItemList">
+        <item>Facebook</item>
+        <item>Twitter</item>
+        <item>Google Plus</item>
+        <item>Instagram</item>
+    </string-array>
+
+    <array name="SideMenuIconList">
+        <item name="facebook">@drawable/facebook</item>
+        <item name="twitter">@drawable/twitter</item>
+        <item name="google">@drawable/google_plus</item>
+        <item name="instagram">@drawable/instagram</item>
+    </array>
 </resources>

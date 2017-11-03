@@ -17,6 +17,7 @@ public class BudgettItem
     private long mEntryDate;
     private int mBudgettSource;
     private int mBudgettType;
+    private String mBudgettNote;
     private double mAmount;
 
     public BudgettItem() { }
@@ -25,6 +26,7 @@ public class BudgettItem
                        long _date,
                        int _budgettSource,
                        int _budgettType,
+                       String _budgettNote,
                        double _amount)
     {
         this.mID = _id;
@@ -32,6 +34,7 @@ public class BudgettItem
         this.mEntryDate = _date;
         this.mBudgettSource = _budgettSource;
         this.mBudgettType = _budgettType;
+        this.mBudgettNote = _budgettNote;
         this.mAmount = _amount;
     }
 
@@ -72,6 +75,9 @@ public class BudgettItem
         return this.mBudgettType;
     }
     public void setBudgettType(int _typeID) { this.mBudgettType = _typeID; }
+
+    public String getBudgettNote() { return this.mBudgettNote; }
+    public void setBudgettNote(String _note) { this.mBudgettNote = _note; }
 
     public double getAmount()
     {

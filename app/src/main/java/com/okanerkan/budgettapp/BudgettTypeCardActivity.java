@@ -7,9 +7,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.okanerkan.globals.Globals;
+import com.okanerkan.sqlite.model.BudgettEntryType;
+import com.okanerkan.sqlite.model.BudgettSource;
 import com.okanerkan.sqlite.model.BudgettType;
 import com.okanerkan.sqlite.model.BudgettTypeList;
 
@@ -17,6 +21,7 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
 
     Button mSaveButton;
     Button mDeleteButton;
+    RadioGroup mEntryTypeRadio;
     EditText mBudgettTypeCode;
     BudgettType mBudgettType;
 
@@ -31,6 +36,7 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
 
     private void SetProperties()
     {
+        this.mEntryTypeRadio = (RadioGroup) findViewById(R.id.rdgEntryType);
         this.mSaveButton = (Button) findViewById(R.id.btnSave);
         this.mDeleteButton = (Button) findViewById(R.id.btnDelete);
         this.mBudgettTypeCode = (EditText) findViewById(R.id.budgettType);
@@ -41,7 +47,11 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
         if (this.mBudgettType == null)
             this.mDeleteButton.setText(R.string.BtnCancel);
         else
+        {
+            RadioButton radioButton = this.mEntryTypeRadio.findViewById(this.mBudgettType.getEntryType().getValue());
+            radioButton.setChecked(true);
             this.mBudgettTypeCode.setText(this.mBudgettType.getTypeCode());
+        }
     }
 
     private void AddEventHandlers()
@@ -61,6 +71,14 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
         });
     }
 
+    private BudgettEntryType GetEntryType()
+    {
+        int radioButtonID = this.mEntryTypeRadio.getCheckedRadioButtonId();
+        View radioButton = this.mEntryTypeRadio.findViewById(radioButtonID);
+        int id = this.mEntryTypeRadio.indexOfChild(radioButton);
+        return BudgettEntryType.values()[id];
+    }
+
     public void OnSaveButtonClicked(View view)
     {
         try
@@ -69,11 +87,12 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
 
             if (this.mBudgettType == null)
             {
-                this.mBudgettType = new BudgettType(-1, typeCode);
+                this.mBudgettType = new BudgettType(-1, this.GetEntryType(), typeCode);
                 Globals.DBHelper.insertBudgettType(this.mBudgettType);
             }
             else
             {
+                this.mBudgettType.setEntryType(this.GetEntryType());
                 this.mBudgettType.setTypeCode(typeCode);
                 Globals.DBHelper.updateBudgettType(this.mBudgettType);
             }

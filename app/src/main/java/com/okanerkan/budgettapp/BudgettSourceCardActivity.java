@@ -7,9 +7,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.okanerkan.globals.Globals;
+import com.okanerkan.sqlite.model.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettSource;
 import com.okanerkan.sqlite.model.BudgettSourceList;
 
@@ -17,6 +20,7 @@ public class BudgettSourceCardActivity extends AppCompatActivity
 {
     Button mSaveButton;
     Button mDeleteButton;
+    RadioGroup mEntryTypeRadio;
     EditText mBudgettSourceCode;
     BudgettSource mBudgettSource;
 
@@ -31,6 +35,7 @@ public class BudgettSourceCardActivity extends AppCompatActivity
 
     private void SetProperties()
     {
+        this.mEntryTypeRadio = (RadioGroup) findViewById(R.id.rdgEntryType);
         this.mSaveButton = (Button) findViewById(R.id.btnSave);
         this.mDeleteButton = (Button) findViewById(R.id.btnDelete);
         this.mBudgettSourceCode = (EditText) findViewById(R.id.budgettSource);
@@ -41,7 +46,11 @@ public class BudgettSourceCardActivity extends AppCompatActivity
         if (this.mBudgettSource == null)
             this.mDeleteButton.setText(R.string.BtnCancel);
         else
+        {
+            RadioButton radioButton = this.mEntryTypeRadio.findViewById(this.mBudgettSource.getEntryType().getValue());
+            radioButton.setChecked(true);
             this.mBudgettSourceCode.setText(this.mBudgettSource.getSourceCode());
+        }
     }
 
     private void AddEventHandlers()
@@ -61,18 +70,29 @@ public class BudgettSourceCardActivity extends AppCompatActivity
         });
     }
 
+    private BudgettEntryType GetEntryType()
+    {
+        int radioButtonID = this.mEntryTypeRadio.getCheckedRadioButtonId();
+        View radioButton = this.mEntryTypeRadio.findViewById(radioButtonID);
+        int id = this.mEntryTypeRadio.indexOfChild(radioButton);
+        return BudgettEntryType.values()[id];
+    }
+
     public void OnSaveButtonClicked(View view)
     {
         try
         {
+            String sourceCode = this.mBudgettSourceCode.getText().toString();
+
             if (this.mBudgettSource == null)
             {
-                this.mBudgettSource = new BudgettSource(-1, this.mBudgettSourceCode.getText().toString());
+                this.mBudgettSource = new BudgettSource(-1, this.GetEntryType(), sourceCode);
                 Globals.DBHelper.insertBudgettSource(this.mBudgettSource);
             }
             else
             {
-                this.mBudgettSource.setSourceCode(this.mBudgettSourceCode.getText().toString());
+                this.mBudgettSource.setEntryType(this.GetEntryType());
+                this.mBudgettSource.setSourceCode(sourceCode);
                 Globals.DBHelper.updateBudgettSource(this.mBudgettSource);
             }
 

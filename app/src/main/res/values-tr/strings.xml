@@ -26,4 +26,5 @@
     <string name="LabelLogin">BUDGETT Giriş</string>
     <string name="Income">Gelir</string>
     <string name="Expense">Gider</string>
+    <string name="MenuItemSettings">Ayarlar</string>
 </resources>
