@@ -77,6 +77,11 @@ public class BudgettTypeList
         return null;
     }
 
+    public ArrayList<BudgettType> GetBudgettTypeList()
+    {
+        return this.mList;
+    }
+
     public void AddToList(BudgettType _type)
     {
         this.mList.add(_type);

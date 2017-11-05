@@ -22,8 +22,11 @@
     <string name="LabelLogin">BUDGETT Login</string>
     <string name="PickADate">Pick a Date</string>
 
+    <string name="MenuItemFacebook">Facebook</string>
     <string name="MenuItemBudgettType">Budgett Type</string>
     <string name="MenuItemBudgettSource">Budgett Source</string>
+    <string name="MenuItemReport">Reports</string>
+    <string name="MenuItemWebsite">Website</string>
     <string name="MenuItemSettings">Settings</string>
 
     <string name="Username">Username</string>
@@ -31,13 +34,6 @@
 
     <string name="Income">Income</string>
     <string name="Expense">Expense</string>
-
-    <string-array name="SideMenuItemList">
-        <item>Facebook</item>
-        <item>Twitter</item>
-        <item>Google Plus</item>
-        <item>Instagram</item>
-    </string-array>
 
     <array name="SideMenuIconList">
         <item name="facebook">@drawable/facebook</item>

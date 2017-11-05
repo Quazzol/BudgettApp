@@ -1,5 +1,8 @@
 package com.okanerkan.sqlite.model;
 
+import com.okanerkan.interfaces.ISpinnerSource;
+
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -10,7 +13,7 @@ import java.util.Locale;
  * Created by OkanErkan on 10.10.2017.
  */
 
-public class BudgettItem
+public class BudgettItem implements Serializable, ISpinnerSource
 {
     private int mID;
     private BudgettEntryType mEntryType;
@@ -20,7 +23,10 @@ public class BudgettItem
     private String mBudgettNote;
     private double mAmount;
 
-    public BudgettItem() { }
+    public BudgettItem()
+    {
+    }
+
     public BudgettItem(int _id,
                        BudgettEntryType _type,
                        long _date,
@@ -91,6 +97,11 @@ public class BudgettItem
                 this.mBudgettType > 0 &&
                 this.mEntryDate > 0 &&
                 this.mAmount > 0;
+    }
+
+    public Object GetID()
+    {
+        return this.mID;
     }
 }
 

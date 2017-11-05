@@ -1,10 +1,14 @@
 package com.okanerkan.sqlite.model;
 
+import com.okanerkan.interfaces.ISpinnerSource;
+
+import java.io.Serializable;
+
 /**
  * Created by OkanErkan on 10.10.2017.
  */
 
-public class BudgettSource
+public class BudgettSource implements ISpinnerSource, Serializable
 {
     private int mID;
     private BudgettEntryType mEntryType;
@@ -30,5 +34,15 @@ public class BudgettSource
     {
         int length = this.mSourceCode.length();
         return length > 3 && length < 50;
+    }
+
+    public String toString()
+    {
+        return this.mSourceCode;
+    }
+
+    public Object GetID()
+    {
+        return this.mID;
     }
 }

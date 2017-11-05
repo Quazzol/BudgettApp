@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.icu.util.Calendar;
+import android.net.Uri;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -30,7 +32,9 @@ import com.okanerkan.globals.Globals;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 import com.okanerkan.sqlite.model.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettItem;
+import com.okanerkan.sqlite.model.BudgettSource;
 import com.okanerkan.sqlite.model.BudgettSourceList;
+import com.okanerkan.sqlite.model.BudgettType;
 import com.okanerkan.sqlite.model.BudgettTypeList;
 
 import java.util.ArrayList;
@@ -85,19 +89,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
 
         return super.onOptionsItemSelected(item);
-
-        /*
-        if (item.getItemId() == R.id.menuItemBudgettSource)
-        {
-            Intent intent = new Intent(getApplicationContext(), BudgettSourceActivity.class);
-            startActivity(intent);
-        }
-        else if (item.getItemId() == R.id.menuItemBudgettType)
-        {
-            Intent intent = new Intent(getApplicationContext(), BudgettTypeActivity.class);
-            startActivity(intent);
-        }
-        */
     }
     //endregion
 
@@ -126,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         Calendar currentTime = Calendar.getInstance();
 
         this.mBudgettItem = new BudgettItem();
-        this.mBudgettItem.setEntryType(this.GetEntryType());
+        this.mBudgettItem.setEntryType(BudgettEntryType.EXPENSE);
         this.SetDateValue(currentTime.get(Calendar.YEAR), currentTime.get(Calendar.MONTH) + 1, currentTime.get(Calendar.DAY_OF_MONTH));
     }
 
@@ -139,15 +130,14 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        String menuTitles[] = this.getResources().getStringArray(R.array.SideMenuItemList);
         TypedArray menuIcons = this.getResources().obtainTypedArray(R.array.SideMenuIconList);
 
         this.mMenuItems = new ArrayList<SideMenuItem>();
-
-        for (int i = 0; i < menuTitles.length; i++)
-        {
-            this.mMenuItems.add(new SideMenuItem(menuIcons.getResourceId(i, 0), menuTitles[i]));
-        }
+        this.mMenuItems.add(new SideMenuItem(menuIcons.getResourceId(0, 0), getResources().getString(R.string.MenuItemBudgettSource)));
+        this.mMenuItems.add(new SideMenuItem(menuIcons.getResourceId(1, 0), getResources().getString(R.string.MenuItemBudgettType)));
+        this.mMenuItems.add(new SideMenuItem(menuIcons.getResourceId(2, 0), getResources().getString(R.string.MenuItemReport)));
+        this.mMenuItems.add(new SideMenuItem(menuIcons.getResourceId(0, 0), getResources().getString(R.string.MenuItemFacebook)));
+        this.mMenuItems.add(new SideMenuItem(menuIcons.getResourceId(3, 0), getResources().getString(R.string.MenuItemWebsite)));
 
         this.mSideMenuListView.setAdapter(new SideMenuAdapter(this.mMenuItems, getApplicationContext()));
         this.mDrawerToggle.syncState();
@@ -158,16 +148,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void LoadSpinners()
     {
-        ArrayAdapter<String> sourceAdapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<BudgettSource> sourceAdapter = new ArrayAdapter<BudgettSource>(this,
                 android.R.layout.simple_spinner_item,
-                BudgettSourceList.GetList().GetBudgettSourceNames());
+                BudgettSourceList.GetList().GetBudgettSourceList());
 
         sourceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.mSourceSpinner.setAdapter(sourceAdapter);
 
-        ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<BudgettType> typeAdapter = new ArrayAdapter<BudgettType>(this,
                 android.R.layout.simple_spinner_item,
-                BudgettTypeList.GetList().GetBudgettTypeNames());
+                BudgettTypeList.GetList().GetBudgettTypeList());
 
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.mTypeSpinner.setAdapter(typeAdapter);
@@ -198,21 +188,60 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
-                OnSideMenuItemClicked();
+                OnSideMenuItemClicked(i);
             }
         });
     }
     //endregion
 
     //region EventHandlers
-    public void OnSideMenuItemClicked()
+    public void OnSideMenuItemClicked(int position)
     {
+        String title = this.mMenuItems.get(position).getTitle();
+
+        if (title.equals(this.getResources().getString(R.string.MenuItemBudgettSource)))
+        {
+            Intent intent = new Intent(getApplicationContext(), BudgettSourceActivity.class);
+            startActivity(intent);
+        }
+        else if (title.equals(this.getResources().getString(R.string.MenuItemBudgettType)))
+        {
+            Intent intent = new Intent(getApplicationContext(), BudgettTypeActivity.class);
+            startActivity(intent);
+        }
+        else if (title.equals(this.getResources().getString(R.string.MenuItemReport)))
+        {
+        }
+        else if (title.equals(this.getResources().getString(R.string.MenuItemFacebook)))
+        {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("https://www.facebook.com/Budgett-App-657157924468286/"));
+            startActivity(intent);
+        }
+        else if (title.equals(this.getResources().getString(R.string.MenuItemWebsite)))
+        {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("http://www.okanerkan.com"));
+            startActivity(intent);
+        }
+
         this.mDrawerLayout.closeDrawer(this.mSideMenuListView);
     }
 
     public void OnResetButtonClicked()
     {
+        try
+        {
+            this.mEntryTypeRadio.check(R.id.rbtnExpense);
+            this.mEntryDateEdit.set
 
+            this.mBudgettItem = new BudgettItem();
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
+            Log.e("Error", ex.getMessage());
+        }
     }
 
     public void OnSaveButtonClicked()
@@ -258,6 +287,11 @@ public class MainActivity extends AppCompatActivity {
         String date =  String.format(Locale.getDefault(), "%02d/%02d/%04d", day, month, year);
         this.mEntryDateEdit.setText(date);
         this.mBudgettItem.setEntryDate(year, month, day);
+    }
+
+    private void SetDateValueOnEdit()
+    {
+
     }
 
     private BudgettEntryType GetEntryType()

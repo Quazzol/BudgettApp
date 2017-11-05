@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.okanerkan.globals.ValidationException;
+import com.okanerkan.exceptions.ValidationException;
 import com.okanerkan.sqlite.model.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettItem;
 import com.okanerkan.sqlite.model.BudgettSource;

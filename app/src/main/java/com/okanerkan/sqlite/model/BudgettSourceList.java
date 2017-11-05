@@ -2,6 +2,7 @@ package com.okanerkan.sqlite.model;
 
 import com.okanerkan.globals.Globals;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -80,6 +81,11 @@ public class BudgettSourceList
                 return source;
         }
         return null;
+    }
+
+    public ArrayList<BudgettSource> GetBudgettSourceList()
+    {
+        return this.mList;
     }
 
     public void AddToList(BudgettSource _source)
