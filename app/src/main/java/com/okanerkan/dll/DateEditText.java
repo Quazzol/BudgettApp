@@ -3,6 +3,7 @@ package com.okanerkan.dll;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.icu.util.Calendar;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.DatePicker;
 
@@ -23,6 +24,22 @@ public class DateEditText extends android.support.v7.widget.AppCompatEditText
     public DateEditText(Context context)
     {
         super(context);
+        this.SetDefault();
+    }
+
+    public DateEditText(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        this.SetDefault();
+    }
+
+    public DateEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        this.SetDefault();
+    }
+
+    private void SetDefault()
+    {
+        this.mTimeStamp = new Timestamp(System.currentTimeMillis()).getTime();
         this.setOnClickListener(new OnClickListener()
         {
             @Override
@@ -36,7 +53,17 @@ public class DateEditText extends android.support.v7.widget.AppCompatEditText
     private long mTimeStamp;
     public long getTimeStamp() { return this.mTimeStamp; }
 
-    // TODO implement
+    public void SetTimestamp(long _timestamp)
+    {
+        this.mTimeStamp = _timestamp;
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(this.mTimeStamp);
+        String dateText = String.format(Locale.getDefault(), "%02d/%02d/%04d",
+                                        cal.get(Calendar.DAY_OF_MONTH),
+                                        cal.get(Calendar.MONTH) + 1,
+                                        cal.get(Calendar.YEAR));
+        this.setText(dateText);
+    }
 
     private void OnDateEditClicked()
     {

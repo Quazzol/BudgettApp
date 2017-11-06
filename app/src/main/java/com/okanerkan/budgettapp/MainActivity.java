@@ -1,6 +1,5 @@
 package com.okanerkan.budgettapp;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.icu.util.Calendar;
@@ -16,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -28,7 +26,6 @@ import com.okanerkan.dll.SideMenuAdapter;
 import com.okanerkan.dll.SideMenuItem;
 import com.okanerkan.globals.Globals;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
-import com.okanerkan.sqlite.model.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettItem;
 import com.okanerkan.sqlite.model.BudgettSource;
 import com.okanerkan.sqlite.model.BudgettSourceList;
@@ -37,7 +34,6 @@ import com.okanerkan.sqlite.model.BudgettTypeList;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 

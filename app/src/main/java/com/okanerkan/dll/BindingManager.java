@@ -51,7 +51,11 @@ public class BindingManager implements IObserver
 
     public void Add(View _view, String _propertyName) throws Exception
     {
-        if (_view instanceof EditText)
+        if (_view instanceof DateEditText)
+        {
+            ((DateEditText) _view).addTextChangedListener(new BindingManagerDateTextWatcher(this, (DateEditText) _view));
+        }
+        else if (_view instanceof EditText)
         {
             ((EditText) _view).addTextChangedListener(new BindingManagerTextWatcher(this, (EditText) _view));
         }
@@ -141,8 +145,7 @@ public class BindingManager implements IObserver
     {
         if (_view instanceof DateEditText)
         {
-            // TODO implement
-            ((DateEditText) _view).setText("");
+            ((DateEditText) _view).SetTimestamp((long)_value);
         }
         else if (_view instanceof EditText)
         {
@@ -174,6 +177,25 @@ public class BindingManager implements IObserver
         else
         {
             throw new ViewTypeNotFoundException(_view.getClass());
+        }
+    }
+
+    private void OnDateEditTextChanged(DateEditText _view)
+    {
+        try
+        {
+            String propertyName = this.mViewList.get(_view);
+            Method method = this.SetterMethod(propertyName);
+
+            if (method == null)
+            {
+                throw new NoSuchMethodException();
+            }
+            method.invoke(this.mObservable, _view.getTimeStamp());
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG, ex.getMessage());
         }
     }
 
@@ -306,6 +328,34 @@ public class BindingManager implements IObserver
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
         {
             this.mManager.OnEditViewTextChanged(this.mEditText);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable)
+        { }
+    }
+
+    class BindingManagerDateTextWatcher implements TextWatcher
+    {
+        public BindingManagerDateTextWatcher(BindingManager _manager, DateEditText _view)
+        {
+            this.mManager = _manager;
+            this.mEditText = _view;
+        }
+
+        private DateEditText mEditText;
+        public DateEditText getEditText() { return this.mEditText; }
+
+        private BindingManager mManager;
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        { }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+        {
+            this.mManager.OnDateEditTextChanged(this.mEditText);
         }
 
         @Override

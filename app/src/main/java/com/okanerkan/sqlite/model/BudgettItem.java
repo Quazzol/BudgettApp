@@ -1,5 +1,7 @@
 package com.okanerkan.sqlite.model;
 
+import android.icu.util.Calendar;
+
 import com.okanerkan.dll.ObservableBase;
 import com.okanerkan.interfaces.ISpinnerSource;
 
@@ -26,6 +28,13 @@ public class BudgettItem extends ObservableBase implements Serializable, ISpinne
 
     public BudgettItem()
     {
+        this(-1,
+                BudgettEntryType.EXPENSE,
+                new Timestamp(System.currentTimeMillis()).getTime(),
+                0,
+                0,
+                "",
+                0);
     }
 
     public BudgettItem(int _id,
