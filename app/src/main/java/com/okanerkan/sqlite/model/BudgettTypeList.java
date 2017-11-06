@@ -82,6 +82,18 @@ public class BudgettTypeList
         return this.mList;
     }
 
+    public ArrayList<BudgettType> GetBudgettTypeList(BudgettEntryType _entryType)
+    {
+        ArrayList<BudgettType> list = new ArrayList<>();
+        for(BudgettType type: this.mList)
+        {
+            if(type.getEntryType() == _entryType)
+                list.add(type);
+        }
+        return list;
+    }
+
+
     public void AddToList(BudgettType _type)
     {
         this.mList.add(_type);

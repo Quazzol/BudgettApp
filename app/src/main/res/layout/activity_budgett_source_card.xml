@@ -21,6 +21,7 @@
         <RadioGroup
             android:id="@+id/rdgEntryType"
             android:orientation="horizontal"
+            android:tag="EntryType"
             style="@style/LayoutControl" >
 
             <RadioButton
@@ -44,6 +45,7 @@
 
         <EditText
             android:id="@+id/budgettSource"
+            android:tag="SourceCode"
             style="@style/LayoutControl"
             android:inputType="text" />
 

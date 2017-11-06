@@ -1,10 +1,12 @@
 package com.okanerkan.sqlite.model;
 
+import com.okanerkan.interfaces.IRadioGroupSource;
+
 /**
  * Created by OkanErkan on 10.10.2017.
  */
 
-public enum BudgettEntryType
+public enum BudgettEntryType implements IRadioGroupSource
 {
     EXPENSE(0),
     INCOME(1);
@@ -15,5 +17,6 @@ public enum BudgettEntryType
         this.value = value;
     }
 
+    @Override
     public int getValue() { return this.value; }
 }

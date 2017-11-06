@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.okanerkan.dll.BindingManager;
 import com.okanerkan.globals.Globals;
 import com.okanerkan.sqlite.model.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettSource;
@@ -19,11 +20,14 @@ import com.okanerkan.sqlite.model.BudgettTypeList;
 
 public class BudgettTypeCardActivity extends AppCompatActivity {
 
-    Button mSaveButton;
-    Button mDeleteButton;
-    RadioGroup mEntryTypeRadio;
-    EditText mBudgettTypeCode;
-    BudgettType mBudgettType;
+    private Button mSaveButton;
+    private Button mDeleteButton;
+    private RadioGroup mEntryTypeRadio;
+    private EditText mBudgettTypeCode;
+    private BudgettType mBudgettType;
+    private BindingManager mBindingManager;
+
+    private static String TAG = "TypeCard";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -31,6 +35,7 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budgett_type_card);
         this.SetProperties();
+        this.CreateBindingManager();
         this.AddEventHandlers();
     }
 
@@ -45,12 +50,23 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
         int index = intent.getIntExtra("BudgettTypeIndex", -1);
         this.mBudgettType = BudgettTypeList.GetList().GetBudgettTypeWithIndex(index);
         if (this.mBudgettType == null)
-            this.mDeleteButton.setText(R.string.BtnCancel);
-        else
         {
-            RadioButton radioButton = this.mEntryTypeRadio.findViewById(this.mBudgettType.getEntryType().getValue());
-            radioButton.setChecked(true);
-            this.mBudgettTypeCode.setText(this.mBudgettType.getTypeCode());
+            this.mDeleteButton.setText(R.string.BtnCancel);
+            this.mBudgettType = new BudgettType();
+        }
+    }
+
+    private void CreateBindingManager()
+    {
+        try
+        {
+            this.mBindingManager = new BindingManager(this.mBudgettType);
+            this.mBindingManager.Add(this.mEntryTypeRadio);
+            this.mBindingManager.Add(this.mBudgettTypeCode);
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG, ex.getMessage());
         }
     }
 
@@ -71,30 +87,17 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
         });
     }
 
-    private BudgettEntryType GetEntryType()
-    {
-        int radioButtonID = this.mEntryTypeRadio.getCheckedRadioButtonId();
-        View radioButton = this.mEntryTypeRadio.findViewById(radioButtonID);
-        int id = this.mEntryTypeRadio.indexOfChild(radioButton);
-        return BudgettEntryType.values()[id];
-    }
-
     public void OnSaveButtonClicked(View view)
     {
         try
         {
-            String typeCode = this.mBudgettTypeCode.getText().toString();
-
-            if (this.mBudgettType == null)
+            if (this.mBudgettType.ExistInDB())
             {
-                this.mBudgettType = new BudgettType(-1, this.GetEntryType(), typeCode);
-                Globals.DBHelper.insertBudgettType(this.mBudgettType);
+                Globals.DBHelper.updateBudgettType(this.mBudgettType);
             }
             else
             {
-                this.mBudgettType.setEntryType(this.GetEntryType());
-                this.mBudgettType.setTypeCode(typeCode);
-                Globals.DBHelper.updateBudgettType(this.mBudgettType);
+                Globals.DBHelper.insertBudgettType(this.mBudgettType);
             }
 
             this.finish();

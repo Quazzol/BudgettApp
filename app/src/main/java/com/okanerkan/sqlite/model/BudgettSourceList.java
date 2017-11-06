@@ -88,6 +88,17 @@ public class BudgettSourceList
         return this.mList;
     }
 
+    public ArrayList<BudgettSource> GetBudgettSourceList(BudgettEntryType _entryType)
+    {
+        ArrayList<BudgettSource> list = new ArrayList<>();
+        for(BudgettSource source: this.mList)
+        {
+            if(source.getEntryType() == _entryType)
+                list.add(source);
+        }
+        return list;
+    }
+
     public void AddToList(BudgettSource _source)
     {
         this.mList.add(_source);

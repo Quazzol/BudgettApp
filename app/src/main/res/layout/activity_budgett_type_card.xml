@@ -22,6 +22,7 @@ tools:context="com.okanerkan.budgettapp.BudgettTypeCardActivity">
         <RadioGroup
             android:id="@+id/rdgEntryType"
             android:orientation="horizontal"
+            android:tag="EntryType"
             style="@style/LayoutControl" >
 
             <RadioButton
@@ -45,6 +46,7 @@ tools:context="com.okanerkan.budgettapp.BudgettTypeCardActivity">
 
         <EditText
             android:id="@+id/budgettType"
+            android:tag="TypeCode"
             style="@style/LayoutControl"
             android:inputType="text" />
 

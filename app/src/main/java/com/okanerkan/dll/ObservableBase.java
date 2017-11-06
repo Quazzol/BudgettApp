@@ -1,5 +1,7 @@
 package com.okanerkan.dll;
 
+import android.util.Log;
+
 import com.okanerkan.interfaces.IObservable;
 import com.okanerkan.interfaces.IObserver;
 
@@ -16,6 +18,8 @@ public class ObservableBase implements IObservable
     {
         this.mObserverList = new ArrayList<>();
     }
+
+    private static String TAG = "ObservableBase";
 
     protected ArrayList<IObserver> mObserverList;
 
@@ -40,12 +44,20 @@ public class ObservableBase implements IObservable
         }
     }
 
-    protected boolean SetValue(String propertyName, Object value) throws Exception
+    protected boolean SetValue(String propertyName, Object value)
     {
-        Field _field = this.getClass().getDeclaredField(propertyName);
-        _field.setAccessible(true);
-        _field.set(this, value);
-        this.NotifyObservers(propertyName);
-        return true;
+        try
+        {
+            Field _field = this.getClass().getDeclaredField("m" + propertyName);
+            _field.setAccessible(true);
+            _field.set(this, value);
+            this.NotifyObservers(propertyName);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG, ex.getMessage());
+            return false;
+        }
     }
 }

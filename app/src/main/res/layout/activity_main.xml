@@ -188,6 +188,7 @@
                     <RadioGroup
                         android:id="@+id/rdgEntryType"
                         android:orientation="horizontal"
+                        android:tag="EntryType"
                         style="@style/LayoutControl" >
 
                         <RadioButton
@@ -197,7 +198,7 @@
                             android:layout_weight="1"
                             android:checked="true"
                             android:text="@string/RadioOptionExpense"
-                            android:textSize="10dp" />
+                            android:textSize="12sp" />
 
                         <RadioButton
                             android:id="@+id/rbtnIncome"
@@ -205,22 +206,25 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/RadioOptionIncome"
-                            android:textSize="10dp" />
+                            android:textSize="12sp" />
 
                     </RadioGroup>
 
-                    <EditText
+                    <com.okanerkan.dll.DateEditText
                         android:id="@+id/txtEntryDate"
                         android:focusable="false"
                         android:clickable="true"
+                        android:tag="EntryDate"
                         style="@style/LayoutControl" />
 
                     <Spinner
                         android:id="@+id/spnBudgettSource"
+                        android:tag="BudgettSource"
                         style="@style/LayoutControl" />
 
                     <Spinner
                         android:id="@+id/spnExpenseType"
+                        android:tag="BudgettType"
                         style="@style/LayoutControl" />
 
                     <EditText
@@ -228,6 +232,7 @@
                         android:inputType="numberDecimal"
                         android:gravity="end"
                         android:textAlignment="textEnd"
+                        android:tag="Amount"
                         android:hint="0.00"
                         style="@style/LayoutControl" />
 

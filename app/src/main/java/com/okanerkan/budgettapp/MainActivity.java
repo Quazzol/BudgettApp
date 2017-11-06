@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.icu.util.Calendar;
 import android.net.Uri;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,10 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -26,6 +23,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.okanerkan.dll.BindingManager;
 import com.okanerkan.dll.SideMenuAdapter;
 import com.okanerkan.dll.SideMenuItem;
 import com.okanerkan.globals.Globals;
@@ -56,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
     private BudgettItem mBudgettItem;
     private List<SideMenuItem> mMenuItems;
+    private BindingManager mBindingManager;
+    private static String TAG = "MainActivity";
+
 
     //region Override
     @Override
@@ -64,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.InitializeProperties();
+        this.CreateBudgettItem();
+        this.CreateBindingManager();
+        this.LoadSideMenu();
+        this.LoadSpinners();
         this.AddHandlers();
     }
 
@@ -82,6 +87,16 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.menuItemSettings)
         {
             Intent intent = new Intent(getApplicationContext(), UserSettingsActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.menuItemBudgettSource)
+        {
+            Intent intent = new Intent(getApplicationContext(), BudgettSourceActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.menuItemBudgettType)
+        {
+            Intent intent = new Intent(getApplicationContext(), BudgettTypeActivity.class);
             startActivity(intent);
         }
 
@@ -106,19 +121,28 @@ public class MainActivity extends AppCompatActivity {
         this.mSideMenuListView = (ListView) findViewById(R.id.listViewSideMenu);
         this.mDrawerLayout = (DrawerLayout) findViewById(R.id.MainLayout);
         this.mDrawerToggle = new ActionBarDrawerToggle(this, this.mDrawerLayout, R.string.BtnNew, R.string.BtnCancel);
-
-        this.CreateBudgettItem();
-        this.LoadSideMenu();
-        this.LoadSpinners();
     }
 
     private void CreateBudgettItem()
     {
-        Calendar currentTime = Calendar.getInstance();
-
         this.mBudgettItem = new BudgettItem();
-        this.mBudgettItem.setEntryType(BudgettEntryType.EXPENSE);
-        this.SetDateValue(currentTime.get(Calendar.YEAR), currentTime.get(Calendar.MONTH) + 1, currentTime.get(Calendar.DAY_OF_MONTH));
+    }
+
+    private void CreateBindingManager()
+    {
+        try
+        {
+            this.mBindingManager = new BindingManager(this.mBudgettItem);
+            this.mBindingManager.Add(this.mEntryTypeRadio);
+            this.mBindingManager.Add(this.mEntryDateEdit);
+            this.mBindingManager.Add(this.mSourceSpinner);
+            this.mBindingManager.Add(this.mTypeSpinner);
+            this.mBindingManager.Add(this.mAmountEdit);
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG, ex.getMessage());
+        }
     }
 
     private void LoadSideMenu()
@@ -150,14 +174,14 @@ public class MainActivity extends AppCompatActivity {
     {
         ArrayAdapter<BudgettSource> sourceAdapter = new ArrayAdapter<BudgettSource>(this,
                 android.R.layout.simple_spinner_item,
-                BudgettSourceList.GetList().GetBudgettSourceList());
+                BudgettSourceList.GetList().GetBudgettSourceList(this.mBudgettItem.getEntryType()));
 
         sourceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.mSourceSpinner.setAdapter(sourceAdapter);
 
         ArrayAdapter<BudgettType> typeAdapter = new ArrayAdapter<BudgettType>(this,
                 android.R.layout.simple_spinner_item,
-                BudgettTypeList.GetList().GetBudgettTypeList());
+                BudgettTypeList.GetList().GetBudgettTypeList(this.mBudgettItem.getEntryType()));
 
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.mTypeSpinner.setAdapter(typeAdapter);
@@ -177,18 +201,12 @@ public class MainActivity extends AppCompatActivity {
                 OnSaveButtonClicked();
             }
         });
-        this.mEntryDateEdit.setOnClickListener(new View.OnClickListener() {
+        this.mEntryTypeRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
             @Override
-            public void onClick(View view)
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedID)
             {
-                OnDateEditClicked();
-            }
-        });
-        this.mSideMenuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
-            {
-                OnSideMenuItemClicked(i);
+                OnRadioGroupCheckChanged();
             }
         });
     }
@@ -232,10 +250,7 @@ public class MainActivity extends AppCompatActivity {
     {
         try
         {
-            this.mEntryTypeRadio.check(R.id.rbtnExpense);
-            this.mEntryDateEdit.set
-
-            this.mBudgettItem = new BudgettItem();
+            this.CreateBudgettItem();
         }
         catch (Exception ex)
         {
@@ -248,11 +263,6 @@ public class MainActivity extends AppCompatActivity {
     {
         try
         {
-            this.mBudgettItem.setEntryType(this.GetEntryType());
-            this.mBudgettItem.setBudgettType(this.GetBudgettTypeID());
-            this.mBudgettItem.setBudgettSource(this.GetBudgettSourceID());
-            this.mBudgettItem.setAmount(this.GetAmount());
-
             Globals.DBHelper.insertBudgettItem(this.mBudgettItem);
         }
         catch (Exception ex)
@@ -262,61 +272,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void OnDateEditClicked()
+    private void OnRadioGroupCheckChanged()
     {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(this.mBudgettItem.getEntryDate());
-
-        DatePickerDialog datePicker;
-        datePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener()
-        {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
-            {
-                SetDateValue(year, monthOfYear + 1, dayOfMonth);
-            }
-        },cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
-        datePicker.setTitle(R.string.PickADate);
-        datePicker.setButton(DatePickerDialog.BUTTON_POSITIVE, this.getResources().getString(R.string.BtnSet), datePicker);
-        datePicker.setButton(DatePickerDialog.BUTTON_NEGATIVE, this.getResources().getString(R.string.BtnCancel), datePicker);
-        datePicker.show();
+        this.LoadSpinners();
     }
-
-    private void SetDateValue(int year, int month, int day)
-    {
-        String date =  String.format(Locale.getDefault(), "%02d/%02d/%04d", day, month, year);
-        this.mEntryDateEdit.setText(date);
-        this.mBudgettItem.setEntryDate(year, month, day);
-    }
-
-    private void SetDateValueOnEdit()
-    {
-
-    }
-
-    private BudgettEntryType GetEntryType()
-    {
-        int radioButtonID = this.mEntryTypeRadio.getCheckedRadioButtonId();
-        View radioButton = this.mEntryTypeRadio.findViewById(radioButtonID);
-        int id = this.mEntryTypeRadio.indexOfChild(radioButton);
-        return BudgettEntryType.values()[id];
-    }
-
-    private int GetBudgettTypeID()
-    {
-        return BudgettTypeList.GetList().GetBudgettListID(this.mTypeSpinner.getSelectedItemPosition());
-    }
-
-    private int GetBudgettSourceID()
-    {
-        return BudgettSourceList.GetList().GetBudgettSourceID(this.mSourceSpinner.getSelectedItemPosition());
-    }
-
-    private double GetAmount()
-    {
-        String amount = this.mAmountEdit.getText().toString();
-        return amount.equalsIgnoreCase("") ? 0 : Double.parseDouble(amount);
-    }
-
     //endregion
 }
