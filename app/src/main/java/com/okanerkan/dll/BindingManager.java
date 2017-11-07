@@ -12,6 +12,7 @@ import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.okanerkan.exceptions.ViewTypeNotFoundException;
 import com.okanerkan.interfaces.IObservable;
@@ -22,6 +23,9 @@ import com.okanerkan.interfaces.ISpinnerSource;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.text.InputType.TYPE_CLASS_NUMBER;
+import static android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL;
 
 /**
  * Created by Quazzol on 4.11.2017.
@@ -40,9 +44,20 @@ public class BindingManager implements IObserver
         this.mViewList = new HashMap<View, String>();
     }
 
+    //region Members
     private static String TAG = "BindingManager";
     private IObservable mObservable;
     private HashMap<View, String> mViewList;
+    //endregion
+
+    //region Methods
+    public void Initialize()
+    {
+        for(Map.Entry<View, String> kvp : this.mViewList.entrySet())
+        {
+            kvp.getKey().per
+        }
+    }
 
     public void Add(View _view) throws Exception
     {
@@ -70,14 +85,14 @@ public class BindingManager implements IObserver
                 }
             });
         }
-        else if (_view instanceof  Spinner)
+        else if (_view instanceof Spinner)
         {
             ((Spinner) _view).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
             {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                 {
-                    OnSpinnerItemChanged((Spinner)view);
+                    OnSpinnerItemChanged((Spinner) adapterView);
                 }
 
                 @Override
@@ -179,7 +194,9 @@ public class BindingManager implements IObserver
             throw new ViewTypeNotFoundException(_view.getClass());
         }
     }
+    //endregion
 
+    //region Events
     private void OnDateEditTextChanged(DateEditText _view)
     {
         try
@@ -211,7 +228,16 @@ public class BindingManager implements IObserver
             {
                 throw new NoSuchMethodException();
             }
-            method.invoke(this.mObservable, viewValue.toString());
+
+            if (_view.getInputType() == (TYPE_NUMBER_FLAG_DECIMAL | TYPE_CLASS_NUMBER))
+            {
+                double value = viewValue.toString().isEmpty() ? 0 : Double.parseDouble(viewValue.toString());
+                method.invoke(this.mObservable, value);
+            }
+            else
+            {
+                method.invoke(this.mObservable, viewValue.toString());
+            }
         }
         catch (Exception ex)
         {
@@ -278,6 +304,7 @@ public class BindingManager implements IObserver
             Log.e(TAG, ex.getMessage());
         }
     }
+    //endregion
 
     @Nullable
     private Method GetterMethod(String _propertyName)

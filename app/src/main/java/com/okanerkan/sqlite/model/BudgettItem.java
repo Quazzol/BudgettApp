@@ -31,8 +31,8 @@ public class BudgettItem extends ObservableBase implements Serializable, ISpinne
         this(-1,
                 BudgettEntryType.EXPENSE,
                 new Timestamp(System.currentTimeMillis()).getTime(),
-                0,
-                0,
+                1,
+                1,
                 "",
                 0);
     }

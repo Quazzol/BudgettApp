@@ -2,7 +2,6 @@ package com.okanerkan.budgettapp;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.icu.util.Calendar;
 import android.net.Uri;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -25,6 +24,7 @@ import com.okanerkan.dll.BindingManager;
 import com.okanerkan.dll.SideMenuAdapter;
 import com.okanerkan.dll.SideMenuItem;
 import com.okanerkan.globals.Globals;
+import com.okanerkan.interfaces.IObserver;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 import com.okanerkan.sqlite.model.BudgettItem;
 import com.okanerkan.sqlite.model.BudgettSource;
@@ -93,6 +93,11 @@ public class MainActivity extends AppCompatActivity {
         else if (id == R.id.menuItemBudgettType)
         {
             Intent intent = new Intent(getApplicationContext(), BudgettTypeActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.menuItemReport)
+        {
+            Intent intent = new Intent(getApplicationContext(), BudgettReportActivity.class);
             startActivity(intent);
         }
 
@@ -197,14 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 OnSaveButtonClicked();
             }
         });
-        this.mEntryTypeRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedID)
-            {
-                OnRadioGroupCheckChanged();
-            }
-        });
+        this.mBudgettItem.AddObserver(new BudgettItemObserver(this));
     }
     //endregion
 
@@ -267,10 +265,26 @@ public class MainActivity extends AppCompatActivity {
             Log.e("Error", ex.getMessage());
         }
     }
+    //endregion
 
-    private void OnRadioGroupCheckChanged()
+    //region BudgettItemObserver
+    public class BudgettItemObserver implements IObserver
     {
-        this.LoadSpinners();
+        public BudgettItemObserver(MainActivity _parent)
+        {
+            this.mParent = _parent;
+        }
+
+        private MainActivity mParent;
+
+        @Override
+        public void Update(String propertyName)
+        {
+            if (propertyName.equalsIgnoreCase("EntryType"))
+            {
+                this.mParent.LoadSpinners();
+            }
+        }
     }
     //endregion
 }

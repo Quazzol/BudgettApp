@@ -31,7 +31,8 @@
         <activity
             android:name=".BudgettSourceCardActivity"
             android:label="@string/LabelBudgettSource" />
-        <activity android:name=".UserSettingsActivity"></activity>
+        <activity android:name=".UserSettingsActivity" />
+        <activity android:name=".BudgettReportActivity"></activity>
     </application>
 
 </manifest>
