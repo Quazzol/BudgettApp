@@ -9,4 +9,5 @@ import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 public class Globals
 {
     public static BudgettDatabaseHelper DBHelper;
+
 }

@@ -50,7 +50,7 @@ public class BudgettSource extends ObservableBase implements ISpinnerSource, Ser
     public boolean ValidateModel()
     {
         int length = this.mSourceCode.length();
-        return length > 3 && length < 50;
+        return length >= 3 && length <= 50;
     }
 
     public String toString()

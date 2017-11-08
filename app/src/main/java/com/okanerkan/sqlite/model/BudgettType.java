@@ -51,7 +51,7 @@ public class BudgettType extends ObservableBase implements Serializable, ISpinne
     public boolean ValidateModel()
     {
         int length = this.mTypeCode.length();
-        return length > 3 && length < 50;
+        return length >= 3 && length <= 50;
     }
 
     public String toString()

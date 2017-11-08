@@ -20,9 +20,12 @@
     <string name="LabelBudgettSources">BUDGETT Source List</string>
     <string name="LabelBudgettTypes">BUDGETT Type List</string>
     <string name="LabelLogin">BUDGETT Login</string>
+    <string name="LabelReports">BUDGETT Report</string>
+    <string name="LabelUserSettings">BUDGETT Settings</string>
+
     <string name="PickADate">Pick a Date</string>
 
-    <string name="MenuItemFacebook">Facebook</string>
+    <string name="MenuItemFacebook" translatable="false">Facebook</string>
     <string name="MenuItemBudgettType">Budgett Type</string>
     <string name="MenuItemBudgettSource">Budgett Source</string>
     <string name="MenuItemReport">Reports</string>
@@ -41,4 +44,7 @@
         <item name="google">@drawable/google_plus</item>
         <item name="instagram">@drawable/instagram</item>
     </array>
+
+    <string name="MSGCannotDelete">Cannot be deleted</string>
+    <string name="MSGSaved">Save successful</string>
 </resources>

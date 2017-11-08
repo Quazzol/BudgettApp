@@ -174,7 +174,7 @@ public class BindingManager implements IObserver
         }
         else if (_view instanceof EditText)
         {
-            ((EditText) _view).setText(_value.toString());
+            ((EditText) _view).setText(_value.toString().trim());
         }
         else if (_view instanceof NumberPicker)
         {
@@ -246,12 +246,12 @@ public class BindingManager implements IObserver
 
             if (_view.getInputType() == (TYPE_NUMBER_FLAG_DECIMAL | TYPE_CLASS_NUMBER))
             {
-                double value = viewValue.toString().isEmpty() ? 0 : Double.parseDouble(viewValue.toString());
+                double value = viewValue.toString().trim().isEmpty() ? 0 : Double.parseDouble(viewValue.toString().trim());
                 method.invoke(this.mObservable, value);
             }
             else
             {
-                method.invoke(this.mObservable, viewValue.toString());
+                method.invoke(this.mObservable, viewValue.toString().trim());
             }
         }
         catch (Exception ex)

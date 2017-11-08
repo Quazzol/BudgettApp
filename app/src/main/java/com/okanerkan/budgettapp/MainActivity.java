@@ -76,6 +76,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume()
+    {
+        super.onResume();
+        this.OnResetButtonClicked();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         this.getMenuInflater().inflate(R.menu.menu, menu);
@@ -292,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception ex)
         {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
-            Log.e("Error", ex.getMessage());
+            Log.e(TAG, ex.getMessage());
         }
     }
 
@@ -301,13 +308,14 @@ public class MainActivity extends AppCompatActivity {
         try
         {
             Globals.DBHelper.insertBudgettItem(this.mBudgettItem);
+            Toast.makeText(this, R.string.MSGSaved, Toast.LENGTH_LONG).show();
             this.UpdateMonthlyStatements();
             this.OnResetButtonClicked();
         }
         catch (Exception ex)
         {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
-            Log.e("Error", ex.getMessage());
+            Log.e(TAG, ex.getMessage());
         }
     }
     //endregion

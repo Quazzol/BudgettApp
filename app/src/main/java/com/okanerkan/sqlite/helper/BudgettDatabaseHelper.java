@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class BudgettDatabaseHelper extends SQLiteOpenHelper
 {
     private static final String LOG = "BudgettDatabaseHelper";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "budgett_db";
 
     private static final String TABLE_SOURCE = "budgett_source";
@@ -50,15 +50,19 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
 
     // Source table create statement
     private static final String CREATE_TABLE_SOURCE = "CREATE TABLE "
-            + TABLE_SOURCE + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
-            + KEY_ENTRY_TYPE + " BOOLEAN,"
-            + KEY_SOURCE_CODE + " TEXT UNIQUE)";
-
-    // Type table create statement
-    private static final String CREATE_TABLE_TYPE = "CREATE TABLE " + TABLE_TYPE
+            + TABLE_SOURCE
             + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
             + KEY_ENTRY_TYPE + " BOOLEAN,"
-            + KEY_TYPE_CODE + " TEXT UNIQUE)";
+            + KEY_SOURCE_CODE + " TEXT NOT NULL,"
+            + "UNIQUE (" + KEY_ENTRY_TYPE + "," + KEY_SOURCE_CODE + "))";
+
+    // Type table create statement
+    private static final String CREATE_TABLE_TYPE = "CREATE TABLE "
+            + TABLE_TYPE
+            + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+            + KEY_ENTRY_TYPE + " BOOLEAN,"
+            + KEY_TYPE_CODE + " TEXT NOT NULL,"
+            + "UNIQUE (" + KEY_ENTRY_TYPE + "," + KEY_TYPE_CODE + "))";
 
     // BudgettItem table create statement
     private static final String CREATE_TABLE_BUDGETT_ITEM = "CREATE TABLE "

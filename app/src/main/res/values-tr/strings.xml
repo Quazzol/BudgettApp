@@ -27,4 +27,10 @@
     <string name="Income">Gelir</string>
     <string name="Expense">Gider</string>
     <string name="MenuItemSettings">Ayarlar</string>
+    <string name="MenuItemReport">Raporlar</string>
+    <string name="MenuItemWebsite">Web Sitesi</string>
+    <string name="MSGCannotDelete">Silinemiyor</string>
+    <string name="MSGSaved">Kayıt başarılı</string>
+    <string name="LabelReports">BUDGETT Rapor</string>
+    <string name="LabelUserSettings">BUDGETT Ayarlar</string>
 </resources>

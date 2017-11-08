@@ -20,6 +20,7 @@ public class BudgettTypeActivity extends AppCompatActivity
     ListView mExpenseListView;
     ListView mIncomeListView;
     Button mNewButton;
+    Button mCancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,6 +30,7 @@ public class BudgettTypeActivity extends AppCompatActivity
         this.mExpenseListView = (ListView) findViewById(R.id.listViewExpenseBudgettType);
         this.mIncomeListView = (ListView) findViewById(R.id.listViewIncomeBudgettType);
         this.mNewButton = (Button) findViewById(R.id.btnNew);
+        this.mCancelButton = (Button) findViewById(R.id.btnCancel);
         this.CreateListView();
         this.AddHandlers();
     }
@@ -87,6 +89,14 @@ public class BudgettTypeActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 OpenCard(-1);
+            }
+        });
+        this.mCancelButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                finish();
             }
         });
     }

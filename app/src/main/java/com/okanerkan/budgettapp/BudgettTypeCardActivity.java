@@ -98,18 +98,20 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
             if (this.mBudgettType.ExistInDB())
             {
                 Globals.DBHelper.updateBudgettType(this.mBudgettType);
+                this.finish();
+                return;
             }
-            else
-            {
-                Globals.DBHelper.insertBudgettType(this.mBudgettType);
-            }
+            Globals.DBHelper.insertBudgettType(this.mBudgettType);
 
-            this.finish();
+            this.CreateBudgetType();
+            Toast.makeText(this, R.string.MSGSaved, Toast.LENGTH_LONG).show();
+            this.mBindingManager.Rebind(this.mBudgettType);
+            this.mBindingManager.BindValues();
         }
         catch (Exception ex)
         {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
-            Log.e("Error", ex.getMessage());
+            Log.e(TAG, ex.getMessage());
         }
     }
 
@@ -123,8 +125,8 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
         }
         catch (Exception ex)
         {
-            Toast.makeText(this, "Cannot delete type", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "cannot delete type");
+            Toast.makeText(this, R.string.MSGCannotDelete, Toast.LENGTH_SHORT).show();
+            Log.e(TAG, getResources().getString(R.string.MSGCannotDelete));
         }
     }
 

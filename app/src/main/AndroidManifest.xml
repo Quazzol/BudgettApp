@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/budgett"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/budgett"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
@@ -31,8 +31,12 @@
         <activity
             android:name=".BudgettSourceCardActivity"
             android:label="@string/LabelBudgettSource" />
-        <activity android:name=".UserSettingsActivity" />
-        <activity android:name=".BudgettReportActivity"></activity>
+        <activity
+            android:name=".UserSettingsActivity"
+            android:label="@string/LabelUserSettings"/>
+        <activity
+            android:name=".BudgettReportActivity"
+            android:label="@string/MenuItemReport"/>
     </application>
 
 </manifest>

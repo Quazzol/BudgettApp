@@ -96,18 +96,20 @@ public class BudgettSourceCardActivity extends AppCompatActivity
             if (this.mBudgettSource.ExistInDB())
             {
                 Globals.DBHelper.updateBudgettSource(this.mBudgettSource);
+                this.finish();
+                return;
             }
-            else
-            {
-                Globals.DBHelper.insertBudgettSource(this.mBudgettSource);
-            }
+            Globals.DBHelper.insertBudgettSource(this.mBudgettSource);
 
-            this.finish();
+            this.CreateBudgettSource();
+            this.mBindingManager.Rebind(this.mBudgettSource);
+            this.mBindingManager.BindValues();
+            Toast.makeText(this, R.string.MSGSaved, Toast.LENGTH_LONG).show();
         }
         catch (Exception ex)
         {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
-            Log.e("Error", ex.getMessage());
+            Log.e(TAG, ex.getMessage());
         }
     }
 
@@ -121,8 +123,8 @@ public class BudgettSourceCardActivity extends AppCompatActivity
         }
         catch (Exception ex)
         {
-            Toast.makeText(this, "Cannot delete source", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "cannot delete source");
+            Toast.makeText(this, R.string.MSGCannotDelete, Toast.LENGTH_SHORT).show();
+            Log.e(TAG, getResources().getString(R.string.MSGCannotDelete));
         }
     }
 }
