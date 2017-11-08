@@ -7,15 +7,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.okanerkan.dll.BindingManager;
 import com.okanerkan.globals.Globals;
-import com.okanerkan.sqlite.model.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettSource;
-import com.okanerkan.sqlite.model.BudgettSourceList;
+import com.okanerkan.sqlite.model_list.BudgettSourceList;
 
 public class BudgettSourceCardActivity extends AppCompatActivity
 {
@@ -34,6 +32,7 @@ public class BudgettSourceCardActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budgett_source_card);
         this.SetProperties();
+        this.CreateBudgettSource();
         this.CreateBindingManager();
         this.AddEventHandlers();
     }
@@ -44,10 +43,13 @@ public class BudgettSourceCardActivity extends AppCompatActivity
         this.mSaveButton = (Button) findViewById(R.id.btnSave);
         this.mDeleteButton = (Button) findViewById(R.id.btnDelete);
         this.mBudgettSourceCode = (EditText) findViewById(R.id.budgettSource);
+    }
 
+    private void CreateBudgettSource()
+    {
         Intent intent = getIntent();
-        int index = intent.getIntExtra("BudgettSourceIndex", -1);
-        this.mBudgettSource = BudgettSourceList.GetList().GetBudgettSourceWithIndex(index);
+        int id = intent.getIntExtra("BudgettSourceID", -1);
+        this.mBudgettSource = BudgettSourceList.GetList().GetBudgettSource(id);
         if (this.mBudgettSource == null)
         {
             this.mDeleteButton.setText(R.string.BtnCancel);
@@ -62,6 +64,7 @@ public class BudgettSourceCardActivity extends AppCompatActivity
             this.mBindingManager = new BindingManager(this.mBudgettSource);
             this.mBindingManager.Add(this.mEntryTypeRadio);
             this.mBindingManager.Add(this.mBudgettSourceCode);
+            this.mBindingManager.Initialize();
         }
         catch (Exception ex)
         {
@@ -110,8 +113,16 @@ public class BudgettSourceCardActivity extends AppCompatActivity
 
     public void OnDeleteButtonClicked(View view)
     {
-        if (this.mBudgettSource != null)
-            Globals.DBHelper.deleteBudgettSource(this.mBudgettSource);
-        this.finish();
+        try
+        {
+            if (this.mBudgettSource.ExistInDB())
+                Globals.DBHelper.deleteBudgettSource(this.mBudgettSource);
+            this.finish();
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(this, "Cannot delete source", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "cannot delete source");
+        }
     }
 }

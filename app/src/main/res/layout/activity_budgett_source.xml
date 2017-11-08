@@ -32,10 +32,53 @@
             android:text="@string/BtnNew"
             style="@style/PositiveButton"/>
 
-        <ListView
-            android:id="@+id/listViewBudgettSource"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="fill_parent" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:layout_weight="1"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Expense"
+                style="@style/LayoutItem"/>
+
+            <ListView
+                android:id="@+id/listViewExpenseBudgettSource"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:layout_weight="1"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Income"
+                style="@style/LayoutItem"/>
+
+            <ListView
+                android:id="@+id/listViewIncomeBudgettSource"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -31,8 +31,8 @@ public class BudgettItem extends ObservableBase implements Serializable, ISpinne
         this(-1,
                 BudgettEntryType.EXPENSE,
                 new Timestamp(System.currentTimeMillis()).getTime(),
-                1,
-                1,
+                0,
+                0,
                 "",
                 0);
     }
@@ -69,19 +69,6 @@ public class BudgettItem extends ObservableBase implements Serializable, ISpinne
     public long getEntryDate()
     {
         return this.mEntryDate;
-    }
-    public void setEntryDate(String _date)
-    {
-        try
-        {
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Date date = dateFormat.parse(_date);
-            this.mEntryDate = new Timestamp(date.getTime()).getTime();
-        }
-        catch (Exception ex)
-        {
-            this.mEntryDate = new Timestamp(System.currentTimeMillis()).getTime();
-        }
     }
     public void setEntryDate(long _timestamp)
     {

@@ -12,25 +12,29 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.okanerkan.dll.BindingManager;
 import com.okanerkan.dll.SideMenuAdapter;
 import com.okanerkan.dll.SideMenuItem;
+import com.okanerkan.dll.Tuple;
 import com.okanerkan.globals.Globals;
 import com.okanerkan.interfaces.IObserver;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 import com.okanerkan.sqlite.model.BudgettItem;
 import com.okanerkan.sqlite.model.BudgettSource;
-import com.okanerkan.sqlite.model.BudgettSourceList;
+import com.okanerkan.sqlite.model_list.BudgettItemList;
+import com.okanerkan.sqlite.model_list.BudgettSourceList;
 import com.okanerkan.sqlite.model.BudgettType;
-import com.okanerkan.sqlite.model.BudgettTypeList;
+import com.okanerkan.sqlite.model_list.BudgettTypeList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText mAmountEdit;
     private ListView mSideMenuListView;
     private DrawerLayout mDrawerLayout;
+    private TextView mMonthlyIncomeText;
+    private TextView mMonthlyExpenseText;
     private ActionBarDrawerToggle mDrawerToggle;
 
     private BudgettItem mBudgettItem;
@@ -53,19 +59,20 @@ public class MainActivity extends AppCompatActivity {
     private BindingManager mBindingManager;
     private static String TAG = "MainActivity";
 
-
     //region Override
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         this.InitializeProperties();
         this.CreateBudgettItem();
         this.CreateBindingManager();
         this.LoadSideMenu();
         this.LoadSpinners();
         this.AddHandlers();
+        this.UpdateMonthlyStatements();
     }
 
     @Override
@@ -100,6 +107,12 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), BudgettReportActivity.class);
             startActivity(intent);
         }
+        else if (id == R.id.menuItemFacebook)
+        {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("https://www.facebook.com/Budgett-App-657157924468286/"));
+            startActivity(intent);
+        }
 
         if (this.mDrawerToggle.onOptionsItemSelected(item))
             return true;
@@ -121,12 +134,15 @@ public class MainActivity extends AppCompatActivity {
         this.mAmountEdit = (EditText) findViewById(R.id.txtAmount);
         this.mSideMenuListView = (ListView) findViewById(R.id.listViewSideMenu);
         this.mDrawerLayout = (DrawerLayout) findViewById(R.id.MainLayout);
+        this.mMonthlyIncomeText = (TextView) findViewById(R.id.lblIncomeValue);
+        this.mMonthlyExpenseText = (TextView) findViewById(R.id.lblExpenseValue);
         this.mDrawerToggle = new ActionBarDrawerToggle(this, this.mDrawerLayout, R.string.BtnNew, R.string.BtnCancel);
     }
 
     private void CreateBudgettItem()
     {
         this.mBudgettItem = new BudgettItem();
+        this.mBudgettItem.AddObserver(new BudgettItemObserver(this));
     }
 
     private void CreateBindingManager()
@@ -139,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
             this.mBindingManager.Add(this.mSourceSpinner);
             this.mBindingManager.Add(this.mTypeSpinner);
             this.mBindingManager.Add(this.mAmountEdit);
+            this.mBindingManager.Initialize();
         }
         catch (Exception ex)
         {
@@ -158,11 +175,13 @@ public class MainActivity extends AppCompatActivity {
         TypedArray menuIcons = this.getResources().obtainTypedArray(R.array.SideMenuIconList);
 
         this.mMenuItems = new ArrayList<SideMenuItem>();
+        /*
         this.mMenuItems.add(new SideMenuItem(menuIcons.getResourceId(0, 0), getResources().getString(R.string.MenuItemBudgettSource)));
         this.mMenuItems.add(new SideMenuItem(menuIcons.getResourceId(1, 0), getResources().getString(R.string.MenuItemBudgettType)));
         this.mMenuItems.add(new SideMenuItem(menuIcons.getResourceId(2, 0), getResources().getString(R.string.MenuItemReport)));
         this.mMenuItems.add(new SideMenuItem(menuIcons.getResourceId(0, 0), getResources().getString(R.string.MenuItemFacebook)));
         this.mMenuItems.add(new SideMenuItem(menuIcons.getResourceId(3, 0), getResources().getString(R.string.MenuItemWebsite)));
+        */
 
         this.mSideMenuListView.setAdapter(new SideMenuAdapter(this.mMenuItems, getApplicationContext()));
         this.mDrawerToggle.syncState();
@@ -202,7 +221,26 @@ public class MainActivity extends AppCompatActivity {
                 OnSaveButtonClicked();
             }
         });
-        this.mBudgettItem.AddObserver(new BudgettItemObserver(this));
+    }
+
+    private void UpdateMonthlyStatements()
+    {
+        Tuple<Double, Double> incExp = new BudgettItemList().GetMonthlyStatements();
+        this.mMonthlyIncomeText.setText(String.format("%.2f", incExp.x));
+        this.mMonthlyExpenseText.setText(String.format("%.2f", incExp.y));
+    }
+
+    private void HideSoftKeyboard()
+    {
+        View view = this.getCurrentFocus();
+        if (view != null)
+        {
+            InputMethodManager imm = (InputMethodManager)getSystemService(this.INPUT_METHOD_SERVICE);
+            if (imm != null)
+            {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }
     }
     //endregion
 
@@ -245,6 +283,11 @@ public class MainActivity extends AppCompatActivity {
         try
         {
             this.CreateBudgettItem();
+            this.mBindingManager.Rebind(this.mBudgettItem);
+            this.mBindingManager.BindValues();
+            this.LoadSpinners();
+            this.mResetButton.requestFocus();
+            this.HideSoftKeyboard();
         }
         catch (Exception ex)
         {
@@ -258,6 +301,8 @@ public class MainActivity extends AppCompatActivity {
         try
         {
             Globals.DBHelper.insertBudgettItem(this.mBudgettItem);
+            this.UpdateMonthlyStatements();
+            this.OnResetButtonClicked();
         }
         catch (Exception ex)
         {

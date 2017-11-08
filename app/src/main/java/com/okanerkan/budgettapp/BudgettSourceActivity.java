@@ -9,11 +9,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.okanerkan.sqlite.model.BudgettSourceList;
+import com.okanerkan.sqlite.model.BudgettEntryType;
+import com.okanerkan.sqlite.model.BudgettSource;
+import com.okanerkan.sqlite.model_list.BudgettSourceList;
 
 public class BudgettSourceActivity extends AppCompatActivity
 {
-    ListView mListView;
+    ListView mExpenseListView;
+    ListView mIncomeListView;
     Button mNewButton;
 
     @Override
@@ -21,9 +24,10 @@ public class BudgettSourceActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budgett_source);
-        this.mListView = (ListView) findViewById(R.id.listViewBudgettSource);
+        this.mExpenseListView = (ListView) findViewById(R.id.listViewExpenseBudgettSource);
+        this.mIncomeListView = (ListView) findViewById(R.id.listViewIncomeBudgettSource);
         this.mNewButton = (Button) findViewById(R.id.btnNew);
-        this.CreateListView();
+        this.CreateListViews();
         this.AddHandlers();
     }
 
@@ -31,19 +35,31 @@ public class BudgettSourceActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        this.CreateListView();
+        this.CreateListViews();
     }
 
-    private void CreateListView()
+    private void CreateListViews()
     {
         try
         {
-            if (this.mListView == null) return;
+            if (this.mIncomeListView == null || this.mExpenseListView == null)
+            {
+                return;
+            }
 
-            this.mListView.setAdapter(new ArrayAdapter<>(
-                    this,
+            ArrayAdapter<BudgettSource> expenseSourceAdapter = new ArrayAdapter<BudgettSource>(this,
                     android.R.layout.simple_list_item_1,
-                    BudgettSourceList.GetList().GetBudgettSourceNames()));
+                    BudgettSourceList.GetList().GetBudgettSourceList(BudgettEntryType.EXPENSE));
+
+            expenseSourceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            this.mExpenseListView.setAdapter(expenseSourceAdapter);
+
+            ArrayAdapter<BudgettSource> incomeSourceAdapter = new ArrayAdapter<BudgettSource>(this,
+                    android.R.layout.simple_list_item_1,
+                    BudgettSourceList.GetList().GetBudgettSourceList(BudgettEntryType.INCOME));
+
+            incomeSourceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            this.mIncomeListView.setAdapter(incomeSourceAdapter);
         }
         catch (Exception ex)
         {
@@ -53,10 +69,16 @@ public class BudgettSourceActivity extends AppCompatActivity
 
     private void AddHandlers()
     {
-        this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        this.mExpenseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                OpenCard(i);
+                OpenCard((ListView) adapterView, i);
+            }
+        });
+        this.mIncomeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                OpenCard((ListView) adapterView, i);
             }
         });
         this.mNewButton.setOnClickListener(new View.OnClickListener() {
@@ -67,10 +89,32 @@ public class BudgettSourceActivity extends AppCompatActivity
         });
     }
 
+    private void OpenCard(ListView _view, int _index)
+    {
+        if (_view == null)
+        {
+            return;
+        }
+
+        ArrayAdapter adapter = (ArrayAdapter) _view.getAdapter();
+        if (adapter == null)
+        {
+            return;
+        }
+
+        BudgettSource source = (BudgettSource) adapter.getItem(_index);
+        if (source == null)
+        {
+            return;
+        }
+
+        this.OpenCard(source.getID());
+    }
+
     private void OpenCard(int _id)
     {
         Intent intent = new Intent(getApplicationContext(), BudgettSourceCardActivity.class);
-        intent.putExtra("BudgettSourceIndex", _id);
+        intent.putExtra("BudgettSourceID", _id);
         startActivity(intent);
     }
 }

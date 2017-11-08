@@ -1,8 +1,9 @@
-package com.okanerkan.sqlite.model;
+package com.okanerkan.sqlite.model_list;
 
 import com.okanerkan.globals.Globals;
+import com.okanerkan.sqlite.model.BudgettEntryType;
+import com.okanerkan.sqlite.model.BudgettSource;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -39,12 +40,15 @@ public class BudgettSourceList
         this.LoadListFromDB();
     }
 
-    public ArrayList<String> GetBudgettSourceNames()
+    public ArrayList<String> GetBudgettSourceNames(BudgettEntryType _entryType)
     {
         ArrayList<String> names = new ArrayList<>();
         for (BudgettSource source: this.mList)
         {
-            names.add(source.getSourceCode());
+            if (source.getEntryType() == _entryType)
+            {
+                names.add(source.getSourceCode());
+            }
         }
         return names;
     }

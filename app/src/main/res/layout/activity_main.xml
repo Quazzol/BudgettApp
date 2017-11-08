@@ -183,6 +183,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:layout_weight="2">
 
                     <RadioGroup
@@ -234,6 +236,7 @@
                         android:textAlignment="textEnd"
                         android:tag="Amount"
                         android:hint="0.00"
+                        android:selectAllOnFocus="true"
                         style="@style/LayoutControl" />
 
                 </LinearLayout>
@@ -253,6 +256,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/BtnReset"
                     android:layout_weight="2"
+                    android:focusableInTouchMode="true"
                     style="@style/NegativeButton"/>
 
                 <Button
@@ -261,6 +265,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/BtnSave"
                     android:layout_weight="1"
+                    android:focusableInTouchMode="true"
                     style="@style/PositiveButton"/>
 
             </LinearLayout>

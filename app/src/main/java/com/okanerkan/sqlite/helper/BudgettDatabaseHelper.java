@@ -11,9 +11,9 @@ import com.okanerkan.exceptions.ValidationException;
 import com.okanerkan.sqlite.model.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettItem;
 import com.okanerkan.sqlite.model.BudgettSource;
-import com.okanerkan.sqlite.model.BudgettSourceList;
+import com.okanerkan.sqlite.model_list.BudgettSourceList;
 import com.okanerkan.sqlite.model.BudgettType;
-import com.okanerkan.sqlite.model.BudgettTypeList;
+import com.okanerkan.sqlite.model_list.BudgettTypeList;
 
 import java.util.ArrayList;
 
@@ -35,40 +35,43 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
     private static final String KEY_ID = "id";
     private static final String KEY_ENTRY_TYPE = "entry_type";
 
-    // SOURCE Table - column nmaes
+    // SOURCE Table - column names
     private static final String KEY_SOURCE_CODE = "source_code";
 
     // TYPE Table - column names
     private static final String KEY_TYPE_CODE = "type_code";
 
     // BUDGETT_ITEM Table - column names
-    private static final String KEY_ITEM_ENTRY_DATE = "date";
-    private static final String KEY_ITEM_SOURCE_ID = "source_id";
-    private static final String KEY_ITEM_TYPE_ID = "type_id";
-    private static final String KEY_ITEM_NOTE = "note";
-    private static final String KEY_ITEM_AMOUNT = "amount";
+    public static final String KEY_ITEM_ENTRY_DATE = "date";
+    public static final String KEY_ITEM_SOURCE_ID = "source_id";
+    public static final String KEY_ITEM_TYPE_ID = "type_id";
+    public static final String KEY_ITEM_NOTE = "note";
+    public static final String KEY_ITEM_AMOUNT = "amount";
 
-    // Table Create Statements
+    // Source table create statement
     private static final String CREATE_TABLE_SOURCE = "CREATE TABLE "
             + TABLE_SOURCE + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
             + KEY_ENTRY_TYPE + " BOOLEAN,"
             + KEY_SOURCE_CODE + " TEXT UNIQUE)";
 
-    // Tag table create statement
+    // Type table create statement
     private static final String CREATE_TABLE_TYPE = "CREATE TABLE " + TABLE_TYPE
             + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
             + KEY_ENTRY_TYPE + " BOOLEAN,"
             + KEY_TYPE_CODE + " TEXT UNIQUE)";
 
-    // todo_tag table create statement
+    // BudgettItem table create statement
     private static final String CREATE_TABLE_BUDGETT_ITEM = "CREATE TABLE "
-            + TABLE_BUDGETT_ITEM + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+            + TABLE_BUDGETT_ITEM
+            + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
             + KEY_ENTRY_TYPE + " BOOLEAN,"
             + KEY_ITEM_ENTRY_DATE + " LONG,"
             + KEY_ITEM_SOURCE_ID + " INTEGER,"
             + KEY_ITEM_TYPE_ID + " INTEGER,"
             + KEY_ITEM_NOTE + " VARCHAR,"
-            + KEY_ITEM_AMOUNT + " DOUBLE)";
+            + KEY_ITEM_AMOUNT + " DOUBLE,"
+            + "FOREIGN KEY(" + KEY_ITEM_SOURCE_ID + ") REFERENCES " + TABLE_SOURCE + "(" + KEY_ID + "),"
+            + "FOREIGN KEY(" + KEY_ITEM_TYPE_ID + ") REFERENCES " + TABLE_TYPE + "(" + KEY_ID + "))";
 
     public BudgettDatabaseHelper(Context context)
     {
@@ -86,10 +89,32 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
+        this.DropTables(db);
+        onCreate(db);
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion)
+    {
+        this.DropTables(db);
+        onCreate(db);
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db)
+    {
+        super.onOpen(db);
+        if (!db.isReadOnly())
+        {
+            db.execSQL("PRAGMA foreign_keys='ON';");
+        }
+    }
+
+    private void DropTables(SQLiteDatabase db)
+    {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUDGETT_ITEM);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SOURCE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TYPE);
-        onCreate(db);
     }
 
     // ------------------------ "budgett_type" table methods ----------------//
@@ -120,8 +145,6 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
     {
         ArrayList<BudgettType> types = new ArrayList<BudgettType>();
         String selectQuery = "SELECT * FROM " + TABLE_TYPE;
-
-        Log.e(LOG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -193,8 +216,6 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
     {
         ArrayList<BudgettSource> sources = new ArrayList<BudgettSource>();
         String selectQuery = "SELECT * FROM " + TABLE_SOURCE;
-
-        Log.e(LOG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -282,10 +303,8 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
         String selectQuery = "SELECT  * FROM " + TABLE_BUDGETT_ITEM;
         if (filter != null)
         {
-            selectQuery += filter;
+            selectQuery += " " + filter;
         }
-
-        Log.e(LOG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);

@@ -1,6 +1,8 @@
-package com.okanerkan.sqlite.model;
+package com.okanerkan.sqlite.model_list;
 
 import com.okanerkan.globals.Globals;
+import com.okanerkan.sqlite.model.BudgettEntryType;
+import com.okanerkan.sqlite.model.BudgettType;
 
 import java.util.ArrayList;
 

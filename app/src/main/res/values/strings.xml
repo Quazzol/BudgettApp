@@ -17,7 +17,7 @@
 
     <string name="LabelBudgettSource">BUDGETT Source</string>
     <string name="LabelBudgettType">BUDGETT Type</string>
-    <string name="LabelBudgettSources">BUDGETT Source Lİst</string>
+    <string name="LabelBudgettSources">BUDGETT Source List</string>
     <string name="LabelBudgettTypes">BUDGETT Type List</string>
     <string name="LabelLogin">BUDGETT Login</string>
     <string name="PickADate">Pick a Date</string>

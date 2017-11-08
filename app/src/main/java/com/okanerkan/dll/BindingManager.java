@@ -53,10 +53,20 @@ public class BindingManager implements IObserver
     //region Methods
     public void Initialize()
     {
+        this.BindValues();
+    }
+
+    public void BindValues()
+    {
         for(Map.Entry<View, String> kvp : this.mViewList.entrySet())
         {
-            kvp.getKey().per
+            this.Update(kvp.getValue());
         }
+    }
+
+    public void Rebind(IObservable _observable)
+    {
+        this.mObservable = _observable;
     }
 
     public void Add(View _view) throws Exception
@@ -173,7 +183,12 @@ public class BindingManager implements IObserver
         else if (_view instanceof Spinner)
         {
             Spinner spinner = (Spinner) _view;
-            spinner.setSelection(((ArrayAdapter)spinner.getAdapter()).getPosition(_value));
+            ArrayAdapter adapter = (ArrayAdapter)spinner.getAdapter();
+            if (adapter == null || _value == null)
+            {
+                return;
+            }
+            spinner.setSelection(adapter.getPosition(_value));
         }
         else if (_view instanceof RadioGroup)
         {
