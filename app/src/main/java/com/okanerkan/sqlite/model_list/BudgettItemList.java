@@ -18,6 +18,7 @@ public class BudgettItemList
 {
     public BudgettItemList()
     {
+        this.mList = new ArrayList<>();
     }
 
     //region Members
@@ -29,10 +30,15 @@ public class BudgettItemList
     //region Methods
 
     // TODO Implement filter classes and use them
-    public ArrayList<BudgettItem> GetItemList(String _filter)
+
+    public ArrayList<BudgettItem> GetItemList()
+    {
+        return this.mList;
+    }
+
+    public void LoadList(String _filter)
     {
         this.mList = Globals.DBHelper.getAllBudgettItem(_filter);
-        return this.mList;
     }
 
     public Tuple<Double, Double> GetMonthlyStatements()

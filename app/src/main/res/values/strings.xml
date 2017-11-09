@@ -14,6 +14,7 @@
     <string name="BtnReset">Reset</string>
     <string name="BtnNew">New</string>
     <string name="BtnSet">Set</string>
+    <string name="SpinnerCurrencyCode">Currency Code</string>
 
     <string name="LabelBudgettSource">BUDGETT Source</string>
     <string name="LabelBudgettType">BUDGETT Type</string>

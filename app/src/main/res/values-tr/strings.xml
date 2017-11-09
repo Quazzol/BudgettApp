@@ -37,4 +37,5 @@
     <string name="Mail">e-posta</string>
     <string name="SideMenuOpen">Menüyü Aç</string>
     <string name="SideMenuClose">Menüyü Kapat</string>
+    <string name="SpinnerCurrencyCode">Para Birimi</string>
 </resources>
