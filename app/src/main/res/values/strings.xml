@@ -31,20 +31,19 @@
     <string name="MenuItemReport">Reports</string>
     <string name="MenuItemWebsite">Website</string>
     <string name="MenuItemSettings">Settings</string>
+    <string name="MenuGroupContact">Contact</string>
+    <string name="SideMenuOpen">Open Menu</string>
+    <string name="SideMenuClose">Close Menu</string>
 
     <string name="Username">Username</string>
     <string name="Password">Password</string>
+    <string name="Mail">e-mail</string>
+    <string name="MailAddress" translatable="false">bilgi@okanerkan.com</string>
 
     <string name="Income">Income</string>
     <string name="Expense">Expense</string>
 
-    <array name="SideMenuIconList">
-        <item name="facebook">@drawable/facebook</item>
-        <item name="twitter">@drawable/twitter</item>
-        <item name="google">@drawable/google_plus</item>
-        <item name="instagram">@drawable/instagram</item>
-    </array>
-
     <string name="MSGCannotDelete">Cannot be deleted</string>
     <string name="MSGSaved">Save successful</string>
+
 </resources>

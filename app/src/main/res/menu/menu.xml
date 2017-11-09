@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menuItemBudgettSource" android:title="@string/MenuItemBudgettSource" />
-    <item android:id="@+id/menuItemBudgettType" android:title="@string/MenuItemBudgettType" />
-    <item android:id="@+id/menuItemReport" android:title="@string/MenuItemReport" />
-    <item android:id="@+id/menuItemFacebook" android:title="@string/MenuItemFacebook" />
-    <item android:id="@+id/menuItemWebsite" android:title="@string/MenuItemWebsite" />
-    <item android:id="@+id/menuItemSettings" android:title="@string/MenuItemSettings" />
-</menu>

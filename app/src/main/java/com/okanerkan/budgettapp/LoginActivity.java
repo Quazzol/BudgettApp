@@ -19,7 +19,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (!username.equals(""))
         {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), BudgettAppActivity.class);
             startActivity(intent);
         }
     }
@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         {
             SharedPreferences prefs = this.getSharedPreferences("com.okanerkan.budgettapp", MODE_PRIVATE);
             prefs.edit().putString("Username", username).apply();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), BudgettAppActivity.class);
             startActivity(intent);
         }
     }

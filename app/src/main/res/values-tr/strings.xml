@@ -33,4 +33,8 @@
     <string name="MSGSaved">Kayıt başarılı</string>
     <string name="LabelReports">BUDGETT Rapor</string>
     <string name="LabelUserSettings">BUDGETT Ayarlar</string>
+    <string name="MenuGroupContact">İletişim</string>
+    <string name="Mail">e-posta</string>
+    <string name="SideMenuOpen">Menüyü Aç</string>
+    <string name="SideMenuClose">Menüyü Kapat</string>
 </resources>

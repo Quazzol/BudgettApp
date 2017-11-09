@@ -27,28 +27,6 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/btnNew"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/BtnNew"
-                android:layout_weight="2"
-                style="@style/PositiveButton"/>
-
-            <Button
-                android:id="@+id/btnCancel"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/BtnCancel"
-                android:layout_weight="1"
-                style="@style/NegativeButton"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@android:drawable/dialog_holo_light_frame"
@@ -92,6 +70,28 @@
                 android:id="@+id/listViewIncomeBudgettSource"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/BtnCancel"
+                android:layout_weight="2"
+                style="@style/NegativeButton"/>
+
+            <Button
+                android:id="@+id/btnNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/BtnNew"
+                android:layout_weight="1"
+                style="@style/PositiveButton"/>
 
         </LinearLayout>
 

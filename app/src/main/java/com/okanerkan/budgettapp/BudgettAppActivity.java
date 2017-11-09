@@ -1,46 +1,49 @@
 package com.okanerkan.budgettapp;
 
 import android.content.Intent;
-import android.content.res.TypedArray;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.util.Log;
+import android.view.View;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.okanerkan.dll.BindingManager;
-import com.okanerkan.dll.SideMenuAdapter;
-import com.okanerkan.dll.SideMenuItem;
 import com.okanerkan.dll.Tuple;
 import com.okanerkan.globals.Globals;
 import com.okanerkan.interfaces.IObserver;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 import com.okanerkan.sqlite.model.BudgettItem;
 import com.okanerkan.sqlite.model.BudgettSource;
+import com.okanerkan.sqlite.model.BudgettType;
 import com.okanerkan.sqlite.model_list.BudgettItemList;
 import com.okanerkan.sqlite.model_list.BudgettSourceList;
-import com.okanerkan.sqlite.model.BudgettType;
 import com.okanerkan.sqlite.model_list.BudgettTypeList;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class BudgettAppActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener
+{
 
+    //region Members
     private Button mSaveButton;
     private Button mResetButton;
     private RadioGroup mEntryTypeRadio;
@@ -48,28 +51,28 @@ public class MainActivity extends AppCompatActivity {
     private Spinner mSourceSpinner;
     private Spinner mTypeSpinner;
     private EditText mAmountEdit;
-    private ListView mSideMenuListView;
-    private DrawerLayout mDrawerLayout;
     private TextView mMonthlyIncomeText;
     private TextView mMonthlyExpenseText;
-    private ActionBarDrawerToggle mDrawerToggle;
+    private Toolbar mToolbar;
 
     private BudgettItem mBudgettItem;
-    private List<SideMenuItem> mMenuItems;
     private BindingManager mBindingManager;
-    private static String TAG = "MainActivity";
+    private String mUserCurrencyCode = "$";
+    private static String TAG = "BudgettAppActivity";
+    //endregion
 
     //region Override
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_budgett_app);
 
         this.InitializeProperties();
         this.CreateBudgettItem();
         this.CreateBindingManager();
-        this.LoadSideMenu();
+        //this.CreateFloatingButton();
+        this.CreateSideMenu();
         this.LoadSpinners();
         this.AddHandlers();
         this.UpdateMonthlyStatements();
@@ -83,9 +86,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed()
+    {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START))
+        {
+            drawer.closeDrawer(GravityCompat.START);
+        } else
+        {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        this.getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.budgett_app, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -98,8 +114,19 @@ public class MainActivity extends AppCompatActivity {
         {
             Intent intent = new Intent(getApplicationContext(), UserSettingsActivity.class);
             startActivity(intent);
+            return true;
         }
-        else if (id == R.id.menuItemBudgettSource)
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        if (id == R.id.menuItemBudgettSource)
         {
             Intent intent = new Intent(getApplicationContext(), BudgettSourceActivity.class);
             startActivity(intent);
@@ -120,11 +147,16 @@ public class MainActivity extends AppCompatActivity {
             intent.setData(Uri.parse("https://www.facebook.com/Budgett-App-657157924468286/"));
             startActivity(intent);
         }
+        else if (id == R.id.menuItemWebsite)
+        {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("http://www.okanerkan.com"));
+            startActivity(intent);
+        }
 
-        if (this.mDrawerToggle.onOptionsItemSelected(item))
-            return true;
-
-        return super.onOptionsItemSelected(item);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
     //endregion
 
@@ -139,17 +171,18 @@ public class MainActivity extends AppCompatActivity {
         this.mSourceSpinner = (Spinner) findViewById(R.id.spnBudgettSource);
         this.mTypeSpinner = (Spinner) findViewById(R.id.spnExpenseType);
         this.mAmountEdit = (EditText) findViewById(R.id.txtAmount);
-        this.mSideMenuListView = (ListView) findViewById(R.id.listViewSideMenu);
-        this.mDrawerLayout = (DrawerLayout) findViewById(R.id.MainLayout);
         this.mMonthlyIncomeText = (TextView) findViewById(R.id.lblIncomeValue);
         this.mMonthlyExpenseText = (TextView) findViewById(R.id.lblExpenseValue);
-        this.mDrawerToggle = new ActionBarDrawerToggle(this, this.mDrawerLayout, R.string.BtnNew, R.string.BtnCancel);
+
+        SharedPreferences prefs = this.getSharedPreferences("com.okanerkan.budgettapp", MODE_PRIVATE);
+        String currencyCode = prefs.getString("CurrencyCode", "");
+        this.mUserCurrencyCode = currencyCode.isEmpty() ? "$" : currencyCode;
     }
 
     private void CreateBudgettItem()
     {
         this.mBudgettItem = new BudgettItem();
-        this.mBudgettItem.AddObserver(new BudgettItemObserver(this));
+        this.mBudgettItem.AddObserver(new BudgettAppActivity.BudgettItemObserver(this));
     }
 
     private void CreateBindingManager()
@@ -170,31 +203,34 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void LoadSideMenu()
+    private void CreateFloatingButton()
     {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabSendMail);
+        fab.setOnClickListener(new View.OnClickListener()
         {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+            @Override
+            public void onClick(View view)
+            {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+    }
 
-        TypedArray menuIcons = this.getResources().obtainTypedArray(R.array.SideMenuIconList);
+    private void CreateSideMenu()
+    {
+        this.mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(this.mToolbar);
 
-        this.mMenuItems = new ArrayList<SideMenuItem>();
-        /*
-        this.mMenuItems.add(new SideMenuItem(menuIcons.getResourceId(0, 0), getResources().getString(R.string.MenuItemBudgettSource)));
-        this.mMenuItems.add(new SideMenuItem(menuIcons.getResourceId(1, 0), getResources().getString(R.string.MenuItemBudgettType)));
-        this.mMenuItems.add(new SideMenuItem(menuIcons.getResourceId(2, 0), getResources().getString(R.string.MenuItemReport)));
-        this.mMenuItems.add(new SideMenuItem(menuIcons.getResourceId(0, 0), getResources().getString(R.string.MenuItemFacebook)));
-        this.mMenuItems.add(new SideMenuItem(menuIcons.getResourceId(3, 0), getResources().getString(R.string.MenuItemWebsite)));
-        */
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, this.mToolbar, R.string.SideMenuOpen, R.string.SideMenuClose);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
-        this.mSideMenuListView.setAdapter(new SideMenuAdapter(this.mMenuItems, getApplicationContext()));
-        this.mDrawerToggle.syncState();
-        this.mDrawerLayout.addDrawerListener(this.mDrawerToggle);
-
-        menuIcons.recycle();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navViewSideMenu);
+        navigationView.setItemIconTintList(null);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     private void LoadSpinners()
@@ -233,9 +269,13 @@ public class MainActivity extends AppCompatActivity {
     private void UpdateMonthlyStatements()
     {
         Tuple<Double, Double> incExp = new BudgettItemList().GetMonthlyStatements();
-        this.mMonthlyIncomeText.setText(String.format("%.2f", incExp.x));
-        this.mMonthlyExpenseText.setText(String.format("%.2f", incExp.y));
+        this.mMonthlyIncomeText.setText(String.format(Locale.getDefault(), "%.2f %s", incExp.x, this.mUserCurrencyCode));
+        this.mMonthlyExpenseText.setText(String.format(Locale.getDefault(),"%.2f %s", incExp.y, this.mUserCurrencyCode));
     }
+
+    //endregion
+
+    //region Methods
 
     private void HideSoftKeyboard()
     {
@@ -249,42 +289,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     //endregion
 
     //region EventHandlers
-    public void OnSideMenuItemClicked(int position)
-    {
-        String title = this.mMenuItems.get(position).getTitle();
-
-        if (title.equals(this.getResources().getString(R.string.MenuItemBudgettSource)))
-        {
-            Intent intent = new Intent(getApplicationContext(), BudgettSourceActivity.class);
-            startActivity(intent);
-        }
-        else if (title.equals(this.getResources().getString(R.string.MenuItemBudgettType)))
-        {
-            Intent intent = new Intent(getApplicationContext(), BudgettTypeActivity.class);
-            startActivity(intent);
-        }
-        else if (title.equals(this.getResources().getString(R.string.MenuItemReport)))
-        {
-        }
-        else if (title.equals(this.getResources().getString(R.string.MenuItemFacebook)))
-        {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse("https://www.facebook.com/Budgett-App-657157924468286/"));
-            startActivity(intent);
-        }
-        else if (title.equals(this.getResources().getString(R.string.MenuItemWebsite)))
-        {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse("http://www.okanerkan.com"));
-            startActivity(intent);
-        }
-
-        this.mDrawerLayout.closeDrawer(this.mSideMenuListView);
-    }
-
     public void OnResetButtonClicked()
     {
         try
@@ -321,14 +329,14 @@ public class MainActivity extends AppCompatActivity {
     //endregion
 
     //region BudgettItemObserver
-    public class BudgettItemObserver implements IObserver
+    private class BudgettItemObserver implements IObserver
     {
-        public BudgettItemObserver(MainActivity _parent)
+        public BudgettItemObserver(BudgettAppActivity _parent)
         {
             this.mParent = _parent;
         }
 
-        private MainActivity mParent;
+        private BudgettAppActivity mParent;
 
         @Override
         public void Update(String propertyName)
