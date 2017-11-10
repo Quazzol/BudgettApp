@@ -1,6 +1,7 @@
 package com.okanerkan.dll;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.okanerkan.budgettapp.R;
+import com.okanerkan.globals.Globals;
+import com.okanerkan.sqlite.model.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettItem;
 import com.okanerkan.sqlite.model_list.BudgettItemList;
+import com.okanerkan.sqlite.model_list.BudgettSourceList;
+import com.okanerkan.sqlite.model_list.BudgettTypeList;
 
 import org.w3c.dom.Text;
+
+import java.util.Locale;
 
 /**
  * Created by Quazzol on 9.11.2017.
@@ -22,12 +29,17 @@ public class ReportViewAdapter extends BaseAdapter
 {
     private Context mContext;
     private BudgettItemList mList;
+    private String mUserCurrencyCode = "$";
 
     public ReportViewAdapter(Context _context)
     {
         super();
         this.mContext = _context;
         this.mList = new BudgettItemList();
+
+        SharedPreferences prefs = this.mContext.getSharedPreferences("com.okanerkan.budgettapp", this.mContext.MODE_PRIVATE);
+        String currencyCode = prefs.getString("CurrencyCode", "");
+        this.mUserCurrencyCode = currencyCode.isEmpty() ? "$" : currencyCode;
     }
 
     @Override
@@ -64,7 +76,11 @@ public class ReportViewAdapter extends BaseAdapter
         final TextView typeTextView = (TextView) convertView.findViewById(R.id.txtType);
         final TextView amountTextView = (TextView) convertView.findViewById(R.id.txtAmount);
 
-        entryDateTextView.setText(item.getEntryDate());
+        entryTypeImageView.setImageResource(item.getEntryType() == BudgettEntryType.INCOME ? R.drawable.up_arrow : R.drawable.down_arrow);
+        entryDateTextView.setText(Globals.GetDateAsString(item.getEntryDate()));
+        sourceTextView.setText(BudgettSourceList.GetList().GetBudgettSource(item.getBudgettSource()).getSourceCode());
+        typeTextView.setText(BudgettTypeList.GetList().GetBudgettType(item.getBudgettType()).getTypeCode());
+        amountTextView.setText(String.format(Locale.getDefault(), "%.2f %s", item.getAmount(), this.mUserCurrencyCode));
 
         return convertView;
     }

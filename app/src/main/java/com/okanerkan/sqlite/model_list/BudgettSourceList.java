@@ -1,10 +1,13 @@
 package com.okanerkan.sqlite.model_list;
 
+import android.support.annotation.NonNull;
+
 import com.okanerkan.globals.Globals;
 import com.okanerkan.sqlite.model.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettSource;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Created by Quazzol on 28.10.2017.
@@ -123,5 +126,17 @@ public class BudgettSourceList
     public void RemoveFromListWithIndex(int _index)
     {
         this.mList.remove(_index);
+    }
+
+    public void Sort()
+    {
+        this.mList.sort(new Comparator<BudgettSource>()
+        {
+            @Override
+            public int compare(BudgettSource s1, BudgettSource s2)
+            {
+                return s1.getSourceCode().compareTo(s2.getSourceCode());
+            }
+        });
     }
 }

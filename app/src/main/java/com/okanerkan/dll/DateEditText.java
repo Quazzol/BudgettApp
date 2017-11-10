@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.DatePicker;
 
 import com.okanerkan.budgettapp.R;
+import com.okanerkan.globals.Globals;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -56,13 +57,7 @@ public class DateEditText extends android.support.v7.widget.AppCompatEditText
     public void SetTimestamp(long _timestamp)
     {
         this.mTimeStamp = _timestamp;
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(this.mTimeStamp);
-        String dateText = String.format(Locale.getDefault(), "%02d/%02d/%04d",
-                                        cal.get(Calendar.DAY_OF_MONTH),
-                                        cal.get(Calendar.MONTH) + 1,
-                                        cal.get(Calendar.YEAR));
-        this.setText(dateText);
+        this.setText(Globals.GetDateAsString(this.mTimeStamp));
     }
 
     private void OnDateEditClicked()

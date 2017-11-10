@@ -2,9 +2,11 @@ package com.okanerkan.sqlite.model_list;
 
 import com.okanerkan.globals.Globals;
 import com.okanerkan.sqlite.model.BudgettEntryType;
+import com.okanerkan.sqlite.model.BudgettSource;
 import com.okanerkan.sqlite.model.BudgettType;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Created by Quazzol on 29.10.2017.
@@ -33,16 +35,7 @@ public class BudgettTypeList
     private void LoadListFromDB()
     {
         this.mList = Globals.DBHelper.getAllBudgettType();
-    }
-
-    public ArrayList<String> GetBudgettTypeNames()
-    {
-        ArrayList<String> names = new ArrayList<>();
-        for (BudgettType type: this.mList)
-        {
-            names.add(type.getTypeCode());
-        }
-        return names;
+        this.Sort();
     }
 
     public int GetBudgettListID(int _index)
@@ -95,10 +88,10 @@ public class BudgettTypeList
         return list;
     }
 
-
     public void AddToList(BudgettType _type)
     {
         this.mList.add(_type);
+        this.Sort();
     }
 
     public void RemoveFromList(BudgettType _type)
@@ -116,5 +109,17 @@ public class BudgettTypeList
     public void RemoveFromListWithIndex(int _index)
     {
         this.mList.remove(_index);
+    }
+
+    private void Sort()
+    {
+        this.mList.sort(new Comparator<BudgettType>()
+        {
+            @Override
+            public int compare(BudgettType t1, BudgettType t2)
+            {
+                return t1.getTypeCode().compareTo(t2.getTypeCode());
+            }
+        });
     }
 }
