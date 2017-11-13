@@ -140,7 +140,7 @@
 
                     <TextView
                         android:id="@+id/lblEntryType"
-                        android:text="@string/RadioGroupBudgettType"
+                        android:text="@string/RadioGroupEntryType"
                         style="@style/LayoutItem" />
 
                     <TextView
@@ -155,7 +155,7 @@
 
                     <TextView
                         android:id="@+id/lblBudgettType"
-                        android:text="@string/SpinnerEditBudgettType"
+                        android:text="@string/SpinnerEditBudgettCategory"
                         style="@style/LayoutItem" />
 
                     <TextView

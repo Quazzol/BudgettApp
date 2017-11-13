@@ -12,7 +12,7 @@
 
         <item
             android:id="@+id/menuItemBudgettType"
-            android:icon="@drawable/budgett_type"
+            android:icon="@drawable/budgett_category"
             android:title="@string/MenuItemBudgettType" />
 
         <item

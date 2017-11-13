@@ -5,15 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.okanerkan.exceptions.ValidationException;
+import com.okanerkan.sqlite.model.BudgettCategory;
 import com.okanerkan.sqlite.model.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettItem;
 import com.okanerkan.sqlite.model.BudgettSource;
 import com.okanerkan.sqlite.model_list.BudgettSourceList;
-import com.okanerkan.sqlite.model.BudgettType;
-import com.okanerkan.sqlite.model_list.BudgettTypeList;
+import com.okanerkan.sqlite.model_list.BudgettCategoryList;
 
 import java.util.ArrayList;
 
@@ -24,11 +23,11 @@ import java.util.ArrayList;
 public class BudgettDatabaseHelper extends SQLiteOpenHelper
 {
     private static final String LOG = "BudgettDatabaseHelper";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "budgett_db";
 
     private static final String TABLE_SOURCE = "budgett_source";
-    private static final String TABLE_TYPE = "budgett_type";
+    private static final String TABLE_CATEGORY = "budgett_category";
     private static final String TABLE_BUDGETT_ITEM = "budgett_item";
 
     // Common column names
@@ -38,13 +37,13 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
     // SOURCE Table - column names
     private static final String KEY_SOURCE_CODE = "source_code";
 
-    // TYPE Table - column names
-    private static final String KEY_TYPE_CODE = "type_code";
+    // CATEGORY Table - column names
+    private static final String KEY_CATEGORY_CODE = "category_code";
 
     // BUDGETT_ITEM Table - column names
     public static final String KEY_ITEM_ENTRY_DATE = "date";
     public static final String KEY_ITEM_SOURCE_ID = "source_id";
-    public static final String KEY_ITEM_TYPE_ID = "type_id";
+    public static final String KEY_ITEM_CATEGORY_ID = "category_id";
     public static final String KEY_ITEM_NOTE = "note";
     public static final String KEY_ITEM_AMOUNT = "amount";
 
@@ -56,13 +55,13 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
             + KEY_SOURCE_CODE + " TEXT NOT NULL,"
             + "UNIQUE (" + KEY_ENTRY_TYPE + "," + KEY_SOURCE_CODE + "))";
 
-    // Type table create statement
+    // Category table create statement
     private static final String CREATE_TABLE_TYPE = "CREATE TABLE "
-            + TABLE_TYPE
+            + TABLE_CATEGORY
             + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
             + KEY_ENTRY_TYPE + " BOOLEAN,"
-            + KEY_TYPE_CODE + " TEXT NOT NULL,"
-            + "UNIQUE (" + KEY_ENTRY_TYPE + "," + KEY_TYPE_CODE + "))";
+            + KEY_CATEGORY_CODE + " TEXT NOT NULL,"
+            + "UNIQUE (" + KEY_ENTRY_TYPE + "," + KEY_CATEGORY_CODE + "))";
 
     // BudgettItem table create statement
     private static final String CREATE_TABLE_BUDGETT_ITEM = "CREATE TABLE "
@@ -71,11 +70,11 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
             + KEY_ENTRY_TYPE + " BOOLEAN,"
             + KEY_ITEM_ENTRY_DATE + " LONG,"
             + KEY_ITEM_SOURCE_ID + " INTEGER,"
-            + KEY_ITEM_TYPE_ID + " INTEGER,"
+            + KEY_ITEM_CATEGORY_ID + " INTEGER,"
             + KEY_ITEM_NOTE + " VARCHAR,"
             + KEY_ITEM_AMOUNT + " DOUBLE,"
             + "FOREIGN KEY(" + KEY_ITEM_SOURCE_ID + ") REFERENCES " + TABLE_SOURCE + "(" + KEY_ID + "),"
-            + "FOREIGN KEY(" + KEY_ITEM_TYPE_ID + ") REFERENCES " + TABLE_TYPE + "(" + KEY_ID + "))";
+            + "FOREIGN KEY(" + KEY_ITEM_CATEGORY_ID + ") REFERENCES " + TABLE_CATEGORY + "(" + KEY_ID + "))";
 
     public BudgettDatabaseHelper(Context context)
     {
@@ -118,37 +117,37 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
     {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUDGETT_ITEM);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SOURCE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TYPE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
     }
 
-    // ------------------------ "budgett_type" table methods ----------------//
+    // ------------------------ "budgett_category" table methods ----------------//
 
-    public long insertBudgettType(BudgettType type) throws Exception
+    public long insertBudgettType(BudgettCategory _category) throws Exception
     {
-        if (!type.ValidateModel())
+        if (!_category.ValidateModel())
         {
-            throw new Exception("BudgettType not valid!");
+            throw new Exception("BudgettCategory not valid!");
         }
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_ENTRY_TYPE, type.getEntryType().getValue());
-        values.put(KEY_TYPE_CODE, type.getTypeCode());
+        values.put(KEY_ENTRY_TYPE, _category.getEntryType().getValue());
+        values.put(KEY_CATEGORY_CODE, _category.getCategoryCode());
 
-        long id = db.insert(TABLE_TYPE, null, values);
+        long id = db.insert(TABLE_CATEGORY, null, values);
         if (id >= 0)
         {
-            BudgettTypeList.GetList().AddToList(type);
-            type.setID((int) id);
+            BudgettCategoryList.GetList().AddToList(_category);
+            _category.setID((int) id);
         }
         return id;
     }
 
-    public ArrayList<BudgettType> getAllBudgettType()
+    public ArrayList<BudgettCategory> getAllBudgettCategory()
     {
-        ArrayList<BudgettType> types = new ArrayList<BudgettType>();
-        String selectQuery = "SELECT * FROM " + TABLE_TYPE;
+        ArrayList<BudgettCategory> types = new ArrayList<BudgettCategory>();
+        String selectQuery = "SELECT * FROM " + TABLE_CATEGORY;
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -156,39 +155,39 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
         cursor.moveToFirst();
         while (!cursor.isAfterLast())
         {
-            BudgettType t = new BudgettType(cursor.getInt((cursor.getColumnIndex(KEY_ID))),
+            BudgettCategory t = new BudgettCategory(cursor.getInt((cursor.getColumnIndex(KEY_ID))),
                     BudgettEntryType.values()[cursor.getInt(cursor.getColumnIndex(KEY_ENTRY_TYPE))],
-                    cursor.getString(cursor.getColumnIndex(KEY_TYPE_CODE)));
+                    cursor.getString(cursor.getColumnIndex(KEY_CATEGORY_CODE)));
             types.add(t);
             cursor.moveToNext();
         }
         return types;
     }
 
-    public int updateBudgettType(BudgettType type) throws Exception
+    public int updateBudgettType(BudgettCategory _category) throws Exception
     {
-        if (!type.ValidateModel())
+        if (!_category.ValidateModel())
         {
-            throw new ValidationException("BudgettType not valid!");
+            throw new ValidationException("BudgettCategory not valid!");
         }
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_ENTRY_TYPE, type.getEntryType().getValue());
-        values.put(KEY_TYPE_CODE, type.getTypeCode());
+        values.put(KEY_ENTRY_TYPE, _category.getEntryType().getValue());
+        values.put(KEY_CATEGORY_CODE, _category.getCategoryCode());
 
-        return db.update(TABLE_TYPE, values, KEY_ID + " = ?",
-                new String[]{String.valueOf(type.getID())});
+        return db.update(TABLE_CATEGORY, values, KEY_ID + " = ?",
+                new String[]{String.valueOf(_category.getID())});
     }
 
-    public void deleteBudgettType(BudgettType type)
+    public void deleteBudgettType(BudgettCategory _category)
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        if (db.delete(TABLE_TYPE, KEY_ID + " = ?", new String[] { String.valueOf(type.getID()) }) > 0)
+        if (db.delete(TABLE_CATEGORY, KEY_ID + " = ?", new String[] { String.valueOf(_category.getID()) }) > 0)
         {
-            BudgettTypeList.GetList().RemoveFromList(type);
+            BudgettCategoryList.GetList().RemoveFromList(_category);
         }
     }
 
@@ -278,7 +277,7 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_ENTRY_TYPE, item.getEntryType().getValue());
         values.put(KEY_ITEM_ENTRY_DATE, item.getEntryDate());
         values.put(KEY_ITEM_SOURCE_ID, item.getBudgettSource());
-        values.put(KEY_ITEM_TYPE_ID, item.getBudgettType());
+        values.put(KEY_ITEM_CATEGORY_ID, item.getBudgettType());
         values.put(KEY_ITEM_NOTE, item.getBudgettNote());
         values.put(KEY_ITEM_AMOUNT, item.getAmount());
 
@@ -320,7 +319,7 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
                     BudgettEntryType.values()[cursor.getInt(cursor.getColumnIndex(KEY_ENTRY_TYPE))],
                     cursor.getLong(cursor.getColumnIndex(KEY_ITEM_ENTRY_DATE)),
                     cursor.getInt(cursor.getColumnIndex(KEY_ITEM_SOURCE_ID)),
-                    cursor.getInt(cursor.getColumnIndex(KEY_ITEM_TYPE_ID)),
+                    cursor.getInt(cursor.getColumnIndex(KEY_ITEM_CATEGORY_ID)),
                     cursor.getString(cursor.getColumnIndex(KEY_ITEM_NOTE)),
                     cursor.getDouble(cursor.getColumnIndex(KEY_ITEM_AMOUNT)));
             items.add(item);
@@ -359,7 +358,7 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
         values.put(KEY_ENTRY_TYPE, item.getEntryType().getValue());
         values.put(KEY_ITEM_ENTRY_DATE, item.getEntryDate());
         values.put(KEY_ITEM_SOURCE_ID, item.getBudgettSource());
-        values.put(KEY_ITEM_TYPE_ID, item.getBudgettType());
+        values.put(KEY_ITEM_CATEGORY_ID, item.getBudgettType());
         values.put(KEY_ITEM_NOTE, item.getBudgettNote());
         values.put(KEY_ITEM_AMOUNT, item.getAmount());
 

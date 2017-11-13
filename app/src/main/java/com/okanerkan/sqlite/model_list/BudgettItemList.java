@@ -36,9 +36,10 @@ public class BudgettItemList
         return this.mList;
     }
 
-    public void LoadList(String _filter)
+    public BudgettItemList LoadList(String _filter)
     {
         this.mList = Globals.DBHelper.getAllBudgettItem(_filter);
+        return this;
     }
 
     public Tuple<Double, Double> GetMonthlyStatements()

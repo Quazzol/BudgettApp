@@ -9,22 +9,22 @@ import java.io.Serializable;
  * Created by OkanErkan on 10.10.2017.
  */
 
-public class BudgettType extends ObservableBase implements Serializable, ISpinnerSource
+public class BudgettCategory extends ObservableBase implements Serializable, ISpinnerSource
 {
     private int mID;
     private int mEntryType;
-    private String mTypeCode;
+    private String mCategoryCode;
 
-    public BudgettType()
+    public BudgettCategory()
     {
         this(-1, BudgettEntryType.EXPENSE, "");
     }
 
-    public BudgettType(int _id, BudgettEntryType _entryType, String _typeValue)
+    public BudgettCategory(int _id, BudgettEntryType _entryType, String _categoryCode)
     {
         this.mID = _id;
         this.mEntryType = _entryType.getValue();
-        this.mTypeCode = _typeValue;
+        this.mCategoryCode = _categoryCode;
     }
 
     public int getID() { return this.mID; }
@@ -39,24 +39,24 @@ public class BudgettType extends ObservableBase implements Serializable, ISpinne
         this.SetValue("EntryType", _entryType);
     }
 
-    public String getTypeCode()
+    public String getCategoryCode()
     {
-        return this.mTypeCode;
+        return this.mCategoryCode;
     }
-    public void setTypeCode(String _type)
+    public void setCategoryCode(String _category)
     {
-        this.SetValue("TypeCode", _type);
+        this.SetValue("CategoryCode", _category);
     }
 
     public boolean ValidateModel()
     {
-        int length = this.mTypeCode.length();
+        int length = this.mCategoryCode.length();
         return length >= 3 && length <= 50;
     }
 
     public String toString()
     {
-        return this.mTypeCode;
+        return this.mCategoryCode;
     }
 
     public Object GetID()

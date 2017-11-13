@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#333"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/LayoutLeftSizeControls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/lblUseDateFilter"
+                android:text="string/CheckBoxDateFilter"
+                style="@style/ReportLayoutItem" />
+
+            <TextView
+                android:id="@+id/lblPreparedDate"
+                android:text="string/SpinnerPreparedDate"
+                style="@style/ReportLayoutItem" />
+
+            <TextView
+                android:id="@+id/lblStartDate"
+                android:text="string/DateEditStartDate"
+                style="@style/ReportLayoutItem" />
+
+            <TextView
+                android:id="@+id/lblEndDate"
+                android:text="string/DateEditEndDate"
+                style="@style/ReportLayoutItem" />
+
+        </LinearLayout>
+
+        <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="#fff" />
+
+        <LinearLayout
+            android:id="@+id/LayoutRightSizeControls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_weight="2"
+            android:layout_marginStart="5dp">
+
+            <Switch
+                android:id="@+id/SwitchUseDateFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="string/UseDateFilter"
+                style="@style/ReportLayoutControl" />
+
+            <Spinner
+                android:id="@+id/SpinnerPreparedDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ReportLayoutControl" />
+
+            <com.okanerkan.dll.DateEditText
+                android:id="@+id/DateEditStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="05/05/2017"
+                style="@style/ReportLayoutControl" />
+
+            <com.okanerkan.dll.DateEditText
+                android:id="@+id/DateEditEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="08/05/2017"
+                style="@style/ReportLayoutControl"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -19,14 +19,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BudgettTypeActivity"
-            android:label="@string/LabelBudgettTypes" />
+            android:name=".BudgettCategoryActivity"
+            android:label="@string/LabelBudgettCategories" />
         <activity
             android:name=".BudgettSourceActivity"
             android:label="@string/LabelBudgettSources" />
         <activity
-            android:name=".BudgettTypeCardActivity"
-            android:label="@string/LabelBudgettType" />
+            android:name=".BudgettCategoryCardActivity"
+            android:label="@string/LabelBudgettCategory" />
         <activity
             android:name=".BudgettSourceCardActivity"
             android:label="@string/LabelBudgettSource" />
@@ -34,11 +34,12 @@
             android:name=".UserSettingsActivity"
             android:label="@string/LabelUserSettings" />
         <activity
-            android:name=".BudgettReportActivity"
-            android:label="@string/MenuItemReport" />
-        <activity
             android:name=".BudgettAppActivity"
             android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BudgettReportActivity"
+            android:label="@string/LabelReports"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

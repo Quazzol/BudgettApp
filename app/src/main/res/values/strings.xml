@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name" translatable="false">BUDGETT APP</string>
-    <string name="RadioGroupBudgettType">Entry Type</string>
+    <string name="RadioGroupEntryType">Entry Type</string>
     <string name="RadioOptionExpense">Expense</string>
     <string name="RadioOptionIncome">Income</string>
     <string name="DateEditBudgettDate">Date</string>
-    <string name="SpinnerEditBudgettType">Type</string>
+    <string name="SpinnerEditBudgettCategory">Category</string>
     <string name="SpinnerEditBudgettSource">Source</string>
+    <string name="SpinnerCurrencyCode">Currency Code</string>
     <string name="NumboxEditBudgettAmount">Amount</string>
     <string name="BtnSave">Save</string>
     <string name="BtnCancel">Cancel</string>
@@ -14,12 +15,11 @@
     <string name="BtnReset">Reset</string>
     <string name="BtnNew">New</string>
     <string name="BtnSet">Set</string>
-    <string name="SpinnerCurrencyCode">Currency Code</string>
 
     <string name="LabelBudgettSource">BUDGETT Source</string>
-    <string name="LabelBudgettType">BUDGETT Type</string>
+    <string name="LabelBudgettCategory">BUDGETT Category</string>
     <string name="LabelBudgettSources">BUDGETT Source List</string>
-    <string name="LabelBudgettTypes">BUDGETT Type List</string>
+    <string name="LabelBudgettCategories">BUDGETT Category List</string>
     <string name="LabelLogin">BUDGETT Login</string>
     <string name="LabelReports">BUDGETT Report</string>
     <string name="LabelUserSettings">BUDGETT Settings</string>
@@ -27,8 +27,8 @@
     <string name="PickADate">Pick a Date</string>
 
     <string name="MenuItemFacebook" translatable="false">Facebook</string>
-    <string name="MenuItemBudgettType">Budgett Type</string>
-    <string name="MenuItemBudgettSource">Budgett Source</string>
+    <string name="MenuItemCategory">Category</string>
+    <string name="MenuItemSource">Source</string>
     <string name="MenuItemReport">Reports</string>
     <string name="MenuItemWebsite">Website</string>
     <string name="MenuItemSettings">Settings</string>

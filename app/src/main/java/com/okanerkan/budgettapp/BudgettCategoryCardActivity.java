@@ -12,27 +12,25 @@ import android.widget.Toast;
 
 import com.okanerkan.dll.BindingManager;
 import com.okanerkan.globals.Globals;
-import com.okanerkan.sqlite.model.BudgettSource;
-import com.okanerkan.sqlite.model.BudgettType;
-import com.okanerkan.sqlite.model_list.BudgettSourceList;
-import com.okanerkan.sqlite.model_list.BudgettTypeList;
+import com.okanerkan.sqlite.model.BudgettCategory;
+import com.okanerkan.sqlite.model_list.BudgettCategoryList;
 
-public class BudgettTypeCardActivity extends AppCompatActivity {
+public class BudgettCategoryCardActivity extends AppCompatActivity {
 
     private Button mSaveButton;
     private Button mDeleteButton;
     private RadioGroup mEntryTypeRadio;
     private EditText mBudgettTypeCode;
-    private BudgettType mBudgettType;
+    private BudgettCategory mBugettCategory;
     private BindingManager mBindingManager;
 
-    private static String TAG = "TypeCard";
+    private static String TAG = "CategoryCard";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_budgett_type_card);
+        setContentView(R.layout.activity_budgett_category_card);
         this.SetProperties();
         this.CreateBudgetType();
         this.CreateBindingManager();
@@ -50,12 +48,12 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
     private void CreateBudgetType()
     {
         Intent intent = getIntent();
-        int id = intent.getIntExtra("BudgettTypeID", -1);
-        this.mBudgettType = BudgettTypeList.GetList().GetBudgettType(id);
-        if (this.mBudgettType == null)
+        int id = intent.getIntExtra("BudgettCategoryID", -1);
+        this.mBugettCategory = BudgettCategoryList.GetList().GetBudgettCategory(id);
+        if (this.mBugettCategory == null)
         {
             this.mDeleteButton.setText(R.string.BtnCancel);
-            this.mBudgettType = new BudgettType();
+            this.mBugettCategory = new BudgettCategory();
         }
     }
 
@@ -63,7 +61,7 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
     {
         try
         {
-            this.mBindingManager = new BindingManager(this.mBudgettType);
+            this.mBindingManager = new BindingManager(this.mBugettCategory);
             this.mBindingManager.Add(this.mEntryTypeRadio);
             this.mBindingManager.Add(this.mBudgettTypeCode);
             this.mBindingManager.Initialize();
@@ -95,17 +93,17 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
     {
         try
         {
-            if (this.mBudgettType.ExistInDB())
+            if (this.mBugettCategory.ExistInDB())
             {
-                Globals.DBHelper.updateBudgettType(this.mBudgettType);
+                Globals.DBHelper.updateBudgettType(this.mBugettCategory);
                 this.finish();
                 return;
             }
-            Globals.DBHelper.insertBudgettType(this.mBudgettType);
+            Globals.DBHelper.insertBudgettType(this.mBugettCategory);
 
             this.CreateBudgetType();
             Toast.makeText(this, R.string.MSGSaved, Toast.LENGTH_LONG).show();
-            this.mBindingManager.Rebind(this.mBudgettType);
+            this.mBindingManager.Rebind(this.mBugettCategory);
             this.mBindingManager.BindValues();
         }
         catch (Exception ex)
@@ -119,8 +117,8 @@ public class BudgettTypeCardActivity extends AppCompatActivity {
     {
         try
         {
-            if (this.mBudgettType != null)
-                Globals.DBHelper.deleteBudgettType(this.mBudgettType);
+            if (this.mBugettCategory != null)
+                Globals.DBHelper.deleteBudgettType(this.mBugettCategory);
             this.finish();
         }
         catch (Exception ex)

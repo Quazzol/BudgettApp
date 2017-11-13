@@ -10,12 +10,10 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.okanerkan.sqlite.model.BudgettEntryType;
-import com.okanerkan.sqlite.model.BudgettSource;
-import com.okanerkan.sqlite.model.BudgettType;
-import com.okanerkan.sqlite.model_list.BudgettSourceList;
-import com.okanerkan.sqlite.model_list.BudgettTypeList;
+import com.okanerkan.sqlite.model.BudgettCategory;
+import com.okanerkan.sqlite.model_list.BudgettCategoryList;
 
-public class BudgettTypeActivity extends AppCompatActivity
+public class BudgettCategoryActivity extends AppCompatActivity
 {
     ListView mExpenseListView;
     ListView mIncomeListView;
@@ -26,7 +24,7 @@ public class BudgettTypeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_budgett_type);
+        setContentView(R.layout.activity_budgett_category);
         this.mExpenseListView = (ListView) findViewById(R.id.listViewExpenseBudgettType);
         this.mIncomeListView = (ListView) findViewById(R.id.listViewIncomeBudgettType);
         this.mNewButton = (Button) findViewById(R.id.btnNew);
@@ -51,16 +49,16 @@ public class BudgettTypeActivity extends AppCompatActivity
                 return;
             }
 
-            ArrayAdapter<BudgettType> expenseSourceAdapter = new ArrayAdapter<BudgettType>(this,
+            ArrayAdapter<BudgettCategory> expenseSourceAdapter = new ArrayAdapter<BudgettCategory>(this,
                     android.R.layout.simple_list_item_1,
-                    BudgettTypeList.GetList().GetBudgettTypeList(BudgettEntryType.EXPENSE));
+                    BudgettCategoryList.GetList().GetBudgettCategoryList(BudgettEntryType.EXPENSE));
 
             expenseSourceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             this.mExpenseListView.setAdapter(expenseSourceAdapter);
 
-            ArrayAdapter<BudgettType> incomeSourceAdapter = new ArrayAdapter<BudgettType>(this,
+            ArrayAdapter<BudgettCategory> incomeSourceAdapter = new ArrayAdapter<BudgettCategory>(this,
                     android.R.layout.simple_list_item_1,
-                    BudgettTypeList.GetList().GetBudgettTypeList(BudgettEntryType.INCOME));
+                    BudgettCategoryList.GetList().GetBudgettCategoryList(BudgettEntryType.INCOME));
 
             incomeSourceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             this.mIncomeListView.setAdapter(incomeSourceAdapter);
@@ -114,19 +112,19 @@ public class BudgettTypeActivity extends AppCompatActivity
             return;
         }
 
-        BudgettType type = (BudgettType) adapter.getItem(_index);
-        if (type == null)
+        BudgettCategory category = (BudgettCategory) adapter.getItem(_index);
+        if (category == null)
         {
             return;
         }
 
-        this.OpenCard(type.getID());
+        this.OpenCard(category.getID());
     }
 
     private void OpenCard(int _id)
     {
-        Intent intent = new Intent(getApplicationContext(), BudgettTypeCardActivity.class);
-        intent.putExtra("BudgettTypeID", _id);
+        Intent intent = new Intent(getApplicationContext(), BudgettCategoryCardActivity.class);
+        intent.putExtra("BudgettCategoryID", _id);
         startActivity(intent);
     }
 }

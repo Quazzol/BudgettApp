@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -32,10 +31,10 @@ import com.okanerkan.interfaces.IObserver;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 import com.okanerkan.sqlite.model.BudgettItem;
 import com.okanerkan.sqlite.model.BudgettSource;
-import com.okanerkan.sqlite.model.BudgettType;
+import com.okanerkan.sqlite.model.BudgettCategory;
 import com.okanerkan.sqlite.model_list.BudgettItemList;
 import com.okanerkan.sqlite.model_list.BudgettSourceList;
-import com.okanerkan.sqlite.model_list.BudgettTypeList;
+import com.okanerkan.sqlite.model_list.BudgettCategoryList;
 
 import java.util.Locale;
 
@@ -53,7 +52,6 @@ public class BudgettAppActivity extends AppCompatActivity
     private EditText mAmountEdit;
     private TextView mMonthlyIncomeText;
     private TextView mMonthlyExpenseText;
-    private Toolbar mToolbar;
 
     private BudgettItem mBudgettItem;
     private BindingManager mBindingManager;
@@ -71,7 +69,6 @@ public class BudgettAppActivity extends AppCompatActivity
         this.InitializeProperties();
         this.CreateBudgettItem();
         this.CreateBindingManager();
-        //this.CreateFloatingButton();
         this.CreateSideMenu();
         this.LoadSpinners();
         this.AddHandlers();
@@ -92,7 +89,8 @@ public class BudgettAppActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START))
         {
             drawer.closeDrawer(GravityCompat.START);
-        } else
+        }
+        else
         {
             super.onBackPressed();
         }
@@ -120,7 +118,6 @@ public class BudgettAppActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item)
     {
@@ -133,7 +130,7 @@ public class BudgettAppActivity extends AppCompatActivity
         }
         else if (id == R.id.menuItemBudgettType)
         {
-            Intent intent = new Intent(getApplicationContext(), BudgettTypeActivity.class);
+            Intent intent = new Intent(getApplicationContext(), BudgettCategoryActivity.class);
             startActivity(intent);
         }
         else if (id == R.id.menuItemReport)
@@ -203,28 +200,14 @@ public class BudgettAppActivity extends AppCompatActivity
         }
     }
 
-    private void CreateFloatingButton()
-    {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabSendMail);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
-
     private void CreateSideMenu()
     {
-        this.mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(this.mToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, this.mToolbar, R.string.SideMenuOpen, R.string.SideMenuClose);
+                this, drawer, toolbar, R.string.SideMenuOpen, R.string.SideMenuClose);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -242,9 +225,9 @@ public class BudgettAppActivity extends AppCompatActivity
         sourceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.mSourceSpinner.setAdapter(sourceAdapter);
 
-        ArrayAdapter<BudgettType> typeAdapter = new ArrayAdapter<BudgettType>(this,
+        ArrayAdapter<BudgettCategory> typeAdapter = new ArrayAdapter<BudgettCategory>(this,
                 android.R.layout.simple_spinner_item,
-                BudgettTypeList.GetList().GetBudgettTypeList(this.mBudgettItem.getEntryType()));
+                BudgettCategoryList.GetList().GetBudgettCategoryList(this.mBudgettItem.getEntryType()));
 
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.mTypeSpinner.setAdapter(typeAdapter);

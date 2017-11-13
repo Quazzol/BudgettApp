@@ -15,9 +15,7 @@ import com.okanerkan.sqlite.model.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettItem;
 import com.okanerkan.sqlite.model_list.BudgettItemList;
 import com.okanerkan.sqlite.model_list.BudgettSourceList;
-import com.okanerkan.sqlite.model_list.BudgettTypeList;
-
-import org.w3c.dom.Text;
+import com.okanerkan.sqlite.model_list.BudgettCategoryList;
 
 import java.util.Locale;
 
@@ -79,7 +77,7 @@ public class ReportViewAdapter extends BaseAdapter
         entryTypeImageView.setImageResource(item.getEntryType() == BudgettEntryType.INCOME ? R.drawable.up_arrow : R.drawable.down_arrow);
         entryDateTextView.setText(Globals.GetDateAsString(item.getEntryDate()));
         sourceTextView.setText(BudgettSourceList.GetList().GetBudgettSource(item.getBudgettSource()).getSourceCode());
-        typeTextView.setText(BudgettTypeList.GetList().GetBudgettType(item.getBudgettType()).getTypeCode());
+        typeTextView.setText(BudgettCategoryList.GetList().GetBudgettCategory(item.getBudgettType()).getCategoryCode());
         amountTextView.setText(String.format(Locale.getDefault(), "%.2f %s", item.getAmount(), this.mUserCurrencyCode));
 
         return convertView;
