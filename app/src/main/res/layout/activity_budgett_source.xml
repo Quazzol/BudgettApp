@@ -81,7 +81,7 @@
                 android:id="@+id/btnCancel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/BtnCancel"
+                android:text="@string/Cancel"
                 android:layout_weight="2"
                 style="@style/NegativeButton"/>
 
@@ -89,7 +89,7 @@
                 android:id="@+id/btnNew"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/BtnNew"
+                android:text="@string/New"
                 android:layout_weight="1"
                 style="@style/PositiveButton"/>
 

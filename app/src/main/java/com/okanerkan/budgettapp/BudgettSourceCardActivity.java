@@ -52,7 +52,7 @@ public class BudgettSourceCardActivity extends AppCompatActivity
         this.mBudgettSource = BudgettSourceList.GetList().GetBudgettSource(id);
         if (this.mBudgettSource == null)
         {
-            this.mDeleteButton.setText(R.string.BtnCancel);
+            this.mDeleteButton.setText(R.string.Cancel);
             this.mBudgettSource = new BudgettSource();
         }
     }

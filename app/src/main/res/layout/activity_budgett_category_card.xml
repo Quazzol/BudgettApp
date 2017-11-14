@@ -30,7 +30,7 @@ tools:context="com.okanerkan.budgettapp.BudgettCategoryCardActivity">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/RadioOptionExpense"
+                android:text="@string/Expense"
                 android:checked="true"
                 android:textSize="20sp"/>
 
@@ -39,14 +39,14 @@ tools:context="com.okanerkan.budgettapp.BudgettCategoryCardActivity">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/RadioOptionIncome"
+                android:text="@string/Income"
                 android:textSize="20sp" />
 
         </RadioGroup>
 
         <EditText
-            android:id="@+id/budgettType"
-            android:tag="TypeCode"
+            android:id="@+id/budgettCategory"
+            android:tag="CategoryCode"
             style="@style/LayoutControl"
             android:inputType="text" />
 
@@ -60,7 +60,7 @@ tools:context="com.okanerkan.budgettapp.BudgettCategoryCardActivity">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="@string/BtnDelete"
+                android:text="@string/Delete"
                 style="@style/NegativeButton"/>
 
             <Button
@@ -68,7 +68,7 @@ tools:context="com.okanerkan.budgettapp.BudgettCategoryCardActivity">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/BtnSave"
+                android:text="@string/Save"
                 style="@style/PositiveButton"/>
 
         </LinearLayout>

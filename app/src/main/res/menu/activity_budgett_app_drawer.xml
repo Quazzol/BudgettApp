@@ -8,12 +8,12 @@
         <item
             android:id="@+id/menuItemBudgettSource"
             android:icon="@drawable/budgett_source"
-            android:title="@string/MenuItemBudgettSource" />
+            android:title="@string/MenuItemSource" />
 
         <item
             android:id="@+id/menuItemBudgettType"
             android:icon="@drawable/budgett_category"
-            android:title="@string/MenuItemBudgettType" />
+            android:title="@string/MenuItemCategory" />
 
         <item
             android:id="@+id/menuItemReport"

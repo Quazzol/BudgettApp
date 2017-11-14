@@ -140,27 +140,27 @@
 
                     <TextView
                         android:id="@+id/lblEntryType"
-                        android:text="@string/RadioGroupEntryType"
+                        android:text="@string/EntryType"
                         style="@style/LayoutItem" />
 
                     <TextView
                         android:id="@+id/lblBudgettDate"
-                        android:text="@string/DateEditBudgettDate"
+                        android:text="@string/Date"
                         style="@style/LayoutItem" />
 
                     <TextView
                         android:id="@+id/lblBudgettSource"
-                        android:text="@string/SpinnerEditBudgettSource"
+                        android:text="@string/Source"
                         style="@style/LayoutItem" />
 
                     <TextView
                         android:id="@+id/lblBudgettType"
-                        android:text="@string/SpinnerEditBudgettCategory"
+                        android:text="@string/Category"
                         style="@style/LayoutItem" />
 
                     <TextView
                         android:id="@+id/lblAmount"
-                        android:text="@string/NumboxEditBudgettAmount"
+                        android:text="@string/Amount"
                         style="@style/LayoutItem" />
 
                 </LinearLayout>
@@ -191,7 +191,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:checked="true"
-                            android:text="@string/RadioOptionExpense"
+                            android:text="@string/Expense"
                             android:textSize="12sp" />
 
                         <RadioButton
@@ -199,7 +199,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/RadioOptionIncome"
+                            android:text="@string/Income"
                             android:textSize="12sp" />
 
                     </RadioGroup>
@@ -246,7 +246,7 @@
                     android:id="@+id/btnReset"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/BtnReset"
+                    android:text="@string/Reset"
                     android:layout_weight="2"
                     android:focusableInTouchMode="true"
                     style="@style/NegativeButton"/>
@@ -255,7 +255,7 @@
                     android:id="@+id/btnSave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/BtnSave"
+                    android:text="@string/Save"
                     android:layout_weight="1"
                     android:focusableInTouchMode="true"
                     style="@style/PositiveButton"/>

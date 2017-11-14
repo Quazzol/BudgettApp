@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class BudgettDatabaseHelper extends SQLiteOpenHelper
 {
     private static final String LOG = "BudgettDatabaseHelper";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
     private static final String DATABASE_NAME = "budgett_db";
 
     private static final String TABLE_SOURCE = "budgett_source";
@@ -56,7 +56,7 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
             + "UNIQUE (" + KEY_ENTRY_TYPE + "," + KEY_SOURCE_CODE + "))";
 
     // Category table create statement
-    private static final String CREATE_TABLE_TYPE = "CREATE TABLE "
+    private static final String CREATE_TABLE_CATEGORY = "CREATE TABLE "
             + TABLE_CATEGORY
             + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
             + KEY_ENTRY_TYPE + " BOOLEAN,"
@@ -85,7 +85,7 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
     public void onCreate(SQLiteDatabase db)
     {
         db.execSQL(CREATE_TABLE_SOURCE);
-        db.execSQL(CREATE_TABLE_TYPE);
+        db.execSQL(CREATE_TABLE_CATEGORY);
         db.execSQL(CREATE_TABLE_BUDGETT_ITEM);
     }
 
@@ -122,7 +122,7 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
 
     // ------------------------ "budgett_category" table methods ----------------//
 
-    public long insertBudgettType(BudgettCategory _category) throws Exception
+    public long insertBudgettCategory(BudgettCategory _category) throws Exception
     {
         if (!_category.ValidateModel())
         {
@@ -146,7 +146,7 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
 
     public ArrayList<BudgettCategory> getAllBudgettCategory()
     {
-        ArrayList<BudgettCategory> types = new ArrayList<BudgettCategory>();
+        ArrayList<BudgettCategory> categories = new ArrayList<BudgettCategory>();
         String selectQuery = "SELECT * FROM " + TABLE_CATEGORY;
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -158,13 +158,13 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
             BudgettCategory t = new BudgettCategory(cursor.getInt((cursor.getColumnIndex(KEY_ID))),
                     BudgettEntryType.values()[cursor.getInt(cursor.getColumnIndex(KEY_ENTRY_TYPE))],
                     cursor.getString(cursor.getColumnIndex(KEY_CATEGORY_CODE)));
-            types.add(t);
+            categories.add(t);
             cursor.moveToNext();
         }
-        return types;
+        return categories;
     }
 
-    public int updateBudgettType(BudgettCategory _category) throws Exception
+    public int updateBudgettCategory(BudgettCategory _category) throws Exception
     {
         if (!_category.ValidateModel())
         {
@@ -181,7 +181,7 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
                 new String[]{String.valueOf(_category.getID())});
     }
 
-    public void deleteBudgettType(BudgettCategory _category)
+    public void deleteBudgettCategory(BudgettCategory _category)
     {
         SQLiteDatabase db = this.getWritableDatabase();
 

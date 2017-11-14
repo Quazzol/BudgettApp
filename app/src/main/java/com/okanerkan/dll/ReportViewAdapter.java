@@ -2,9 +2,11 @@ package com.okanerkan.dll;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,12 +25,8 @@ import java.util.Locale;
  * Created by Quazzol on 9.11.2017.
  */
 
-public class ReportViewAdapter extends BaseAdapter
+public class ReportViewAdapter extends BaseAdapter implements View.OnClickListener
 {
-    private Context mContext;
-    private BudgettItemList mList;
-    private String mUserCurrencyCode = "$";
-
     public ReportViewAdapter(Context _context)
     {
         super();
@@ -38,6 +36,31 @@ public class ReportViewAdapter extends BaseAdapter
         SharedPreferences prefs = this.mContext.getSharedPreferences("com.okanerkan.budgettapp", this.mContext.MODE_PRIVATE);
         String currencyCode = prefs.getString("CurrencyCode", "");
         this.mUserCurrencyCode = currencyCode.isEmpty() ? "$" : currencyCode;
+    }
+
+    //region Members
+
+    private static class ViewHolder
+    {
+        ImageView mEntryTypeImageView;
+        TextView mEntryDateTextView;
+        TextView mSourceTextView;
+        TextView mCategoryTextView;
+        TextView mAmountTextView;
+    }
+
+    private Context mContext;
+    private BudgettItemList mList;
+    private String mUserCurrencyCode = "$";
+
+    //endregion
+
+    @Override
+    public void onClick(View _view)
+    {
+        int position = (Integer) _view.getTag();
+        BudgettItem budgettItem = (BudgettItem) getItem(position);
+        Snackbar.make(_view, budgettItem.getBudgettNote(), Snackbar.LENGTH_LONG).setAction("No action", null).show();
     }
 
     @Override
@@ -55,36 +78,49 @@ public class ReportViewAdapter extends BaseAdapter
     @Override
     public long getItemId(int i)
     {
-        return i;
+        return this.mList.GetItemList().get(i).getID();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        final BudgettItem item = this.mList.GetItemList().get(position);
+        BudgettItem budgettItem = (BudgettItem) this.getItem(position);
+        ReportViewAdapter.ViewHolder viewHolder;
+        final View resultView;
 
-        if (convertView == null) {
-            final LayoutInflater layoutInflater = LayoutInflater.from(this.mContext);
-            convertView = layoutInflater.inflate(R.layout.gridrow_budgettitem, null);
+        if (convertView == null)
+        {
+            viewHolder = new ReportViewAdapter.ViewHolder();
+            LayoutInflater inflater = LayoutInflater.from(this.mContext);
+            convertView = inflater.inflate(R.layout.gridrow_budgettitem, parent, false);
+
+            viewHolder.mEntryTypeImageView = (ImageView) convertView.findViewById(R.id.imgEntryType);
+            viewHolder.mEntryDateTextView = (TextView) convertView.findViewById(R.id.txtEntryDate);
+            viewHolder.mSourceTextView = (TextView) convertView.findViewById(R.id.txtSource);
+            viewHolder.mCategoryTextView = (TextView) convertView.findViewById(R.id.txtCategory);
+            viewHolder.mAmountTextView = (TextView) convertView.findViewById(R.id.txtAmount);
+
+            resultView = convertView;
+            convertView.setTag(viewHolder);
+        }
+        else
+        {
+            viewHolder = (ReportViewAdapter.ViewHolder) convertView.getTag();
+            resultView = convertView;
         }
 
-        final ImageView entryTypeImageView = (ImageView) convertView.findViewById(R.id.imgEntryType);
-        final TextView entryDateTextView = (TextView) convertView.findViewById(R.id.txtEntryDate);
-        final TextView sourceTextView = (TextView) convertView.findViewById(R.id.txtSource);
-        final TextView typeTextView = (TextView) convertView.findViewById(R.id.txtType);
-        final TextView amountTextView = (TextView) convertView.findViewById(R.id.txtAmount);
+        viewHolder.mEntryTypeImageView.setImageResource(budgettItem.getEntryType() == BudgettEntryType.INCOME ? R.drawable.up_arrow : R.drawable.down_arrow);
+        viewHolder.mEntryDateTextView.setText(Globals.GetDateAsString(budgettItem.getEntryDate()));
+        viewHolder.mSourceTextView.setText(BudgettSourceList.GetList().GetBudgettSource(budgettItem.getBudgettSource()).getSourceCode());
+        viewHolder.mCategoryTextView.setText(BudgettCategoryList.GetList().GetBudgettCategory(budgettItem.getBudgettType()).getCategoryCode());
+        viewHolder.mAmountTextView.setText(String.format(Locale.getDefault(), "%.2f %s", budgettItem.getAmount(), this.mUserCurrencyCode));
 
-        entryTypeImageView.setImageResource(item.getEntryType() == BudgettEntryType.INCOME ? R.drawable.up_arrow : R.drawable.down_arrow);
-        entryDateTextView.setText(Globals.GetDateAsString(item.getEntryDate()));
-        sourceTextView.setText(BudgettSourceList.GetList().GetBudgettSource(item.getBudgettSource()).getSourceCode());
-        typeTextView.setText(BudgettCategoryList.GetList().GetBudgettCategory(item.getBudgettType()).getCategoryCode());
-        amountTextView.setText(String.format(Locale.getDefault(), "%.2f %s", item.getAmount(), this.mUserCurrencyCode));
-
-        return convertView;
+        return resultView;
     }
 
-    public void Load(String _filter)
+    public ReportViewAdapter Load(String _filter)
     {
         this.mList.LoadList(_filter);
+        return this;
     }
 }

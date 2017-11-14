@@ -4,91 +4,296 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/LinearLayoutFilter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#333"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
-        android:paddingTop="30dp"
-        android:paddingBottom="30dp"
-        android:visibility="visible">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/LayoutLeftSizeControls"
-            android:layout_width="wrap_content"
+            android:id="@+id/LinearLayoutFilter"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="1" >
+            android:background="#333"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:visibility="visible">
 
-            <TextView
-                android:id="@+id/lblUseDateFilter"
-                android:text="string/CheckBoxDateFilter"
-                style="@style/ReportLayoutItem" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/lblPreparedDate"
-                android:text="string/SpinnerPreparedDate"
-                style="@style/ReportLayoutItem" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/lblStartDate"
-                android:text="string/DateEditStartDate"
-                style="@style/ReportLayoutItem" />
+                    <TextView
+                        android:id="@+id/lblUseDateFilter"
+                        android:text="@string/UseDate"
+                        style="@style/ReportLayoutItem" />
 
-            <TextView
-                android:id="@+id/lblEndDate"
-                android:text="string/DateEditEndDate"
-                style="@style/ReportLayoutItem" />
+                    <Switch
+                        android:id="@+id/SwitchUseDateFilter"
+                        style="@style/ReportLayoutControl" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/LinearLayoutDateArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lblPreparedDate"
+                            android:text="@string/PickADate"
+                            style="@style/ReportLayoutItem" />
+
+                        <Spinner
+                            android:id="@+id/SpinnerPreparedDate"
+                            style="@style/ReportLayoutControl" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lblStartDate"
+                            android:text="@string/StartDate"
+                            style="@style/ReportLayoutItem" />
+
+                        <com.okanerkan.dll.DateEditText
+                            android:id="@+id/DateEditStartDate"
+                            android:text="05/05/2017"
+                            style="@style/ReportLayoutControl" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lblEndDate"
+                            android:text="@string/EndDate"
+                            style="@style/ReportLayoutItem" />
+
+                        <com.okanerkan.dll.DateEditText
+                            android:id="@+id/DateEditEndDate"
+                            android:text="08/05/2017"
+                            style="@style/ReportLayoutControl"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="#fff" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lblEntryType"
+                        android:text="@string/EntryType"
+                        style="@style/ReportLayoutItem" />
+
+                    <RadioGroup
+                        android:id="@+id/rdgEntryType"
+                        android:orientation="horizontal"
+                        android:tag="EntryType"
+                        style="@style/ReportLayoutControl" >
+
+                        <RadioButton
+                            android:id="@+id/rbtnExpense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:text="@string/Expense"
+                            android:textSize="12sp" />
+
+                        <RadioButton
+                            android:id="@+id/rbtnIncome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/Income"
+                            android:textSize="12sp" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="#fff" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lblUSeSourceFilter"
+                        android:text="@string/Source"
+                        style="@style/ReportLayoutItem" />
+
+                    <Switch
+                        android:id="@+id/SwitchUseSourceFilter"
+                        style="@style/ReportLayoutControl" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/LinearLayoutSourceArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="#fff" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lblUseCategoryFilter"
+                        android:text="@string/Category"
+                        style="@style/ReportLayoutItem" />
+
+                    <Switch
+                        android:id="@+id/SwitchUseCategoryFilter"
+                        style="@style/ReportLayoutControl" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/LinearLayoutCategoryArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="#fff" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lblNote"
+                        android:text="@string/Note"
+                        style="@style/ReportLayoutItem" />
+
+                    <EditText
+                        android:id="@+id/EditTextNote"
+                        android:hint="@string/Note"
+                        android:textColorHint="#aaa"
+                        style="@style/ReportLayoutControl" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LayoutBottomBlock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnReset"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Reset"
+                    android:layout_weight="2"
+                    android:focusableInTouchMode="true"
+                    style="@style/NegativeButton"/>
+
+                <Button
+                    android:id="@+id/btnFilter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Filter"
+                    android:layout_weight="1"
+                    android:focusableInTouchMode="true"
+                    style="@style/PositiveButton"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="#fff" />
-
-        <LinearLayout
-            android:id="@+id/LayoutRightSizeControls"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:layout_weight="2"
-            android:layout_marginStart="5dp">
-
-            <Switch
-                android:id="@+id/SwitchUseDateFilter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="string/UseDateFilter"
-                style="@style/ReportLayoutControl" />
-
-            <Spinner
-                android:id="@+id/SpinnerPreparedDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/ReportLayoutControl" />
-
-            <com.okanerkan.dll.DateEditText
-                android:id="@+id/DateEditStartDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="05/05/2017"
-                style="@style/ReportLayoutControl" />
-
-            <com.okanerkan.dll.DateEditText
-                android:id="@+id/DateEditEndDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="08/05/2017"
-                style="@style/ReportLayoutControl"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

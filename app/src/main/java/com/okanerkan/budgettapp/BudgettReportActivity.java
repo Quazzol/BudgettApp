@@ -37,8 +37,8 @@ public class BudgettReportActivity extends AppCompatActivity
 
     private void InitializeProperties()
     {
-        this.mReportView = (ListView) this.findViewById(R.id.listViewReport);
-        this.mFilterLayout = (LinearLayout) this.findViewById(R.id.linearLayoutFilter);
+        this.mReportView = (ListView) this.findViewById(R.id.ListViewReport);
+        this.mFilterLayout = (LinearLayout) this.findViewById(R.id.LinearLayoutFilter);
         this.mHideViewAnimation = AnimationUtils.loadAnimation(this, R.anim.hide_view_animation);
         this.mHideViewAnimation.setAnimationListener(new AnimationListenerExt(this.mFilterLayout, false));
         this.mShowViewAnimation = AnimationUtils.loadAnimation(this, R.anim.show_view_animation);
@@ -61,7 +61,7 @@ public class BudgettReportActivity extends AppCompatActivity
     private void BindData()
     {
         ReportViewAdapter reportAdapter = new ReportViewAdapter(this);
-        this.mReportView.setAdapter(reportAdapter);
+        this.mReportView.setAdapter(reportAdapter.Load(null));
     }
 
     //endregion

@@ -20,7 +20,7 @@ public class BudgettCategoryCardActivity extends AppCompatActivity {
     private Button mSaveButton;
     private Button mDeleteButton;
     private RadioGroup mEntryTypeRadio;
-    private EditText mBudgettTypeCode;
+    private EditText mBudgettCategoryCode;
     private BudgettCategory mBugettCategory;
     private BindingManager mBindingManager;
 
@@ -32,7 +32,7 @@ public class BudgettCategoryCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budgett_category_card);
         this.SetProperties();
-        this.CreateBudgetType();
+        this.CreateBudgetCategory();
         this.CreateBindingManager();
         this.AddEventHandlers();
     }
@@ -42,17 +42,17 @@ public class BudgettCategoryCardActivity extends AppCompatActivity {
         this.mEntryTypeRadio = (RadioGroup) findViewById(R.id.rdgEntryType);
         this.mSaveButton = (Button) findViewById(R.id.btnSave);
         this.mDeleteButton = (Button) findViewById(R.id.btnDelete);
-        this.mBudgettTypeCode = (EditText) findViewById(R.id.budgettType);
+        this.mBudgettCategoryCode = (EditText) findViewById(R.id.budgettCategory);
     }
 
-    private void CreateBudgetType()
+    private void CreateBudgetCategory()
     {
         Intent intent = getIntent();
         int id = intent.getIntExtra("BudgettCategoryID", -1);
         this.mBugettCategory = BudgettCategoryList.GetList().GetBudgettCategory(id);
         if (this.mBugettCategory == null)
         {
-            this.mDeleteButton.setText(R.string.BtnCancel);
+            this.mDeleteButton.setText(R.string.Cancel);
             this.mBugettCategory = new BudgettCategory();
         }
     }
@@ -63,7 +63,7 @@ public class BudgettCategoryCardActivity extends AppCompatActivity {
         {
             this.mBindingManager = new BindingManager(this.mBugettCategory);
             this.mBindingManager.Add(this.mEntryTypeRadio);
-            this.mBindingManager.Add(this.mBudgettTypeCode);
+            this.mBindingManager.Add(this.mBudgettCategoryCode);
             this.mBindingManager.Initialize();
         }
         catch (Exception ex)
@@ -95,13 +95,13 @@ public class BudgettCategoryCardActivity extends AppCompatActivity {
         {
             if (this.mBugettCategory.ExistInDB())
             {
-                Globals.DBHelper.updateBudgettType(this.mBugettCategory);
+                Globals.DBHelper.updateBudgettCategory(this.mBugettCategory);
                 this.finish();
                 return;
             }
-            Globals.DBHelper.insertBudgettType(this.mBugettCategory);
+            Globals.DBHelper.insertBudgettCategory(this.mBugettCategory);
 
-            this.CreateBudgetType();
+            this.CreateBudgetCategory();
             Toast.makeText(this, R.string.MSGSaved, Toast.LENGTH_LONG).show();
             this.mBindingManager.Rebind(this.mBugettCategory);
             this.mBindingManager.BindValues();
@@ -118,7 +118,7 @@ public class BudgettCategoryCardActivity extends AppCompatActivity {
         try
         {
             if (this.mBugettCategory != null)
-                Globals.DBHelper.deleteBudgettType(this.mBugettCategory);
+                Globals.DBHelper.deleteBudgettCategory(this.mBugettCategory);
             this.finish();
         }
         catch (Exception ex)

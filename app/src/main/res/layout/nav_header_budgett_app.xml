@@ -14,12 +14,11 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:contentDescription="@string/app_name"
         android:scaleType="fitCenter"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@mipmap/budgett_app" />
+        app:srcCompat="@mipmap/bapp_launcher_round" />
 
     <TextView
         android:layout_width="match_parent"

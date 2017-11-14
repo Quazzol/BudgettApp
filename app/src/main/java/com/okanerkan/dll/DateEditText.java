@@ -75,8 +75,8 @@ public class DateEditText extends android.support.v7.widget.AppCompatEditText
             }
         },cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         datePicker.setTitle(R.string.PickADate);
-        datePicker.setButton(DatePickerDialog.BUTTON_POSITIVE, this.getResources().getString(R.string.BtnSet), datePicker);
-        datePicker.setButton(DatePickerDialog.BUTTON_NEGATIVE, this.getResources().getString(R.string.BtnCancel), datePicker);
+        datePicker.setButton(DatePickerDialog.BUTTON_POSITIVE, this.getResources().getString(R.string.Set), datePicker);
+        datePicker.setButton(DatePickerDialog.BUTTON_NEGATIVE, this.getResources().getString(R.string.Cancel), datePicker);
         datePicker.show();
     }
 
