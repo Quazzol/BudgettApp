@@ -137,7 +137,8 @@
                             android:layout_weight="1"
                             android:checked="true"
                             android:text="@string/Expense"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:textColor="#fff" />
 
                         <RadioButton
                             android:id="@+id/rbtnIncome"
@@ -145,7 +146,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/Income"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:textColor="#fff" />
 
                     </RadioGroup>
 
@@ -184,10 +186,16 @@
                 <LinearLayout
                     android:id="@+id/LinearLayoutSourceArea"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
+                    <GridView
+                        android:id="@+id/GridViewSource"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:numColumns="2"
+                        style="@style/ReportLayoutControl" />
 
                 </LinearLayout>
 
@@ -224,10 +232,16 @@
                 <LinearLayout
                     android:id="@+id/LinearLayoutCategoryArea"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
+                    <GridView
+                        android:id="@+id/GridViewCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:numColumns="2"
+                        style="@style/ReportLayoutControl" />
 
                 </LinearLayout>
 

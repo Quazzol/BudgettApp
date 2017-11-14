@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
@@ -123,6 +125,17 @@ public class BindingManager implements IObserver
                 }
             });
         }
+        else if (_view instanceof  CheckBox)
+        {
+            ((CheckBox) _view).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+            {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+                {
+                    OnCheckBoxCheckChanged(compoundButton, b);
+                }
+            });
+        }
         else
         {
             throw new ViewTypeNotFoundException(_view.getClass());
@@ -203,6 +216,10 @@ public class BindingManager implements IObserver
                     rbtn.setChecked(i == ((IRadioGroupSource) _value).getValue());
                 }
             }
+        }
+        else if (_view instanceof CheckBox)
+        {
+            ((CheckBox) _view).setChecked((boolean) _value);
         }
         else
         {
@@ -313,6 +330,25 @@ public class BindingManager implements IObserver
             }
 
             method.invoke(this.mObservable, selectedIndex);
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG, ex.getMessage());
+        }
+    }
+
+    private void OnCheckBoxCheckChanged(CompoundButton _view, boolean isChecked)
+    {
+        try
+        {
+            String propertyName = this.mViewList.get(_view);
+            Method method = this.SetterMethod(propertyName);
+
+            if(method == null)
+            {
+                throw new NoSuchMethodException();
+            }
+            method.invoke(this.mObservable, isChecked);
         }
         catch (Exception ex)
         {

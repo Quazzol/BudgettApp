@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -92,7 +91,7 @@ public class ReportViewAdapter extends BaseAdapter implements View.OnClickListen
         {
             viewHolder = new ReportViewAdapter.ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(this.mContext);
-            convertView = inflater.inflate(R.layout.gridrow_budgettitem, parent, false);
+            convertView = inflater.inflate(R.layout.listview_item, parent, false);
 
             viewHolder.mEntryTypeImageView = (ImageView) convertView.findViewById(R.id.imgEntryType);
             viewHolder.mEntryDateTextView = (TextView) convertView.findViewById(R.id.txtEntryDate);

@@ -6,10 +6,15 @@ import android.view.View;
 import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.okanerkan.dll.GridItem;
+import com.okanerkan.dll.GridViewAdapter;
 import com.okanerkan.dll.ReportViewAdapter;
+
+import java.util.ArrayList;
 
 public class BudgettReportActivity extends AppCompatActivity
 {
@@ -29,6 +34,7 @@ public class BudgettReportActivity extends AppCompatActivity
         this.InitializeProperties();
         this.CreateFloatingButton();
         this.BindData();
+        this.CreateFilterControls();
     }
 
     //endregion
@@ -62,6 +68,17 @@ public class BudgettReportActivity extends AppCompatActivity
     {
         ReportViewAdapter reportAdapter = new ReportViewAdapter(this);
         this.mReportView.setAdapter(reportAdapter.Load(null));
+    }
+
+    private void CreateFilterControls()
+    {
+        GridView gridViewSource = (GridView) findViewById(R.id.GridViewSource);
+        GridViewAdapter sourceAdapter = new GridViewAdapter(this, new ArrayList<GridItem>());
+        gridViewSource.setAdapter(sourceAdapter);
+
+        GridView gridViewCategory = (GridView) findViewById(R.id.GridViewCategory);
+        GridViewAdapter categoryAdapter = new GridViewAdapter(this, new ArrayList<GridItem>());
+        gridViewCategory.setAdapter(categoryAdapter);
     }
 
     //endregion
