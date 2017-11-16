@@ -7,12 +7,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 
+import com.okanerkan.dll.AnimationListenerExt;
+import com.okanerkan.dll.FilterUIManager;
 import com.okanerkan.dll.GridItem;
 import com.okanerkan.dll.GridViewAdapter;
 import com.okanerkan.dll.ReportViewAdapter;
+import com.okanerkan.sqlite.model.BudgettCategory;
+import com.okanerkan.sqlite.model.BudgettSource;
+import com.okanerkan.sqlite.model_list.BudgettCategoryList;
+import com.okanerkan.sqlite.model_list.BudgettSourceList;
 
 import java.util.ArrayList;
 
@@ -20,8 +26,9 @@ public class BudgettReportActivity extends AppCompatActivity
 {
     private Animation mShowViewAnimation;
     private Animation mHideViewAnimation;
-    private LinearLayout mFilterLayout;
+    private ScrollView mFilterLayout;
     private ListView mReportView;
+    private FilterUIManager mFilterUIManager;
 
     //region Overrides
 
@@ -44,11 +51,12 @@ public class BudgettReportActivity extends AppCompatActivity
     private void InitializeProperties()
     {
         this.mReportView = (ListView) this.findViewById(R.id.ListViewReport);
-        this.mFilterLayout = (LinearLayout) this.findViewById(R.id.LinearLayoutFilter);
+        this.mFilterLayout = (ScrollView) this.findViewById(R.id.ScrollViewFilter);
         this.mHideViewAnimation = AnimationUtils.loadAnimation(this, R.anim.hide_view_animation);
         this.mHideViewAnimation.setAnimationListener(new AnimationListenerExt(this.mFilterLayout, false));
         this.mShowViewAnimation = AnimationUtils.loadAnimation(this, R.anim.show_view_animation);
         this.mShowViewAnimation.setAnimationListener(new AnimationListenerExt(this.mFilterLayout, true));
+        this.mFilterUIManager = new FilterUIManager(this.mFilterLayout);
     }
 
     private void CreateFloatingButton()
@@ -73,54 +81,23 @@ public class BudgettReportActivity extends AppCompatActivity
     private void CreateFilterControls()
     {
         GridView gridViewSource = (GridView) findViewById(R.id.GridViewSource);
-        GridViewAdapter sourceAdapter = new GridViewAdapter(this, new ArrayList<GridItem>());
+        ArrayList<GridItem> items = new ArrayList<GridItem>();
+        for (BudgettSource source : BudgettSourceList.GetList().GetBudgettSourceList())
+        {
+            items.add(new GridItem(source.getID(), source.getSourceCode()));
+        }
+        GridViewAdapter sourceAdapter = new GridViewAdapter(this, items);
         gridViewSource.setAdapter(sourceAdapter);
 
         GridView gridViewCategory = (GridView) findViewById(R.id.GridViewCategory);
-        GridViewAdapter categoryAdapter = new GridViewAdapter(this, new ArrayList<GridItem>());
+        items = new ArrayList<GridItem>();
+        for (BudgettCategory category : BudgettCategoryList.GetList().GetBudgettCategoryList())
+        {
+            items.add(new GridItem(category.getID(), category.getCategoryCode()));
+        }
+        GridViewAdapter categoryAdapter = new GridViewAdapter(this, items);
         gridViewCategory.setAdapter(categoryAdapter);
     }
 
     //endregion
-
-    // region AnimationListener
-
-    private class AnimationListenerExt implements Animation.AnimationListener
-    {
-        private View mView;
-        private boolean mIsShow;
-
-        public AnimationListenerExt(View _view, boolean _isShow)
-        {
-            this.mView = _view;
-            this.mIsShow = _isShow;
-        }
-
-        @Override
-        public void onAnimationStart(Animation animation)
-        {
-            if (this.mIsShow)
-            {
-                this.mView.setVisibility(View.VISIBLE);
-            }
-        }
-
-        @Override
-        public void onAnimationEnd(Animation animation)
-        {
-            if (!this.mIsShow)
-            {
-                this.mView.setVisibility(View.GONE);
-            }
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation)
-        {
-
-        }
-    }
-
-    //endregion
-
 }
