@@ -72,11 +72,15 @@
 
                         <TextView
                             android:id="@+id/lblStartDate"
+                            android:focusable="false"
+                            android:clickable="true"
                             android:text="@string/StartDate"
                             style="@style/ReportLayoutItem" />
 
                         <com.okanerkan.dll.DateEditText
                             android:id="@+id/DateEditStartDate"
+                            android:focusable="false"
+                            android:clickable="true"
                             android:text="05/05/2017"
                             style="@style/ReportLayoutControl" />
 
@@ -132,11 +136,20 @@
                         style="@style/ReportLayoutControl" >
 
                         <RadioButton
-                            android:id="@+id/rbtnExpense"
+                            android:id="@+id/rbtnAll"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:checked="true"
+                            android:text="@string/All"
+                            android:textSize="12sp"
+                            android:textColor="#fff" />
+
+                        <RadioButton
+                            android:id="@+id/rbtnExpense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:text="@string/Expense"
                             android:textSize="12sp"
                             android:textColor="#fff" />

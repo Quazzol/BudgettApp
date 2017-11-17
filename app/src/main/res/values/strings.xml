@@ -25,6 +25,7 @@
     <string name="EndDate">End Date</string>
     <string name="Note">Note</string>
     <string name="Filter">Filter</string>
+    <string name="All">All</string>
 
     <string name="LabelBudgettSource">BUDGETT Source</string>
     <string name="LabelBudgettCategory">BUDGETT Category</string>
@@ -46,5 +47,13 @@
 
     <string name="MSGCannotDelete">Cannot be deleted</string>
     <string name="MSGSaved">Save successful</string>
+
+    <string name="Today">Today</string>
+    <string name="Yesterday">Yesterday</string>
+    <string name="ThisWeek">This Week</string>
+    <string name="LastWeek">Last Week</string>
+    <string name="ThisMonth">This Month</string>
+    <string name="LastMonth">Last Month</string>
+    <string name="LastThreeMonths">Last 3 Months</string>
 
 </resources>

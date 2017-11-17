@@ -2,7 +2,6 @@ package com.okanerkan.dll;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.icu.util.Calendar;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.DatePicker;
@@ -13,6 +12,7 @@ import com.okanerkan.globals.Globals;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -54,7 +54,7 @@ public class DateEditText extends android.support.v7.widget.AppCompatEditText
     private long mTimeStamp;
     public long getTimeStamp() { return this.mTimeStamp; }
 
-    public void SetTimestamp(long _timestamp)
+    public void setTimestamp(long _timestamp)
     {
         this.mTimeStamp = _timestamp;
         this.setText(Globals.GetDateAsString(this.mTimeStamp));

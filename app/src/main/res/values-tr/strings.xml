@@ -41,4 +41,12 @@
     <string name="EndDate">Bitiş Tarihi</string>
     <string name="Note">Not</string>
     <string name="Filter">Filtrele</string>
+    <string name="Today">Bugün</string>
+    <string name="Yesterday">Dün</string>
+    <string name="ThisWeek">Bu Hafta</string>
+    <string name="LastWeek">Geçen Hafta</string>
+    <string name="ThisMonth">Bu Ay</string>
+    <string name="LastThreeMonths">Son 3 Ay</string>
+    <string name="LastMonth">Geçen Ay</string>
+    <string name="All">Tümü</string>
 </resources>

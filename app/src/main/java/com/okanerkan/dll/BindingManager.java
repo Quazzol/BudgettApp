@@ -14,7 +14,6 @@ import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.okanerkan.exceptions.ViewTypeNotFoundException;
 import com.okanerkan.interfaces.IObservable;
@@ -183,7 +182,7 @@ public class BindingManager implements IObserver
     {
         if (_view instanceof DateEditText)
         {
-            ((DateEditText) _view).SetTimestamp((long)_value);
+            ((DateEditText) _view).setTimestamp((long)_value);
         }
         else if (_view instanceof EditText)
         {
