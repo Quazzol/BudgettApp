@@ -1,6 +1,7 @@
 package com.okanerkan.dll;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -13,13 +14,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.okanerkan.budgettapp.R;
 import com.okanerkan.globals.Globals;
-import com.okanerkan.interfaces.ISpinnerSource;
+import com.okanerkan.interfaces.IFilterUser;
+import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 import com.okanerkan.sqlite.model.BudgettCategory;
 import com.okanerkan.sqlite.model.BudgettSource;
 import com.okanerkan.sqlite.model_list.BudgettCategoryList;
@@ -45,6 +47,8 @@ public class FilterUIManager
 
     //region Members
 
+    private final String TAG = "FilterUIManager";
+
     private ViewGroup mReportView;
 
     private FilterUIManager.ViewHolder mDateViewHolder;
@@ -52,7 +56,7 @@ public class FilterUIManager
     private DateEditText mStartDateEdit;
     private DateEditText mEndDateEdit;
 
-    private RadioGroup mEntryTypeRadioGroup;
+    private KnRadioGroup mEntryTypeRadioGroup;
 
     private FilterUIManager.ViewHolder mSourceViewHolder;
     private GridView mSourceGridView;
@@ -64,6 +68,8 @@ public class FilterUIManager
 
     private Button mApplyFilterButton;
     private Button mResetFilterButton;
+
+    private ArrayList<IFilterUser> mFilterUsers;
 
     private class ViewHolder
     {
@@ -79,10 +85,14 @@ public class FilterUIManager
 
     private void InitializeProperties()
     {
+        this.mFilterUsers = new ArrayList<IFilterUser>();
+
         this.mDateViewHolder = this.CreateViewHolder(R.id.SwitchUseDateFilter, R.id.LinearLayoutDateArea);
         this.mPreparedDateSpinner = (Spinner) this.mReportView.findViewById(R.id.SpinnerPreparedDate);
         this.mStartDateEdit = (DateEditText) this.mReportView.findViewById(R.id.DateEditStartDate);
         this.mEndDateEdit = (DateEditText) this.mReportView.findViewById(R.id.DateEditEndDate);
+
+        this.mEntryTypeRadioGroup = (KnRadioGroup) this.mReportView.findViewById(R.id.rdgEntryType);
 
         this.mSourceViewHolder = this.CreateViewHolder(R.id.SwitchUseSourceFilter, R.id.LinearLayoutSourceArea);
         this.mSourceGridView = (GridView) this.mReportView.findViewById(R.id.GridViewSource);
@@ -243,25 +253,67 @@ public class FilterUIManager
 
     private void OnApplyFilterClicked()
     {
-        String filter = " WHERE ";
-        if (this.mDateViewHolder.mSwitchControl.isChecked())
+        try
         {
+            String filter = " WHERE ";
+            if (this.mDateViewHolder.mSwitchControl.isChecked())
+            {
+                filter += "(" + BudgettDatabaseHelper.KEY_ITEM_ENTRY_DATE + " >= " + this.mStartDateEdit.getTimeStamp() + " AND ";
+                filter += BudgettDatabaseHelper.KEY_ITEM_ENTRY_DATE + " <= " + this.mEndDateEdit.getTimeStamp() + ") AND ";
+            }
 
+            RadioButton selectedRadioButton = (RadioButton) this.mReportView.findViewById(this.mEntryTypeRadioGroup.getCheckedRadioButtonId());
+            int selectedTag = Integer.parseInt(selectedRadioButton.getTag().toString());
+            if (selectedTag != 2)
+            {
+                filter += "(" + BudgettDatabaseHelper.KEY_ENTRY_TYPE + " = " + selectedTag + ") AND ";
+            }
+
+            if (this.mSourceViewHolder.mSwitchControl.isChecked())
+            {
+                String filterStr = "(";
+                for (int i = 0; i < this.mSourceGridView.getChildCount(); i++)
+                {
+                    CheckBox chkBox = (CheckBox) ((ViewGroup) this.mSourceGridView.getChildAt(i)).getChildAt(0);
+                    if (chkBox.isChecked())
+                    {
+                        filterStr += BudgettDatabaseHelper.KEY_ITEM_SOURCE_ID + " = " + chkBox.getTag() + " OR ";
+                    }
+                }
+                if (filterStr.length() > 1)
+                {
+                    filter += filterStr.substring(0, filterStr.length() - 4) + ") AND ";
+                }
+            }
+
+            if (this.mCategoryViewHolder.mSwitchControl.isChecked())
+            {
+                String filterStr = "(";
+                for (int i = 0; i < this.mCategoryGridView.getChildCount(); i++)
+                {
+                    CheckBox chkBox = (CheckBox) ((ViewGroup) this.mCategoryGridView.getChildAt(i)).getChildAt(0);
+                    if (chkBox.isChecked())
+                    {
+                        filterStr += BudgettDatabaseHelper.KEY_ITEM_CATEGORY_ID + " = " + chkBox.getTag() + " OR ";
+                    }
+                }
+                if (filterStr.length() > 1)
+                {
+                    filter += filterStr.substring(0, filterStr.length() - 4) + ") AND ";
+                }
+            }
+
+            if (!this.mNoteEdit.getText().toString().isEmpty())
+            {
+                filter += "(" + BudgettDatabaseHelper.KEY_ITEM_NOTE + " LIKE %'" + this.mNoteEdit.getText().toString() + "'%) AND ";
+            }
+            filter = filter.substring(0, filter.length() - 5);
+
+            this.RaiseFilterChanged(filter);
         }
-
-        if (this.mSourceViewHolder.mSwitchControl.isChecked())
+        catch (Exception ex)
         {
-
-        }
-
-        if (this.mCategoryViewHolder.mSwitchControl.isChecked())
-        {
-
-        }
-
-        if (!this.mNoteEdit.getText().toString().isEmpty())
-        {
-
+            Log.e(TAG, ex.getMessage());
         }
     }
 
@@ -269,6 +321,8 @@ public class FilterUIManager
     {
         this.mPreparedDateSpinner.setSelection(0);
         this.mDateViewHolder.mSwitchControl.setChecked(false);
+
+        this.mEntryTypeRadioGroup.ResetToDefault();
 
         for (int i = 0; i < this.mSourceGridView.getChildCount(); i++)
         {
@@ -286,6 +340,19 @@ public class FilterUIManager
     }
 
     //endregion
+
+    public void AddFilterChanged(IFilterUser _filterUser)
+    {
+        this.mFilterUsers.add(_filterUser);
+    }
+
+    private void RaiseFilterChanged(String _filter)
+    {
+        for (IFilterUser filterUser : this.mFilterUsers)
+        {
+            filterUser.FilterApplied(_filter);
+        }
+    }
 
     private class PreparedDateSource
     {

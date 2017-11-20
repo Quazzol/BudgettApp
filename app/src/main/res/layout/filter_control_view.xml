@@ -8,7 +8,7 @@
         android:id="@+id/ScrollViewFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,8 +31,74 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/lblEntryType"
+                        android:text="@string/EntryType"
+                        style="@style/ReportLayoutItem" />
+
+                    <com.okanerkan.dll.KnRadioGroup
+                        android:id="@+id/rdgEntryType"
+                        android:orientation="vertical"
+                        android:tag="EntryType"
+                        style="@style/ReportLayoutControl"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/rbtnAll"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:text="@string/All"
+                            android:tag="2"
+                            android:textSize="12sp"
+                            android:textColor="#fff" />
+
+                        <RadioButton
+                            android:id="@+id/rbtnExpense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/Expense"
+                            android:tag="0"
+                            android:textSize="12sp"
+                            android:textColor="#fff" />
+
+                        <RadioButton
+                            android:id="@+id/rbtnIncome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/Income"
+                            android:tag="1"
+                            android:textSize="12sp"
+                            android:textColor="#fff" />
+
+                    </com.okanerkan.dll.KnRadioGroup>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="#fff" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
                         android:id="@+id/lblUseDateFilter"
-                        android:text="@string/UseDate"
+                        android:text="@string/Date"
                         style="@style/ReportLayoutItem" />
 
                     <Switch
@@ -102,68 +168,6 @@
                             style="@style/ReportLayoutControl"/>
 
                     </LinearLayout>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="#fff" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/lblEntryType"
-                        android:text="@string/EntryType"
-                        style="@style/ReportLayoutItem" />
-
-                    <RadioGroup
-                        android:id="@+id/rdgEntryType"
-                        android:orientation="horizontal"
-                        android:tag="EntryType"
-                        style="@style/ReportLayoutControl" >
-
-                        <RadioButton
-                            android:id="@+id/rbtnAll"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:checked="true"
-                            android:text="@string/All"
-                            android:textSize="12sp"
-                            android:textColor="#fff" />
-
-                        <RadioButton
-                            android:id="@+id/rbtnExpense"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/Expense"
-                            android:textSize="12sp"
-                            android:textColor="#fff" />
-
-                        <RadioButton
-                            android:id="@+id/rbtnIncome"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/Income"
-                            android:textSize="12sp"
-                            android:textColor="#fff" />
-
-                    </RadioGroup>
 
                 </LinearLayout>
 

@@ -18,7 +18,7 @@
         android:padding="16dp"
         android:orientation="vertical">
 
-        <RadioGroup
+        <com.okanerkan.dll.KnRadioGroup
             android:id="@+id/rdgEntryType"
             android:orientation="horizontal"
             android:tag="EntryType"
@@ -30,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/Expense"
+                android:tag="0"
                 android:checked="true"
                 android:textSize="20sp"/>
 
@@ -39,9 +40,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/Income"
+                android:tag="1"
                 android:textSize="20sp" />
 
-        </RadioGroup>
+        </com.okanerkan.dll.KnRadioGroup>
 
         <EditText
             android:id="@+id/budgettSource"

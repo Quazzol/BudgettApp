@@ -179,7 +179,7 @@
                     android:focusableInTouchMode="true"
                     android:layout_weight="2">
 
-                    <RadioGroup
+                    <com.okanerkan.dll.KnRadioGroup
                         android:id="@+id/rdgEntryType"
                         android:orientation="horizontal"
                         android:tag="EntryType"
@@ -192,6 +192,7 @@
                             android:layout_weight="1"
                             android:checked="true"
                             android:text="@string/Expense"
+                            android:tag="0"
                             android:textSize="12sp" />
 
                         <RadioButton
@@ -200,9 +201,10 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/Income"
+                            android:tag="1"
                             android:textSize="12sp" />
 
-                    </RadioGroup>
+                    </com.okanerkan.dll.KnRadioGroup>
 
                     <com.okanerkan.dll.DateEditText
                         android:id="@+id/txtEntryDate"

@@ -31,8 +31,8 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
     private static final String TABLE_BUDGETT_ITEM = "budgett_item";
 
     // Common column names
-    private static final String KEY_ID = "id";
-    private static final String KEY_ENTRY_TYPE = "entry_type";
+    public static final String KEY_ID = "id";
+    public static final String KEY_ENTRY_TYPE = "entry_type";
 
     // SOURCE Table - column names
     private static final String KEY_SOURCE_CODE = "source_code";

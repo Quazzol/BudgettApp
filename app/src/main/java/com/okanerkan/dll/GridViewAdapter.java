@@ -59,6 +59,7 @@ public class GridViewAdapter extends BaseAdapter
         final CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.chkBoxGridCell);
         checkBox.setText(item.getCheckBoxText());
         checkBox.setChecked(item.getIsChecked());
+        checkBox.setTag(item.getID());
 
         return convertView;
     }

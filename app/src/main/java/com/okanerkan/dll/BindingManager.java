@@ -113,7 +113,7 @@ public class BindingManager implements IObserver
                 }
             });
         }
-        else if (_view instanceof RadioGroup)
+        else if (_view instanceof KnRadioGroup)
         {
             ((RadioGroup) _view).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
             {
@@ -202,19 +202,10 @@ public class BindingManager implements IObserver
             }
             spinner.setSelection(adapter.getPosition(_value));
         }
-        else if (_view instanceof RadioGroup)
+        else if (_view instanceof KnRadioGroup)
         {
-            RadioGroup rdg = (RadioGroup) _view;
-            int count = rdg.getChildCount();
-            for (int i = 0; i < count; i++)
-            {
-                View child = rdg.getChildAt(i);
-                if (child instanceof RadioButton)
-                {
-                    RadioButton rbtn = (RadioButton) child;
-                    rbtn.setChecked(i == ((IRadioGroupSource) _value).getValue());
-                }
-            }
+            KnRadioGroup rdg = (KnRadioGroup) _view;
+            rdg.SetCheckedOnIndex(((IRadioGroupSource) _value).getValue());
         }
         else if (_view instanceof CheckBox)
         {
@@ -319,7 +310,7 @@ public class BindingManager implements IObserver
     {
         try
         {
-            int selectedIndex = _view.indexOfChild(_view.findViewById(_checkedID));
+            CheckBox selectedCheckBox = (CheckBox) _view.findViewById(_checkedID);
             String propertyName = this.mViewList.get(_view);
             Method method = this.SetterMethod(propertyName);
 
@@ -328,7 +319,7 @@ public class BindingManager implements IObserver
                 throw new NoSuchMethodException();
             }
 
-            method.invoke(this.mObservable, selectedIndex);
+            method.invoke(this.mObservable, selectedCheckBox.getTag());
         }
         catch (Exception ex)
         {
