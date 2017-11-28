@@ -2,8 +2,12 @@ package com.okanerkan.sqlite.model;
 
 import android.icu.util.Calendar;
 
+import com.okanerkan.dll.KnEntity;
 import com.okanerkan.dll.ObservableBase;
+import com.okanerkan.globals.Globals;
+import com.okanerkan.globals.Guid;
 import com.okanerkan.interfaces.ISpinnerSource;
+import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -16,46 +20,54 @@ import java.util.Locale;
  * Created by OkanErkan on 10.10.2017.
  */
 
-public class BudgettItem extends ObservableBase implements Serializable, ISpinnerSource
+public class BudgettItem extends KnEntity implements Serializable, ISpinnerSource
 {
-    private int mID;
+    private String mID;
     private int mEntryType;
     private long mEntryDate;
-    private int mBudgettSource;
-    private int mBudgettType;
+    private String mUserID;
+    private String mAccountID;
+    private String mSourceID;
+    private String mCategoryID;
     private String mBudgettNote;
     private double mAmount;
 
     public BudgettItem()
     {
-        this(-1,
+        this(Guid.New(),
                 BudgettEntryType.EXPENSE,
-                new Timestamp(System.currentTimeMillis()).getTime(),
-                0,
-                0,
+                Globals.GetNow(),
+                "",
+                "",
+                "",
+                "",
                 "",
                 0);
     }
 
-    public BudgettItem(int _id,
+    public BudgettItem(String _id,
                        BudgettEntryType _type,
                        long _date,
-                       int _budgettSource,
-                       int _budgettType,
+                       String _userID,
+                       String _accountID,
+                       String _sourceID,
+                       String _categoryID,
                        String _budgettNote,
                        double _amount)
     {
         this.mID = _id;
         this.mEntryType = _type.getValue();
         this.mEntryDate = _date;
-        this.mBudgettSource = _budgettSource;
-        this.mBudgettType = _budgettType;
+        this.mUserID = _userID;
+        this.mAccountID = _accountID;
+        this.mSourceID = _sourceID;
+        this.mCategoryID = _categoryID;
         this.mBudgettNote = _budgettNote;
         this.mAmount = _amount;
     }
 
-    public int getID() { return this.mID; }
-    public void setID(int _id)
+    public String getID() { return this.mID; }
+    public void setID(String _id)
     {
         this.SetValue("ID", _id);
     }
@@ -75,22 +87,28 @@ public class BudgettItem extends ObservableBase implements Serializable, ISpinne
         this.SetValue("EntryDate", _timestamp);
     }
 
-    public int getBudgettSource()
+    public String getUserID() { return this.mUserID; }
+    public void setUserID(String _userID) { this.SetValue("UserID", _userID); }
+
+    public String getAccountID() { return this.mAccountID; }
+    public void setAccountID(String _accountID) { this.SetValue("AccountID", _accountID); }
+
+    public String getSourceID()
     {
-        return this.mBudgettSource;
+        return this.mSourceID;
     }
-    public void setBudgettSource(int _sourceID)
+    public void setSourceID(String _sourceID)
     {
-        this.SetValue("BudgettSource", _sourceID);
+        this.SetValue("SourceID", _sourceID);
     }
 
-    public int getBudgettType()
+    public String getCategoryID()
     {
-        return this.mBudgettType;
+        return this.mCategoryID;
     }
-    public void setBudgettType(int _typeID)
+    public void setBudgettType(String _categoryID)
     {
-        this.SetValue("BudgettType", _typeID);
+        this.SetValue("CategoryID", _categoryID);
     }
 
     public String getBudgettNote() { return this.mBudgettNote; }
@@ -110,8 +128,10 @@ public class BudgettItem extends ObservableBase implements Serializable, ISpinne
 
     public boolean ValidateModel()
     {
-        return this.mBudgettSource > 0 &&
-                this.mBudgettType > 0 &&
+        return !this.mUserID.isEmpty() &&
+                !this.mAccountID.isEmpty() &&
+                !this.mSourceID.isEmpty() &&
+                !this.mCategoryID.isEmpty() &&
                 this.mEntryDate > 0 &&
                 this.mAmount > 0;
     }
@@ -120,8 +140,15 @@ public class BudgettItem extends ObservableBase implements Serializable, ISpinne
     {
         return this.mID;
     }
+    public String toString()
+    {
+        return "";
+    }
 
-    public boolean IsLoaded() { return false; }
-    public boolean ExistInDB() { return this.mID >= 0; }
+    @Override
+    protected String TableName()
+    {
+        return BudgettDatabaseHelper.TABLE_BUDGETT_ITEM;
+    }
 }
 

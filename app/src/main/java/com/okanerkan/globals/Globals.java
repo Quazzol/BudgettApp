@@ -24,6 +24,11 @@ public class Globals
                 cal.get(Calendar.YEAR));
     }
 
+    public static long GetNow()
+    {
+        return new Timestamp(System.currentTimeMillis()).getTime();
+    }
+
     public static long GetToday()
     {
         Calendar cal = Calendar.getInstance();

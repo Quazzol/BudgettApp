@@ -1,7 +1,10 @@
 package com.okanerkan.sqlite.model;
 
+import com.okanerkan.dll.KnEntity;
 import com.okanerkan.dll.ObservableBase;
+import com.okanerkan.globals.Guid;
 import com.okanerkan.interfaces.ISpinnerSource;
+import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 
 import java.io.Serializable;
 
@@ -9,26 +12,26 @@ import java.io.Serializable;
  * Created by OkanErkan on 10.10.2017.
  */
 
-public class BudgettCategory extends ObservableBase implements Serializable, ISpinnerSource
+public class BudgettCategory extends KnEntity implements Serializable, ISpinnerSource
 {
-    private int mID;
+    private String mID;
     private int mEntryType;
     private String mCategoryCode;
 
     public BudgettCategory()
     {
-        this(-1, BudgettEntryType.EXPENSE, "");
+        this(Guid.New(), BudgettEntryType.EXPENSE, "");
     }
 
-    public BudgettCategory(int _id, BudgettEntryType _entryType, String _categoryCode)
+    public BudgettCategory(String _id, BudgettEntryType _entryType, String _categoryCode)
     {
         this.mID = _id;
         this.mEntryType = _entryType.getValue();
         this.mCategoryCode = _categoryCode;
     }
 
-    public int getID() { return this.mID; }
-    public void setID(int _id)
+    public String getID() { return this.mID; }
+    public void setID(String _id)
     {
         this.SetValue("ID", _id);
     }
@@ -58,12 +61,14 @@ public class BudgettCategory extends ObservableBase implements Serializable, ISp
     {
         return this.mCategoryCode;
     }
-
     public Object GetID()
     {
         return this.mID;
     }
 
-    public boolean IsLoaded() { return false; }
-    public boolean ExistInDB() { return this.mID >= 0; }
+    @Override
+    protected String TableName()
+    {
+        return BudgettDatabaseHelper.TABLE_CATEGORY;
+    }
 }

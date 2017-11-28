@@ -1,9 +1,12 @@
 package com.okanerkan.sqlite.model;
 
+import com.okanerkan.dll.KnEntity;
 import com.okanerkan.dll.ObservableBase;
+import com.okanerkan.globals.Guid;
 import com.okanerkan.interfaces.IObservable;
 import com.okanerkan.interfaces.IObserver;
 import com.okanerkan.interfaces.ISpinnerSource;
+import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 
 import java.io.Serializable;
 
@@ -11,26 +14,26 @@ import java.io.Serializable;
  * Created by OkanErkan on 10.10.2017.
  */
 
-public class BudgettSource extends ObservableBase implements ISpinnerSource, Serializable
+public class BudgettSource extends KnEntity implements ISpinnerSource, Serializable
 {
-    private int mID;
+    private String mID;
     private int mEntryType;
     private String mSourceCode;
 
     public BudgettSource()
     {
-        this(-1, BudgettEntryType.EXPENSE, "");
+        this(Guid.New(), BudgettEntryType.EXPENSE, "");
     }
 
-    public BudgettSource(int _id, BudgettEntryType _entryType, String _sourceValue)
+    public BudgettSource(String _id, BudgettEntryType _entryType, String _sourceValue)
     {
         this.mID = _id;
         this.mEntryType = _entryType.getValue();
         this.mSourceCode = _sourceValue;
     }
 
-    public int getID() { return this.mID; }
-    public void setID(int _id)
+    public String getID() { return this.mID; }
+    public void setID(String _id)
     {
         this.SetValue("ID", _id);
     }
@@ -57,12 +60,14 @@ public class BudgettSource extends ObservableBase implements ISpinnerSource, Ser
     {
         return this.mSourceCode;
     }
-
     public Object GetID()
     {
         return this.mID;
     }
 
-    public boolean IsLoaded() { return false; }
-    public boolean ExistInDB() { return this.mID >= 0; }
+    @Override
+    protected String TableName()
+    {
+        return BudgettDatabaseHelper.TABLE_SOURCE;
+    }
 }
