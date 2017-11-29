@@ -7,6 +7,7 @@ import com.okanerkan.sqlite.model.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettSource;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 /**
@@ -56,10 +57,10 @@ public class BudgettSourceList
         return names;
     }
 
-    public int GetBudgettSourceID(int _index)
+    public String GetBudgettSourceID(int _index)
     {
         if (_index < 0 || _index >= this.mList.size())
-            return -1;
+            return "";
         return this.mList.get(_index).getID();
     }
 
@@ -70,11 +71,11 @@ public class BudgettSourceList
         return this.mList.get(_index);
     }
 
-    public BudgettSource GetBudgettSource(int _id)
+    public BudgettSource GetBudgettSourceWithID(String _id)
     {
         for (BudgettSource source: this.mList)
         {
-            if(source.getID() == _id)
+            if(source.getID().equalsIgnoreCase(_id))
                 return source;
         }
         return null;
@@ -116,10 +117,10 @@ public class BudgettSourceList
         this.mList.remove(_source);
     }
 
-    public void RemoveFromList(int _id)
+    public void RemoveFromList(String _id)
     {
         for (int i = 0; i < this.mList.size(); i++)
-            if (this.mList.get(i).getID() == _id)
+            if (this.mList.get(i).getID().equalsIgnoreCase(_id))
                 this.mList.remove(i);
     }
 
@@ -130,7 +131,7 @@ public class BudgettSourceList
 
     public void Sort()
     {
-        this.mList.sort(new Comparator<BudgettSource>()
+        Collections.sort(this.mList, new Comparator<BudgettSource>()
         {
             @Override
             public int compare(BudgettSource s1, BudgettSource s2)

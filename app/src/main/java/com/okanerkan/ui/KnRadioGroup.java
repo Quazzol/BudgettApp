@@ -1,12 +1,10 @@
-package com.okanerkan.dll;
+package com.okanerkan.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
-import com.okanerkan.interfaces.IRadioGroupSource;
 
 /**
  * Created by OkanErkan on 20.11.2017.

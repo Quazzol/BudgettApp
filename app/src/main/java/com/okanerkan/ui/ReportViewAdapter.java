@@ -1,4 +1,4 @@
-package com.okanerkan.dll;
+package com.okanerkan.ui;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.okanerkan.budgettapp.R;
 import com.okanerkan.globals.Globals;
+import com.okanerkan.globals.TimeStampHelper;
 import com.okanerkan.sqlite.model.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettItem;
 import com.okanerkan.sqlite.model_list.BudgettItemList;
@@ -32,7 +33,7 @@ public class ReportViewAdapter extends BaseAdapter implements View.OnClickListen
         this.mContext = _context;
         this.mList = new BudgettItemList();
 
-        SharedPreferences prefs = this.mContext.getSharedPreferences("com.okanerkan.budgettapp", this.mContext.MODE_PRIVATE);
+        SharedPreferences prefs = this.mContext.getSharedPreferences("com.okanerkan.budgettapp", Context.MODE_PRIVATE);
         String currencyCode = prefs.getString("CurrencyCode", "");
         this.mUserCurrencyCode = currencyCode.isEmpty() ? "$" : currencyCode;
     }
@@ -77,7 +78,7 @@ public class ReportViewAdapter extends BaseAdapter implements View.OnClickListen
     @Override
     public long getItemId(int i)
     {
-        return this.mList.GetItemList().get(i).getID();
+        return i;
     }
 
     @Override
@@ -109,9 +110,9 @@ public class ReportViewAdapter extends BaseAdapter implements View.OnClickListen
         }
 
         viewHolder.mEntryTypeImageView.setImageResource(budgettItem.getEntryType() == BudgettEntryType.INCOME ? R.drawable.up_arrow : R.drawable.down_arrow);
-        viewHolder.mEntryDateTextView.setText(Globals.GetDateAsString(budgettItem.getEntryDate()));
-        viewHolder.mSourceTextView.setText(BudgettSourceList.GetList().GetBudgettSource(budgettItem.getBudgettSource()).getSourceCode());
-        viewHolder.mCategoryTextView.setText(BudgettCategoryList.GetList().GetBudgettCategory(budgettItem.getBudgettType()).getCategoryCode());
+        viewHolder.mEntryDateTextView.setText(TimeStampHelper.GetDateAsString(budgettItem.getEntryDate()));
+        viewHolder.mSourceTextView.setText(BudgettSourceList.GetList().GetBudgettSource(budgettItem.getSourceID()).getSourceCode());
+        viewHolder.mCategoryTextView.setText(BudgettCategoryList.GetList().GetBudgettCategory(budgettItem.getCategoryID()).getCategoryCode());
         viewHolder.mAmountTextView.setText(String.format(Locale.getDefault(), "%.2f %s", budgettItem.getAmount(), this.mUserCurrencyCode));
 
         return resultView;

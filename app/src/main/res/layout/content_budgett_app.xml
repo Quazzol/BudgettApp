@@ -179,7 +179,7 @@
                     android:focusableInTouchMode="true"
                     android:layout_weight="2">
 
-                    <com.okanerkan.dll.KnRadioGroup
+                    <com.okanerkan.ui.KnRadioGroup
                         android:id="@+id/rdgEntryType"
                         android:orientation="horizontal"
                         android:tag="EntryType"
@@ -204,9 +204,9 @@
                             android:tag="1"
                             android:textSize="12sp" />
 
-                    </com.okanerkan.dll.KnRadioGroup>
+                    </com.okanerkan.ui.KnRadioGroup>
 
-                    <com.okanerkan.dll.DateEditText
+                    <com.okanerkan.ui.DateEditText
                         android:id="@+id/txtEntryDate"
                         android:focusable="false"
                         android:clickable="true"

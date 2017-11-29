@@ -3,6 +3,7 @@ package com.okanerkan.sqlite.model;
 import com.okanerkan.dll.KnEntity;
 import com.okanerkan.dll.ObservableBase;
 import com.okanerkan.globals.Guid;
+import com.okanerkan.globals.TimeStampHelper;
 import com.okanerkan.interfaces.ISpinnerSource;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 
@@ -17,17 +18,19 @@ public class BudgettCategory extends KnEntity implements Serializable, ISpinnerS
     private String mID;
     private int mEntryType;
     private String mCategoryCode;
+    private long mLastUpdatedDate;
 
     public BudgettCategory()
     {
-        this(Guid.New(), BudgettEntryType.EXPENSE, "");
+        this(Guid.New(), BudgettEntryType.EXPENSE, "", TimeStampHelper.GetNow());
     }
 
-    public BudgettCategory(String _id, BudgettEntryType _entryType, String _categoryCode)
+    public BudgettCategory(String _id, BudgettEntryType _entryType, String _categoryCode, long _lastUpdatedDate)
     {
         this.mID = _id;
         this.mEntryType = _entryType.getValue();
         this.mCategoryCode = _categoryCode;
+        this.mLastUpdatedDate = _lastUpdatedDate;
     }
 
     public String getID() { return this.mID; }
@@ -50,6 +53,9 @@ public class BudgettCategory extends KnEntity implements Serializable, ISpinnerS
     {
         this.SetValue("CategoryCode", _category);
     }
+
+    public long getLastUpdateDate() { return this.mLastUpdatedDate; }
+    public void setLastUpdateDate(long _lastUpdatedDate) { this.SetValue("LastUpdatedDate", _lastUpdatedDate); }
 
     public boolean ValidateModel()
     {

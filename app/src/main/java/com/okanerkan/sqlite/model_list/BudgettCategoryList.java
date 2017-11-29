@@ -5,6 +5,7 @@ import com.okanerkan.sqlite.model.BudgettCategory;
 import com.okanerkan.sqlite.model.BudgettEntryType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 /**
@@ -37,10 +38,10 @@ public class BudgettCategoryList
         this.Sort();
     }
 
-    public int GetBudgettListID(int _index)
+    public String GetBudgettListID(int _index)
     {
         if (_index < 0 || _index >= this.mList.size())
-            return -1;
+            return "";
         return this.mList.get(_index).getID();
     }
 
@@ -51,11 +52,11 @@ public class BudgettCategoryList
         return this.mList.get(_index);
     }
 
-    public BudgettCategory GetBudgettCategory(int _id)
+    public BudgettCategory GetBudgettCategoryWithID(String _id)
     {
         for (BudgettCategory category: this.mList)
         {
-            if(category.getID() == _id)
+            if(category.getID().equalsIgnoreCase(_id))
                 return category;
         }
         return null;
@@ -98,10 +99,10 @@ public class BudgettCategoryList
         this.mList.remove(_category);
     }
 
-    public void RemoveFromList(int _id)
+    public void RemoveFromList(String _id)
     {
         for (int i = 0; i < this.mList.size(); i++)
-            if (this.mList.get(i).getID() == _id)
+            if (this.mList.get(i).getID().equalsIgnoreCase(_id))
                 this.mList.remove(i);
     }
 
@@ -112,7 +113,7 @@ public class BudgettCategoryList
 
     private void Sort()
     {
-        this.mList.sort(new Comparator<BudgettCategory>()
+        Collections.sort(this.mList, new Comparator<BudgettCategory>()
         {
             @Override
             public int compare(BudgettCategory _c1, BudgettCategory _c2)

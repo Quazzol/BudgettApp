@@ -1,4 +1,4 @@
-package com.okanerkan.dll;
+package com.okanerkan.ui;
 
 import android.content.Context;
 import android.util.Log;
@@ -20,6 +20,7 @@ import android.widget.Switch;
 
 import com.okanerkan.budgettapp.R;
 import com.okanerkan.globals.Globals;
+import com.okanerkan.globals.TimeStampHelper;
 import com.okanerkan.interfaces.IFilterUser;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 import com.okanerkan.sqlite.model.BudgettCategory;
@@ -221,32 +222,32 @@ public class FilterUIManager
         switch (selectedItem.getDatePeriod())
         {
             case TODAY:
-                this.mStartDateEdit.setTimestamp(Globals.GetToday());
-                this.mEndDateEdit.setTimestamp(Globals.GetTomorrow());
+                this.mStartDateEdit.setTimestamp(TimeStampHelper.GetToday());
+                this.mEndDateEdit.setTimestamp(TimeStampHelper.GetTomorrow());
                 break;
             case YESTERDAY:
-                this.mStartDateEdit.setTimestamp(Globals.GetYesterday());
-                this.mEndDateEdit.setTimestamp(Globals.GetToday());
+                this.mStartDateEdit.setTimestamp(TimeStampHelper.GetYesterday());
+                this.mEndDateEdit.setTimestamp(TimeStampHelper.GetToday());
                 break;
             case THISWEEK:
-                this.mStartDateEdit.setTimestamp(Globals.GetStartOfThisWeek());
-                this.mEndDateEdit.setTimestamp(Globals.GetTomorrow());
+                this.mStartDateEdit.setTimestamp(TimeStampHelper.GetStartOfThisWeek());
+                this.mEndDateEdit.setTimestamp(TimeStampHelper.GetTomorrow());
                 break;
             case LASTWEEK:
-                this.mStartDateEdit.setTimestamp(Globals.GetStartOfLastWeek());
-                this.mEndDateEdit.setTimestamp(Globals.GetStartOfThisWeek());
+                this.mStartDateEdit.setTimestamp(TimeStampHelper.GetStartOfLastWeek());
+                this.mEndDateEdit.setTimestamp(TimeStampHelper.GetStartOfThisWeek());
                 break;
             case THISMONTH:
-                this.mStartDateEdit.setTimestamp(Globals.GetStartOfThisMonth());
-                this.mEndDateEdit.setTimestamp(Globals.GetTomorrow());
+                this.mStartDateEdit.setTimestamp(TimeStampHelper.GetStartOfThisMonth());
+                this.mEndDateEdit.setTimestamp(TimeStampHelper.GetTomorrow());
                 break;
             case LASTMONTH:
-                this.mStartDateEdit.setTimestamp(Globals.GetStartOfLastMonth());
-                this.mEndDateEdit.setTimestamp(Globals.GetStartOfThisMonth());
+                this.mStartDateEdit.setTimestamp(TimeStampHelper.GetStartOfLastMonth());
+                this.mEndDateEdit.setTimestamp(TimeStampHelper.GetStartOfThisMonth());
                 break;
             case LAST3MONTHS:
-                this.mStartDateEdit.setTimestamp(Globals.GetStartOfTheeMonthAgo());
-                this.mEndDateEdit.setTimestamp(Globals.GetYesterday());
+                this.mStartDateEdit.setTimestamp(TimeStampHelper.GetStartOfTheeMonthAgo());
+                this.mEndDateEdit.setTimestamp(TimeStampHelper.GetYesterday());
                 break;
         }
     }

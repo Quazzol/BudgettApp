@@ -48,7 +48,7 @@ public class BudgettCategoryCardActivity extends AppCompatActivity {
     private void CreateBudgetCategory()
     {
         Intent intent = getIntent();
-        int id = intent.getIntExtra("BudgettCategoryID", -1);
+        String id = intent.getStringExtra("BudgettCategoryID");
         this.mBugettCategory = BudgettCategoryList.GetList().GetBudgettCategory(id);
         if (this.mBugettCategory == null)
         {

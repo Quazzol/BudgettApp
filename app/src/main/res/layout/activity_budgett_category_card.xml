@@ -19,7 +19,7 @@ tools:context="com.okanerkan.budgettapp.BudgettCategoryCardActivity">
         android:padding="16dp"
         android:orientation="vertical">
 
-        <com.okanerkan.dll.KnRadioGroup
+        <com.okanerkan.ui.KnRadioGroup
             android:id="@+id/rdgEntryType"
             android:orientation="horizontal"
             android:tag="EntryType"
@@ -44,7 +44,7 @@ tools:context="com.okanerkan.budgettapp.BudgettCategoryCardActivity">
                 android:tag="1"
                 android:textSize="20sp" />
 
-        </com.okanerkan.dll.KnRadioGroup>
+        </com.okanerkan.ui.KnRadioGroup>
 
         <EditText
             android:id="@+id/budgettCategory"

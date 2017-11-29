@@ -3,6 +3,7 @@ package com.okanerkan.sqlite.model;
 import com.okanerkan.dll.KnEntity;
 import com.okanerkan.globals.Globals;
 import com.okanerkan.globals.Guid;
+import com.okanerkan.globals.TimeStampHelper;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 
 import java.io.Serializable;
@@ -20,7 +21,7 @@ public class BudgettAccount extends KnEntity implements Serializable
 
     public BudgettAccount()
     {
-        this(Guid.New(), "", "", Globals.GetNow());
+        this(Guid.New(), "", "", TimeStampHelper.GetNow());
     }
 
     public BudgettAccount(String _id, String _name, String _ownerID, long _sync)

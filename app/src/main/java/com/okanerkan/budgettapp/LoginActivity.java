@@ -24,6 +24,20 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        SharedPreferences prefs = this.getSharedPreferences("com.okanerkan.budgettapp", MODE_PRIVATE);
+        String username = prefs.getString("Username", "");
+
+        if (!username.equals(""))
+        {
+            Intent intent = new Intent(getApplicationContext(), BudgettAppActivity.class);
+            startActivity(intent);
+        }
+    }
+
     public void OnBtnLoginClick(View view)
     {
         String username = ((EditText) findViewById(R.id.txtUsername)).getText().toString();

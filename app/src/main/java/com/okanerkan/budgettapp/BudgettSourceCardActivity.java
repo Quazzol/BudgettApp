@@ -48,7 +48,7 @@ public class BudgettSourceCardActivity extends AppCompatActivity
     private void CreateBudgettSource()
     {
         Intent intent = getIntent();
-        int id = intent.getIntExtra("BudgettSourceID", -1);
+        String id = intent.getStringExtra("BudgettSourceID");
         this.mBudgettSource = BudgettSourceList.GetList().GetBudgettSource(id);
         if (this.mBudgettSource == null)
         {

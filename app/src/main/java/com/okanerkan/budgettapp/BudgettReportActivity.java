@@ -10,9 +10,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
-import com.okanerkan.dll.AnimationListenerExt;
-import com.okanerkan.dll.FilterUIManager;
-import com.okanerkan.dll.ReportViewAdapter;
+import com.okanerkan.ui.AnimationListenerExt;
+import com.okanerkan.ui.FilterUIManager;
+import com.okanerkan.ui.ReportViewAdapter;
 import com.okanerkan.interfaces.IFilterUser;
 
 

@@ -35,7 +35,7 @@
                         android:text="@string/EntryType"
                         style="@style/ReportLayoutItem" />
 
-                    <com.okanerkan.dll.KnRadioGroup
+                    <com.okanerkan.ui.KnRadioGroup
                         android:id="@+id/rdgEntryType"
                         android:orientation="vertical"
                         android:tag="EntryType"
@@ -73,7 +73,7 @@
                             android:textSize="12sp"
                             android:textColor="#fff" />
 
-                    </com.okanerkan.dll.KnRadioGroup>
+                    </com.okanerkan.ui.KnRadioGroup>
 
                 </LinearLayout>
 
@@ -143,7 +143,7 @@
                             android:text="@string/StartDate"
                             style="@style/ReportLayoutItem" />
 
-                        <com.okanerkan.dll.DateEditText
+                        <com.okanerkan.ui.DateEditText
                             android:id="@+id/DateEditStartDate"
                             android:focusable="false"
                             android:clickable="true"
@@ -162,7 +162,7 @@
                             android:text="@string/EndDate"
                             style="@style/ReportLayoutItem" />
 
-                        <com.okanerkan.dll.DateEditText
+                        <com.okanerkan.ui.DateEditText
                             android:id="@+id/DateEditEndDate"
                             android:text="08/05/2017"
                             style="@style/ReportLayoutControl"/>

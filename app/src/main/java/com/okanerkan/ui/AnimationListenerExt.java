@@ -1,4 +1,4 @@
-package com.okanerkan.dll;
+package com.okanerkan.ui;
 
 import android.view.View;
 import android.view.animation.Animation;

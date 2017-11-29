@@ -6,6 +6,7 @@ import com.okanerkan.dll.KnEntity;
 import com.okanerkan.dll.ObservableBase;
 import com.okanerkan.globals.Globals;
 import com.okanerkan.globals.Guid;
+import com.okanerkan.globals.TimeStampHelper;
 import com.okanerkan.interfaces.ISpinnerSource;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 
@@ -31,18 +32,20 @@ public class BudgettItem extends KnEntity implements Serializable, ISpinnerSourc
     private String mCategoryID;
     private String mBudgettNote;
     private double mAmount;
+    private long mLastUpdatedDate;
 
     public BudgettItem()
     {
         this(Guid.New(),
                 BudgettEntryType.EXPENSE,
-                Globals.GetNow(),
+                TimeStampHelper.GetNow(),
                 "",
                 "",
                 "",
                 "",
                 "",
-                0);
+                0,
+                TimeStampHelper.GetNow());
     }
 
     public BudgettItem(String _id,
@@ -53,7 +56,8 @@ public class BudgettItem extends KnEntity implements Serializable, ISpinnerSourc
                        String _sourceID,
                        String _categoryID,
                        String _budgettNote,
-                       double _amount)
+                       double _amount,
+                       long _lastUpdatedDate)
     {
         this.mID = _id;
         this.mEntryType = _type.getValue();
@@ -64,6 +68,7 @@ public class BudgettItem extends KnEntity implements Serializable, ISpinnerSourc
         this.mCategoryID = _categoryID;
         this.mBudgettNote = _budgettNote;
         this.mAmount = _amount;
+        this.mLastUpdatedDate = _lastUpdatedDate;
     }
 
     public String getID() { return this.mID; }
@@ -125,6 +130,9 @@ public class BudgettItem extends KnEntity implements Serializable, ISpinnerSourc
     {
         this.SetValue("Amount", _amount);
     }
+
+    public long getLastUpdatedDate() { return this.mLastUpdatedDate; }
+    public void setLastUpdatedDate(long _lastUpdatedDate) { this.SetValue("LastUpdatedDate", _lastUpdatedDate); }
 
     public boolean ValidateModel()
     {

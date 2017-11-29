@@ -3,6 +3,7 @@ package com.okanerkan.sqlite.model;
 import com.okanerkan.dll.KnEntity;
 import com.okanerkan.dll.ObservableBase;
 import com.okanerkan.globals.Guid;
+import com.okanerkan.globals.TimeStampHelper;
 import com.okanerkan.interfaces.IObservable;
 import com.okanerkan.interfaces.IObserver;
 import com.okanerkan.interfaces.ISpinnerSource;
@@ -19,17 +20,19 @@ public class BudgettSource extends KnEntity implements ISpinnerSource, Serializa
     private String mID;
     private int mEntryType;
     private String mSourceCode;
+    private long mLastUpdatedDate;
 
     public BudgettSource()
     {
-        this(Guid.New(), BudgettEntryType.EXPENSE, "");
+        this(Guid.New(), BudgettEntryType.EXPENSE, "", TimeStampHelper.GetNow());
     }
 
-    public BudgettSource(String _id, BudgettEntryType _entryType, String _sourceValue)
+    public BudgettSource(String _id, BudgettEntryType _entryType, String _sourceValue, long _lastUpdatedDate)
     {
         this.mID = _id;
         this.mEntryType = _entryType.getValue();
         this.mSourceCode = _sourceValue;
+        this.mLastUpdatedDate = _lastUpdatedDate;
     }
 
     public String getID() { return this.mID; }
@@ -49,6 +52,9 @@ public class BudgettSource extends KnEntity implements ISpinnerSource, Serializa
     {
         this.SetValue("SourceCode", _source);
     }
+
+    public long getLastUpdatedDate() { return this.mLastUpdatedDate; }
+    public void setLastUpdatedDate(long _lastUpdatedDate) { this.SetValue("LastUpdatedDate", _lastUpdatedDate); }
 
     public boolean ValidateModel()
     {

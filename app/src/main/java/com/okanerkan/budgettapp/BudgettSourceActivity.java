@@ -86,7 +86,7 @@ public class BudgettSourceActivity extends AppCompatActivity
         this.mNewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                OpenCard(-1);
+                OpenCard("");
             }
         });
         this.mCancelButton.setOnClickListener(new View.OnClickListener()
@@ -121,7 +121,7 @@ public class BudgettSourceActivity extends AppCompatActivity
         this.OpenCard(source.getID());
     }
 
-    private void OpenCard(int _id)
+    private void OpenCard(String _id)
     {
         Intent intent = new Intent(getApplicationContext(), BudgettSourceCardActivity.class);
         intent.putExtra("BudgettSourceID", _id);

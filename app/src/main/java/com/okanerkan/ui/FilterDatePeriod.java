@@ -1,4 +1,4 @@
-package com.okanerkan.dll;
+package com.okanerkan.ui;
 
 import android.content.Context;
 
