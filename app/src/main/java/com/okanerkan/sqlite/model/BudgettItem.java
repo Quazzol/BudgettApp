@@ -1,21 +1,13 @@
 package com.okanerkan.sqlite.model;
 
-import android.icu.util.Calendar;
-
 import com.okanerkan.dll.KnEntity;
-import com.okanerkan.dll.ObservableBase;
-import com.okanerkan.globals.Globals;
+import com.okanerkan.enums.BudgettEntryType;
 import com.okanerkan.globals.Guid;
 import com.okanerkan.globals.TimeStampHelper;
 import com.okanerkan.interfaces.ISpinnerSource;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by OkanErkan on 10.10.2017.

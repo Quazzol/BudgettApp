@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.okanerkan.dll.BindingManager;
 import com.okanerkan.globals.Globals;
+import com.okanerkan.globals.KNGlobal;
 import com.okanerkan.sqlite.model.BudgettCategory;
 import com.okanerkan.sqlite.model_list.BudgettCategoryList;
 
@@ -95,11 +96,11 @@ public class BudgettCategoryCardActivity extends AppCompatActivity {
         {
             if (this.mBugettCategory.ExistInDB())
             {
-                Globals.DBHelper.updateBudgettCategory(this.mBugettCategory);
+                KNGlobal.DBHelper().updateBudgettCategory(this.mBugettCategory);
                 this.finish();
                 return;
             }
-            Globals.DBHelper.insertBudgettCategory(this.mBugettCategory);
+            KNGlobal.DBHelper().insertBudgettCategory(this.mBugettCategory);
 
             this.CreateBudgetCategory();
             Toast.makeText(this, R.string.MSGSaved, Toast.LENGTH_LONG).show();
@@ -118,7 +119,7 @@ public class BudgettCategoryCardActivity extends AppCompatActivity {
         try
         {
             if (this.mBugettCategory != null)
-                Globals.DBHelper.deleteBudgettCategory(this.mBugettCategory);
+                KNGlobal.DBHelper().deleteBudgettCategory(this.mBugettCategory);
             this.finish();
         }
         catch (Exception ex)

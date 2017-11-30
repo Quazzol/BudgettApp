@@ -41,6 +41,7 @@
     <string name="MenuItemReport">Reports</string>
     <string name="MenuItemWebsite">Website</string>
     <string name="MenuItemSettings">Settings</string>
+    <string name="MenuItemLogout">Logout</string>
     <string name="MenuGroupContact">Contact</string>
     <string name="SideMenuOpen">Open Menu</string>
     <string name="SideMenuClose">Close Menu</string>

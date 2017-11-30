@@ -1,8 +1,8 @@
 package com.okanerkan.sqlite.model_list;
 
-import com.okanerkan.globals.Globals;
+import com.okanerkan.globals.KNGlobal;
 import com.okanerkan.sqlite.model.BudgettCategory;
-import com.okanerkan.sqlite.model.BudgettEntryType;
+import com.okanerkan.enums.BudgettEntryType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,7 +34,7 @@ public class BudgettCategoryList
 
     private void LoadListFromDB()
     {
-        this.mList = Globals.DBHelper.getAllBudgettCategory();
+        this.mList = KNGlobal.DBHelper().getAllBudgettCategory();
         this.Sort();
     }
 

@@ -11,9 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.okanerkan.budgettapp.R;
-import com.okanerkan.globals.Globals;
 import com.okanerkan.globals.TimeStampHelper;
-import com.okanerkan.sqlite.model.BudgettEntryType;
+import com.okanerkan.enums.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettItem;
 import com.okanerkan.sqlite.model_list.BudgettItemList;
 import com.okanerkan.sqlite.model_list.BudgettSourceList;

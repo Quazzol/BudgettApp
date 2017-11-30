@@ -1,7 +1,9 @@
 package com.okanerkan.globals;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.okanerkan.enums.LoginResult;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 import com.okanerkan.sqlite.model.BudgettAccount;
 import com.okanerkan.sqlite.model.BudgettUser;
@@ -14,17 +16,29 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Globals
 {
-    public static BudgettDatabaseHelper DBHelper;
-    private static BudgettUser mCurrentUser = null;
-    private static BudgettAccount mCurrentAccount = null;
+    private Context mContext = null;
+    private BudgettDatabaseHelper mDBHelper = null;
+    private BudgettUser mCurrentUser = null;
+    private BudgettAccount mCurrentAccount = null;
 
-    public static BudgettUser CurrentUser()
+    public Globals(Context _context)
+    {
+        this.mContext = _context;
+        this.mDBHelper = new BudgettDatabaseHelper(this.mContext);
+    }
+
+    public BudgettDatabaseHelper DBHelper()
+    {
+        return this.mDBHelper;
+    }
+
+    public BudgettUser CurrentUser()
     {
         try
         {
             if (mCurrentUser == null)
             {
-                SharedPreferences prefs = this.getSharedPreferences("com.okanerkan.budgettapp", MODE_PRIVATE);
+                SharedPreferences prefs = this.mContext.getSharedPreferences("com.okanerkan.budgettapp", MODE_PRIVATE);
                 String username = prefs.getString("Username", "");
                 String password = prefs.getString("Password", "");
 
@@ -36,7 +50,7 @@ public class Globals
                 BudgettUser user = new BudgettUser();
                 user.setName(username);
                 user.setPassword(password);
-                if (user.Login())
+                if (user.Login() == LoginResult.LOGIN_SUCCESS)
                 {
                     mCurrentUser = user;
                 }
@@ -49,7 +63,7 @@ public class Globals
         }
     }
 
-    public static BudgettAccount CurrentAccount()
+    public BudgettAccount CurrentAccount()
     {
         try
         {
@@ -65,5 +79,13 @@ public class Globals
         {
             return null;
         }
+    }
+
+    public void Reset()
+    {
+        this.mCurrentUser = null;
+        this.mCurrentAccount = null;
+        SharedPreferences prefs = this.mContext.getSharedPreferences("com.okanerkan.budgettapp", MODE_PRIVATE);
+        prefs.edit().clear().apply();
     }
 }

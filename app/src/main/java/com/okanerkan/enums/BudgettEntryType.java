@@ -1,4 +1,4 @@
-package com.okanerkan.sqlite.model;
+package com.okanerkan.enums;
 
 import com.okanerkan.interfaces.IRadioGroupSource;
 

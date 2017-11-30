@@ -215,12 +215,12 @@
 
                     <Spinner
                         android:id="@+id/spnBudgettSource"
-                        android:tag="BudgettSource"
+                        android:tag="SourceID"
                         style="@style/LayoutControl" />
 
                     <Spinner
                         android:id="@+id/spnExpenseType"
-                        android:tag="BudgettType"
+                        android:tag="CategoryID"
                         style="@style/LayoutControl" />
 
                     <EditText

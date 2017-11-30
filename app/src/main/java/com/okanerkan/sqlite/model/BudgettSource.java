@@ -1,11 +1,9 @@
 package com.okanerkan.sqlite.model;
 
 import com.okanerkan.dll.KnEntity;
-import com.okanerkan.dll.ObservableBase;
+import com.okanerkan.enums.BudgettEntryType;
 import com.okanerkan.globals.Guid;
 import com.okanerkan.globals.TimeStampHelper;
-import com.okanerkan.interfaces.IObservable;
-import com.okanerkan.interfaces.IObserver;
 import com.okanerkan.interfaces.ISpinnerSource;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 

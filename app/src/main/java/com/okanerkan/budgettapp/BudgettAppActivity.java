@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.okanerkan.dll.BindingManager;
 import com.okanerkan.dll.Tuple;
 import com.okanerkan.globals.Globals;
+import com.okanerkan.globals.KNGlobal;
 import com.okanerkan.interfaces.IObserver;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 import com.okanerkan.sqlite.model.BudgettItem;
@@ -114,6 +115,13 @@ public class BudgettAppActivity extends AppCompatActivity
             startActivity(intent);
             return true;
         }
+        else if (id == R.id.menuItemLogout)
+        {
+            KNGlobal.Reset();
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -160,7 +168,6 @@ public class BudgettAppActivity extends AppCompatActivity
     //region Initialize Methods
     private void InitializeProperties()
     {
-        Globals.DBHelper = new BudgettDatabaseHelper(getApplicationContext());
         this.mSaveButton = (Button) findViewById(R.id.btnSave);
         this.mResetButton = (Button) findViewById(R.id.btnReset);
         this.mEntryTypeRadio = (RadioGroup) findViewById(R.id.rdgEntryType);
@@ -298,7 +305,7 @@ public class BudgettAppActivity extends AppCompatActivity
     {
         try
         {
-            Globals.DBHelper.insertBudgettItem(this.mBudgettItem);
+            KNGlobal.DBHelper().insertBudgettItem(this.mBudgettItem);
             Toast.makeText(this, R.string.MSGSaved, Toast.LENGTH_LONG).show();
             this.UpdateMonthlyStatements();
             this.OnResetButtonClicked();

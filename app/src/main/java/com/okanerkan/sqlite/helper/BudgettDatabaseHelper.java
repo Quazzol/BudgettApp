@@ -5,15 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteTransactionListener;
-import android.security.keystore.KeyNotYetValidException;
 
 import com.okanerkan.dll.KnEntity;
 import com.okanerkan.exceptions.IncorrectTypeException;
 import com.okanerkan.exceptions.ValidationException;
 import com.okanerkan.sqlite.model.BudgettAccount;
 import com.okanerkan.sqlite.model.BudgettCategory;
-import com.okanerkan.sqlite.model.BudgettEntryType;
+import com.okanerkan.enums.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettItem;
 import com.okanerkan.sqlite.model.BudgettSource;
 import com.okanerkan.sqlite.model.BudgettUser;
@@ -712,6 +710,29 @@ public class BudgettDatabaseHelper extends SQLiteOpenHelper
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, new String[] { user.getID()});
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast())
+        {
+            BudgettUser t = new BudgettUser(cursor.getString(cursor.getColumnIndex(KEY_ID)),
+                    cursor.getString(cursor.getColumnIndex(KEY_USER_NAME)),
+                    cursor.getString(cursor.getColumnIndex(KEY_USER_PASSWORD)),
+                    cursor.getString(cursor.getColumnIndex(KEY_USER_ACCOUNT_ID)),
+                    cursor.getString(cursor.getColumnIndex(KEY_USER_MAIL)),
+                    cursor.getLong(cursor.getColumnIndex(KEY_USER_CREATED_DATE)),
+                    cursor.getLong(cursor.getColumnIndex(KEY_USER_SYNC)),
+                    cursor.getInt(cursor.getColumnIndex(KEY_USER_STATUS)));
+            return t;
+        }
+        return null;
+    }
+
+    public KnEntity loadBudgettUser(String _filter)
+    {
+        String selectQuery = "SELECT * FROM " + TABLE_USER + " " + _filter;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast())

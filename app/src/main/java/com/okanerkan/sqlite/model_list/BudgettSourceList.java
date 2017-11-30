@@ -1,9 +1,7 @@
 package com.okanerkan.sqlite.model_list;
 
-import android.support.annotation.NonNull;
-
-import com.okanerkan.globals.Globals;
-import com.okanerkan.sqlite.model.BudgettEntryType;
+import com.okanerkan.globals.KNGlobal;
+import com.okanerkan.enums.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettSource;
 
 import java.util.ArrayList;
@@ -36,7 +34,7 @@ public class BudgettSourceList
 
     private void LoadListFromDB()
     {
-        this.mList = Globals.DBHelper.getAllBudgettSource();
+        this.mList = KNGlobal.DBHelper().getAllBudgettSource();
     }
 
     public void ReLoadListFromDB()

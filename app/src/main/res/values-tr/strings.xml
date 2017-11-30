@@ -49,4 +49,5 @@
     <string name="LastThreeMonths">Son 3 Ay</string>
     <string name="LastMonth">Geçen Ay</string>
     <string name="All">Tümü</string>
+    <string name="MenuItemLogout">Çıkış</string>
 </resources>

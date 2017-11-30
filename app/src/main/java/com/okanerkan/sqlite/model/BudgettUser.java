@@ -1,7 +1,7 @@
 package com.okanerkan.sqlite.model;
 
 import com.okanerkan.dll.KnEntity;
-import com.okanerkan.globals.Globals;
+import com.okanerkan.enums.LoginResult;
 import com.okanerkan.globals.Guid;
 import com.okanerkan.globals.TimeStampHelper;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
@@ -25,7 +25,7 @@ public class BudgettUser extends KnEntity implements Serializable
 
     public BudgettUser()
     {
-        this(Guid.Empty(), "", "", "", "", TimeStampHelper.GetNow(), TimeStampHelper.GetNow(), 0);
+        this(Guid.New(), "", "", Guid.New(), "", TimeStampHelper.GetNow(), TimeStampHelper.GetNow(), 0);
     }
 
     public BudgettUser(String _id, String _name, String _password, String _accountID, String _mailAddress, long _createdDate, long _sync, int _status)
@@ -69,7 +69,6 @@ public class BudgettUser extends KnEntity implements Serializable
         return !this.mName.isEmpty() &&
                 !this.mPassword.isEmpty() &&
                 !this.mAccountID.isEmpty() &&
-                !this.mMailAddress.isEmpty() &&
                 this.mCreatedDate > 0;
     }
 
@@ -88,8 +87,18 @@ public class BudgettUser extends KnEntity implements Serializable
         return BudgettDatabaseHelper.TABLE_USER;
     }
 
-    public boolean Login()
+    public LoginResult Login()
     {
-        return false;
+        String filter = " WHERE name='" + this.mName + "' AND password='" + this.mPassword + "'";
+        if (this.mDBHelper.loadBudgettUser(filter) != null)
+        {
+            return LoginResult.LOGIN_SUCCESS;
+        }
+        filter = " WHERE 1=1";
+        if (this.mDBHelper.loadBudgettUser(filter) == null)
+        {
+            return LoginResult.NO_USER;
+        }
+        return LoginResult.LOGIN_FAILED;
     }
 }

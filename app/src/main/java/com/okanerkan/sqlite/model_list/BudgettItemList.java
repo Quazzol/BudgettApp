@@ -1,12 +1,11 @@
 package com.okanerkan.sqlite.model_list;
 
 import com.okanerkan.dll.Tuple;
-import com.okanerkan.globals.Globals;
+import com.okanerkan.globals.KNGlobal;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
-import com.okanerkan.sqlite.model.BudgettEntryType;
+import com.okanerkan.enums.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettItem;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -38,7 +37,7 @@ public class BudgettItemList
 
     public BudgettItemList LoadList(String _filter)
     {
-        this.mList = Globals.DBHelper.getAllBudgettItem(_filter);
+        this.mList = KNGlobal.DBHelper().getAllBudgettItem(_filter);
         return this;
     }
 
@@ -50,7 +49,7 @@ public class BudgettItemList
                 + BudgettDatabaseHelper.KEY_ITEM_ENTRY_DATE + " <= "
                 + this.EndOfMonth();
 
-        this.mList = Globals.DBHelper.getAllBudgettItem(filter);
+        this.mList = KNGlobal.DBHelper().getAllBudgettItem(filter);
 
         Tuple<Double, Double> incExp = new Tuple<>(0.0, 0.0);
         for(BudgettItem item : this.mList)

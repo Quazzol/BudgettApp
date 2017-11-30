@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.okanerkan.dll.BindingManager;
 import com.okanerkan.globals.Globals;
+import com.okanerkan.globals.KNGlobal;
 import com.okanerkan.sqlite.model.BudgettSource;
 import com.okanerkan.sqlite.model_list.BudgettSourceList;
 
@@ -95,11 +96,11 @@ public class BudgettSourceCardActivity extends AppCompatActivity
         {
             if (this.mBudgettSource.ExistInDB())
             {
-                Globals.DBHelper.updateBudgettSource(this.mBudgettSource);
+                KNGlobal.DBHelper().updateBudgettSource(this.mBudgettSource);
                 this.finish();
                 return;
             }
-            Globals.DBHelper.insertBudgettSource(this.mBudgettSource);
+            KNGlobal.DBHelper().insertBudgettSource(this.mBudgettSource);
 
             this.CreateBudgettSource();
             this.mBindingManager.Rebind(this.mBudgettSource);
@@ -118,7 +119,7 @@ public class BudgettSourceCardActivity extends AppCompatActivity
         try
         {
             if (this.mBudgettSource.ExistInDB())
-                Globals.DBHelper.deleteBudgettSource(this.mBudgettSource);
+                KNGlobal.DBHelper().deleteBudgettSource(this.mBudgettSource);
             this.finish();
         }
         catch (Exception ex)

@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.okanerkan.sqlite.model.BudgettEntryType;
+import com.okanerkan.enums.BudgettEntryType;
 import com.okanerkan.sqlite.model.BudgettSource;
 import com.okanerkan.sqlite.model_list.BudgettSourceList;
 
