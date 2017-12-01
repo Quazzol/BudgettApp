@@ -11,8 +11,9 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.okanerkan.dll.BindingManager;
-import com.okanerkan.globals.Globals;
+import com.okanerkan.globals.ExceptionHandler;
 import com.okanerkan.globals.KNGlobal;
+import com.okanerkan.globals.Message;
 import com.okanerkan.sqlite.model.BudgettCategory;
 import com.okanerkan.sqlite.model_list.BudgettCategoryList;
 
@@ -22,7 +23,7 @@ public class BudgettCategoryCardActivity extends AppCompatActivity {
     private Button mDeleteButton;
     private RadioGroup mEntryTypeRadio;
     private EditText mBudgettCategoryCode;
-    private BudgettCategory mBugettCategory;
+    private BudgettCategory mBudgettCategory;
     private BindingManager mBindingManager;
 
     private static String TAG = "CategoryCard";
@@ -34,6 +35,8 @@ public class BudgettCategoryCardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_budgett_category_card);
         this.SetProperties();
         this.CreateBudgetCategory();
+        this.LoadBudgettCategory();
+        this.SetCancelButtonText();
         this.CreateBindingManager();
         this.AddEventHandlers();
     }
@@ -48,13 +51,21 @@ public class BudgettCategoryCardActivity extends AppCompatActivity {
 
     private void CreateBudgetCategory()
     {
-        Intent intent = getIntent();
-        String id = intent.getStringExtra("BudgettCategoryID");
-        this.mBugettCategory = BudgettCategoryList.GetList().GetBudgettCategory(id);
-        if (this.mBugettCategory == null)
+        this.mBudgettCategory = new BudgettCategory();
+    }
+
+    private void LoadBudgettCategory()
+    {
+        try
         {
-            this.mDeleteButton.setText(R.string.Cancel);
-            this.mBugettCategory = new BudgettCategory();
+            Intent intent = getIntent();
+            String id = intent.getStringExtra("BudgettCategoryID");
+            this.mBudgettCategory.setID(id);
+            this.mBudgettCategory.Load();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.HandleException(TAG, ex);
         }
     }
 
@@ -62,15 +73,20 @@ public class BudgettCategoryCardActivity extends AppCompatActivity {
     {
         try
         {
-            this.mBindingManager = new BindingManager(this.mBugettCategory);
+            this.mBindingManager = new BindingManager(this.mBudgettCategory);
             this.mBindingManager.Add(this.mEntryTypeRadio);
             this.mBindingManager.Add(this.mBudgettCategoryCode);
             this.mBindingManager.Initialize();
         }
         catch (Exception ex)
         {
-            Log.e(TAG, ex.getMessage());
+            ExceptionHandler.HandleException(TAG, ex);
         }
+    }
+
+    private void SetCancelButtonText()
+    {
+        this.mDeleteButton.setText(this.mBudgettCategory.ExistInDB() ? R.string.Delete : R.string.Cancel);
     }
 
     private void AddEventHandlers()
@@ -94,23 +110,16 @@ public class BudgettCategoryCardActivity extends AppCompatActivity {
     {
         try
         {
-            if (this.mBugettCategory.ExistInDB())
-            {
-                KNGlobal.DBHelper().updateBudgettCategory(this.mBugettCategory);
-                this.finish();
-                return;
-            }
-            KNGlobal.DBHelper().insertBudgettCategory(this.mBugettCategory);
-
+            this.mBudgettCategory.Save();
             this.CreateBudgetCategory();
-            Toast.makeText(this, R.string.MSGSaved, Toast.LENGTH_LONG).show();
-            this.mBindingManager.Rebind(this.mBugettCategory);
+            this.SetCancelButtonText();
+            this.mBindingManager.Rebind(this.mBudgettCategory);
             this.mBindingManager.BindValues();
+            Message.Show(R.string.MSGSaved);
         }
         catch (Exception ex)
         {
-            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
-            Log.e(TAG, ex.getMessage());
+            ExceptionHandler.HandleException(TAG, ex);
         }
     }
 
@@ -118,14 +127,12 @@ public class BudgettCategoryCardActivity extends AppCompatActivity {
     {
         try
         {
-            if (this.mBugettCategory != null)
-                KNGlobal.DBHelper().deleteBudgettCategory(this.mBugettCategory);
+            this.mBudgettCategory.Delete();
             this.finish();
         }
         catch (Exception ex)
         {
-            Toast.makeText(this, R.string.MSGCannotDelete, Toast.LENGTH_SHORT).show();
-            Log.e(TAG, getResources().getString(R.string.MSGCannotDelete));
+            ExceptionHandler.HandleException(TAG, ex);
         }
     }
 

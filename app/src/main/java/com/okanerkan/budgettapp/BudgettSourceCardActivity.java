@@ -11,8 +11,10 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.okanerkan.dll.BindingManager;
+import com.okanerkan.globals.ExceptionHandler;
 import com.okanerkan.globals.Globals;
 import com.okanerkan.globals.KNGlobal;
+import com.okanerkan.globals.Message;
 import com.okanerkan.sqlite.model.BudgettSource;
 import com.okanerkan.sqlite.model_list.BudgettSourceList;
 
@@ -34,6 +36,8 @@ public class BudgettSourceCardActivity extends AppCompatActivity
         setContentView(R.layout.activity_budgett_source_card);
         this.SetProperties();
         this.CreateBudgettSource();
+        this.LoadBudgettSource();
+        this.SetCancelButtonText();
         this.CreateBindingManager();
         this.AddEventHandlers();
     }
@@ -48,13 +52,21 @@ public class BudgettSourceCardActivity extends AppCompatActivity
 
     private void CreateBudgettSource()
     {
-        Intent intent = getIntent();
-        String id = intent.getStringExtra("BudgettSourceID");
-        this.mBudgettSource = BudgettSourceList.GetList().GetBudgettSource(id);
-        if (this.mBudgettSource == null)
+        this.mBudgettSource = new BudgettSource();
+    }
+
+    private void LoadBudgettSource()
+    {
+        try
         {
-            this.mDeleteButton.setText(R.string.Cancel);
-            this.mBudgettSource = new BudgettSource();
+            Intent intent = getIntent();
+            String id = intent.getStringExtra("BudgettSourceID");
+            this.mBudgettSource.setID(id);
+            this.mBudgettSource.Load();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.HandleException(TAG, ex);
         }
     }
 
@@ -69,8 +81,13 @@ public class BudgettSourceCardActivity extends AppCompatActivity
         }
         catch (Exception ex)
         {
-            Log.e(TAG, ex.getMessage());
+            ExceptionHandler.HandleException(TAG, ex);
         }
+    }
+
+    private void SetCancelButtonText()
+    {
+        this.mDeleteButton.setText(this.mBudgettSource.ExistInDB() ? R.string.Delete : R.string.Cancel);
     }
 
     private void AddEventHandlers()
@@ -94,23 +111,17 @@ public class BudgettSourceCardActivity extends AppCompatActivity
     {
         try
         {
-            if (this.mBudgettSource.ExistInDB())
-            {
-                KNGlobal.DBHelper().updateBudgettSource(this.mBudgettSource);
-                this.finish();
-                return;
-            }
-            KNGlobal.DBHelper().insertBudgettSource(this.mBudgettSource);
-
+            this.mBudgettSource.Save();
             this.CreateBudgettSource();
+            this.SetCancelButtonText();
             this.mBindingManager.Rebind(this.mBudgettSource);
             this.mBindingManager.BindValues();
+            Message.Show(R.string.MSGSaved);
             Toast.makeText(this, R.string.MSGSaved, Toast.LENGTH_LONG).show();
         }
         catch (Exception ex)
         {
-            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
-            Log.e(TAG, ex.getMessage());
+            ExceptionHandler.HandleException(TAG, ex);
         }
     }
 
@@ -118,14 +129,15 @@ public class BudgettSourceCardActivity extends AppCompatActivity
     {
         try
         {
-            if (this.mBudgettSource.ExistInDB())
-                KNGlobal.DBHelper().deleteBudgettSource(this.mBudgettSource);
-            this.finish();
+            this.mBudgettSource.Delete();
         }
         catch (Exception ex)
         {
-            Toast.makeText(this, R.string.MSGCannotDelete, Toast.LENGTH_SHORT).show();
-            Log.e(TAG, getResources().getString(R.string.MSGCannotDelete));
+            ExceptionHandler.HandleException(TAG, ex);
+        }
+        finally
+        {
+            this.finish();
         }
     }
 }

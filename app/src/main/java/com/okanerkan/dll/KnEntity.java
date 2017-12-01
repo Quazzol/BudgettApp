@@ -3,7 +3,6 @@ package com.okanerkan.dll;
 import com.okanerkan.exceptions.IncorrectTypeException;
 import com.okanerkan.exceptions.TableNotFoundException;
 import com.okanerkan.exceptions.ValidationException;
-import com.okanerkan.globals.Globals;
 import com.okanerkan.globals.KNGlobal;
 import com.okanerkan.interfaces.IKnEntity;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;

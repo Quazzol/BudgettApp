@@ -2,6 +2,7 @@ package com.okanerkan.globals;
 
 import android.content.Context;
 
+import com.okanerkan.budgettapp.R;
 import com.okanerkan.sqlite.helper.BudgettDatabaseHelper;
 import com.okanerkan.sqlite.model.BudgettAccount;
 import com.okanerkan.sqlite.model.BudgettUser;
@@ -21,6 +22,11 @@ public class KNGlobal
             mGlobal = new Globals(_context);
         }
         return mGlobal;
+    }
+
+    public static Context FixedContext()
+    {
+        return mGlobal.GetContext();
     }
 
     public static BudgettDatabaseHelper DBHelper()

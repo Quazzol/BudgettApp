@@ -88,4 +88,9 @@ public class Globals
         SharedPreferences prefs = this.mContext.getSharedPreferences("com.okanerkan.budgettapp", MODE_PRIVATE);
         prefs.edit().clear().apply();
     }
+
+    public Context GetContext()
+    {
+        return this.mContext;
+    }
 }
